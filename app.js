@@ -27,8 +27,7 @@
 process.chdir(__dirname);
 
 // Config dotenv to read environment variables from .env file
-var dotenv = require('dotenv');
-dotenv.load();
+require('dotenv/config');
 
 // Attempt to import `sails` dependency, as well as `rc` (for loading `.sailsrc` files).
 var sails;
