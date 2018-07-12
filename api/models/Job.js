@@ -8,8 +8,6 @@
 module.exports = {
 
   attributes: {
-    'title': 'string',
-    'description': 'string'
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
