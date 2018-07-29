@@ -10,7 +10,7 @@ module.exports = {
   attributes: {
     company: { model: 'company' },
     category: { model: 'category' },
-    status: { type: 'string' },
+    status: { type: 'string', defaultsTo: 'ACTIVE' },
     title: { type: 'string', required: true },
     description: { type: 'string', required: true },
     students: {
