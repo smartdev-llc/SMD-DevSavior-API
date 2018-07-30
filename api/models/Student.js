@@ -10,7 +10,7 @@ module.exports = {
   attributes: {
     firstName: { type: 'string', required: true },
     lastName: { type: 'string', required: true },
-    status: { type: 'string', default: 'ACTIVE' },
+    status: { type: 'string', defaultsTo: 'ACTIVE' },
     skills: {
       collection: 'skill',
       via: 'student',
