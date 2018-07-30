@@ -13,10 +13,15 @@ module.exports.policies = {
   /***************************************************************************
   *                                                                          *
   * Default policy for all controllers and actions, unless overridden.       *
-  * (`true` allows public access)                                            *
+  * (`true` allows public access)
+  * Available policies: isStudent, isCompany                                 *
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  '*': false, // set to admin later
+
+  'auth/*': true,
+
+  'job/find': 'isStudent',
 
 };
