@@ -8,7 +8,9 @@ module.exports = async function (req, res) {
 
   if (role === 'company') {
     if (!email || !password || !name) {
-      return res.badRequest();
+      return res.badRequest({
+        message: "Missing parameters."
+      });
     }
 
     const companyReq = {
@@ -21,7 +23,9 @@ module.exports = async function (req, res) {
     try {
       const companyWithCurrentEmail = await Company.findOne({ email });
       if (companyWithCurrentEmail) {
-        return res.badRequest("Email exists");
+        return res.conflict({
+          message: "This email already exists."
+        });
       } else {
         await Company.create(companyReq);
       }
@@ -31,7 +35,9 @@ module.exports = async function (req, res) {
 
   } else {
     if (!email || !password || !firstName || !lastName) {
-      return res.badRequest();
+      return res.badRequest({
+        message: "Missing parameters."
+      });
     }
 
     const studentReq = {
@@ -47,7 +53,9 @@ module.exports = async function (req, res) {
     try {
       const studentWithCurrentEmail = await Student.findOne({ email });
       if (studentWithCurrentEmail) {
-        return res.badRequest("Email exists");
+        return res.conflict({
+          message: "This email already exists."
+        });
       } else {
         await Student.create(studentReq);
       }

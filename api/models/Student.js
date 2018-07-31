@@ -58,7 +58,7 @@ module.exports = {
 
   customToJSON: function() {
     this.displayName = `${this.firstName} ${this.lastName}`;
-    return _.omit(this, ['password'])
+    return _.omit(this, ['password']);
   },
 
   beforeCreate: function(user, cb){

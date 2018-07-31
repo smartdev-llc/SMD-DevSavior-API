@@ -83,14 +83,14 @@ async function handleLocalAuthentication(req, email, password, cb) {
 
   if (!user) {
     return cb(null, false, {
-      message: 'Invalid email or password'
+      message: 'Invalid email or password.'
     });
   }
 
   const isValidPassword = bcrypt.compareSync(password, user.password);
   if (!isValidPassword) {
     return cb(null, false, {
-      message: 'Invalid email or password'
+      message: 'Invalid email or password.'
     });
   }
 
@@ -102,9 +102,9 @@ async function handleLocalAuthentication(req, email, password, cb) {
 async function handleFacebookAuthentication(req, accessToken, refreshToken, profile, cb) {
   const providerData = _.get(profile, '_json');
   if (!providerData) {
-    let cannnotGetProviderDataError = new Error("Bad Request.");
-    cannnotGetProviderDataError.status = 400;
-    return cb(cannnotGetProviderDataError);
+    return cb(null, false, {
+      message: "Cannot get provider data."
+    })
   }
   const userProfile = {
     firstName: providerData.first_name,
@@ -115,9 +115,9 @@ async function handleFacebookAuthentication(req, accessToken, refreshToken, prof
   }
 
   if (!userProfile.email) {
-    let cannnotGetEmailError = new Error("Cannot get email from this facebook user");
-    cannnotGetEmailError.status = 500;
-    return cb(cannnotGetEmailError);
+    return cb(null, false, {
+      message: "Cannot get email from this social account."
+    })
   }
 
   const existingUser = await Student.findOne({ email: userProfile.email });
@@ -151,9 +151,9 @@ async function handleFacebookAuthentication(req, accessToken, refreshToken, prof
 async function handleGoogleAuthentication(req, accessToken, refreshToken, profile, cb) {
   const providerData = _.get(profile, '_json');
   if (!providerData) {
-    let cannnotGetProviderDataError = new Error("Bad Request.");
-    cannnotGetProviderDataError.status = 500;
-    return cb(cannnotGetProviderDataError);
+    return cb(null, false, {
+      message: "Cannot get provider data."
+    })
   }
   const userProfile = {
     firstName: _.get(providerData, 'name.familyName'),
@@ -164,9 +164,9 @@ async function handleGoogleAuthentication(req, accessToken, refreshToken, profil
   }
 
   if (!userProfile.email) {
-    let cannnotGetEmailError = new Error("Cannot get email from this facebook user");
-    cannnotGetEmailError.status = 400;
-    return cb(cannnotGetEmailError);
+    return cb(null, false, {
+      message: "Cannot get email from this social account."
+    })
   }
 
   const existingUser = await Student.findOne({ email: userProfile.email });

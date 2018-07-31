@@ -24,4 +24,6 @@ module.exports.policies = {
 
   'job/find': 'isStudent',
 
+  'job/create': 'isCompany'
+
 };

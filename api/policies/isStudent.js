@@ -10,28 +10,33 @@ module.exports = async function (req, res, proceed) {
       if ( /^Bearer$/i.test(scheme) ) {
         accessToken = credentials;
       } else {
-        return res.unauthorized();
+        return res.unauthorized({
+          message: "Permission denied."
+        });
       }
     } else {
-      return res.unauthorized();
+      return res.unauthorized({
+        message: "Permission denied."
+      });
     }
   } else if (req.param('access_token')) {
     accessToken = req.param('access_token');
     // We delete the access_token from param to not mess with blueprints
     delete req.query.access_token;
   } else {
-    return res.unauthorized();
+    return res.unauthorized({
+      message: "Permission denied."
+    });
   }
-
-  console.log('std accessToken: ', accessToken);
 
   let decoded;
   try {
     decoded = JwtService.verify(accessToken);
   } catch(err) {
     if (err) {
-      console.log("loi decode");
-      return res.unauthorized();
+      return res.unauthorized({
+        message: "Permission denied."
+      });
     }
   }
   
@@ -39,17 +44,23 @@ module.exports = async function (req, res, proceed) {
   const role = _.get(decoded, 'role');
 
   if (_.isNil(userId) || role !== 'student') {
-    return res.unauthorized();
+    return res.unauthorized({
+      message: "Permission denied."
+    });
   }
   
   let user;
   try {
     user = await Student.findOne({ id: userId });
   } catch(err) {
-    return res.serverError();
+    return res.serverError(err);
   }
 
-  if (!user) return res.unauthorized();
+  if (!user) {
+    return res.unauthorized({
+      message: "Permission denied."
+    });
+  }
 
   req.user = user;
 

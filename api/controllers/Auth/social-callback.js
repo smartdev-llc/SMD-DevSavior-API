@@ -3,12 +3,18 @@ const passport = require('passport');
 module.exports = async function (req, res) {
   const provider = req.params.provider;
   if (!isValidSocialProvider(provider)) {
-    return res.badRequest();
+    return res.badRequest({
+      message: "Invalid social provider."
+    });
   }
 
-  return passport.authenticate(provider, function(err, user) {
+  return passport.authenticate(provider, function(err, user, info) {
     if (err) {
-      return err.status == 400 ? res.badRequest() : res.serverError(err);
+      return res.serverError(err);
+    }
+
+    if (!user) {
+      return res.unauthorized(info);
     }
 
     req.logIn(user, function(err) {

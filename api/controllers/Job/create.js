@@ -1,8 +1,19 @@
 module.exports = async function(req, res) {
   try {
-    // TODO: only get companyId from body now, wait for login case finish -> change companyId to req.user.id
-    const { skillIds, title, description, categoryId, companyId } = req.allParams();
+    const companyId = _.get(req, 'user.id');
+    if (!companyId) {
+      return res.unauthorized({
+        message: "You need login as a company to create a new job."
+      });
+    }
+    const { skillIds, title, description, categoryId } = req.allParams();
 
+    if (!title || !categoryId) {
+      return res.badRequest({
+        message: "Missing parameters."
+      })
+    }
+    
     const job = await Job.create({
       company: companyId,
       title,
@@ -13,12 +24,12 @@ module.exports = async function(req, res) {
   
     if (!job) {
       return res.serverError({
-        err: 'could not create Job model'
-      })
+        message: 'Cannot create job.'
+      });
     }
 
     res.ok(job);
   } catch (err) {
-    res.serverError({err});
+    res.serverError(err);
   }
 }

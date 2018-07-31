@@ -2,15 +2,19 @@ const passport = require('passport');
 
 module.exports = async function (req, res) {
   passport.authenticate('local', function (err, user, info) {
-    if (err || !user) {
-      return res.badRequest(info);
+    if (err) {
+      return res.serverError(err);
+    }
+
+    if (!user) {
+      return res.unauthorized(info);
     }
 
     // Remove sensitive data before login
     user.password = undefined;
     req.logIn(user, function (err) {
       if (err) { 
-        res.serverError();
+        res.serverError(err);
       }
 
       const token = JwtService.issue(user);

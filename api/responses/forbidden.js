@@ -6,19 +6,19 @@ var util = require('util');
 
 
 /**
- * 401 (Unauthorized) Handler
+ * 403 (Forbidden) Handler
  *
  * Usage:
- * return res.unauthorized();
- * return res.unauthorized();
+ * return res.forbidden();
+ * return res.forbidden(data);
  *
  * e.g.:
  * ```
- * return res.unauthorized('Invalid username or password');
+ * return res.forbidden('Cannot access this resource');
  * ```
  */
 
-module.exports = function unauthorized (data) {
+module.exports = function forbidden (data) {
 
   // Get access to `req` and `res`
   var req = this.req;
@@ -29,15 +29,15 @@ module.exports = function unauthorized (data) {
 
   // Log error to console
   if (!_.isUndefined(data)) {
-    sails.log.verbose('Sending 401 ("Unauthorized") response: \n', data);
+    sails.log.verbose('Sending 403 ("Forbidden") response: \n', data);
   }
 
   // Set status code
-  res.status(401);
+  res.status(403);
 
   // If no data was provided, use res.sendStatus().
   if (_.isUndefined(data)) {
-    return res.sendStatus(401);
+    return res.sendStatus(403);
   }
 
   if (_.isError(data)) {
@@ -48,7 +48,7 @@ module.exports = function unauthorized (data) {
     // > production, we wouldn't want to inadvertently dump a stack trace.
     if (!_.isFunction(data.toJSON)) {
       if (process.env.NODE_ENV === 'production') {
-        return res.sendStatus(401);
+        return res.sendStatus(403);
       }
       // No need to JSON stringify (this is already a string).
       return res.send(util.inspect(data));

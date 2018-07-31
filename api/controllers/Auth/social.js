@@ -3,7 +3,9 @@ const passport = require('passport');
 module.exports = async function (req, res) {
   const provider = req.params.provider;
   if (!isValidSocialProvider(provider)) {
-    return res.badRequest();
+    return res.badRequest({
+      message: "Invalid social provider."
+    });
   }
 
   const socialScope = getSocialScope(provider);
