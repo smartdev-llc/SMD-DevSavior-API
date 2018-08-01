@@ -1,0 +1,26 @@
+extends ../layout/index
+
+block content
+  div#verify-student-email
+    p
+      | Hi 
+      strong !{`${_data.userInfo.firstName} ${_data.userInfo.lastName}` }
+      | ,
+    p
+      | Welcome to 
+      strong JuniorViec
+      | ! Thank you for signing up, please verify your email by clicking the following button:
+    div.block
+      table.button.large.expand
+        tr
+          td
+            table
+              tr
+                td
+                  a.float-center(href= _data.verificationLink, align='center') Confirm my account
+    div.block
+      p
+        | Thanks,
+        br
+        strong The JuniorViec Team
+        | .

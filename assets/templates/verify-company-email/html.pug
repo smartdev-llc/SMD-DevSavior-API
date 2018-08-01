@@ -1,0 +1,26 @@
+extends ../layout/index
+
+block content
+  div#verify-company-email
+    p
+      | Hi 
+      strong !{_data.companyInfo.name}
+      | ,
+    p
+      | Welcome to 
+      strong JuniorViec
+      | ! Thank you for joining us, please verify your company email by clicking the following button:
+    div.block
+      table.button.large.expand
+        tr
+          td
+            table
+              tr
+                td
+                  a.float-center(href= _data.verificationLink, align='center') Confirm my account
+    div.block
+      p
+        | Thanks,
+        br
+        strong The JuniorViec Team
+        | .

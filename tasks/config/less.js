@@ -16,8 +16,8 @@ module.exports = function(grunt) {
       files: [{
         expand: true,
         cwd: 'assets/styles/',
-        src: ['importer.less'],
-        dest: '.tmp/public/styles/',
+        src: ['app.less'],
+        dest: 'build/css/',
         ext: '.css'
       }]
     }
