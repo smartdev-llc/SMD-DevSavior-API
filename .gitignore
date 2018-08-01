@@ -134,6 +134,7 @@ package-lock.json
 .editorconfig
 views/
 .env
+build/
 
 
 

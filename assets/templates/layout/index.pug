@@ -1,0 +1,32 @@
+doctype transitional
+html(xmlns='http://www.w3.org/1999/xhtml')
+  head
+    meta(name='viewport', content='width=device-width')
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    link(rel="stylesheet", href="/css/app.css", data-inline)
+  body(bgcolor='#FFFFFF')
+    table.head-wrap
+      tr(height='10px')
+      tr
+        td.contain-logo(align='left')
+          div.logo
+            img(src= _data.LOGO_URL)
+    table.body-wrap
+      tr
+        td.container
+          .content
+            table.body-email
+              tr
+                td
+                  block content
+    table.footer-wrap
+      tr
+        td
+        td.container
+          .content-footer
+            table.footer-email
+              tr
+                td(align='left')
+                  p.sent-by
+                    | Sent with ♥ from JuniorViec
+        td

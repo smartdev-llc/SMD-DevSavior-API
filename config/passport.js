@@ -142,6 +142,11 @@ async function handleFacebookAuthentication(req, accessToken, refreshToken, prof
     };
 
     user = await Student.create(userProfile).fetch();
+
+    EmailService.sendToUser(user, 'welcome-social-email', {
+      provider: "Facebook",
+      userInfo: user
+    });
   }
 
   user.role = 'student';
@@ -191,6 +196,10 @@ async function handleGoogleAuthentication(req, accessToken, refreshToken, profil
     };
 
     user = await Student.create(userProfile).fetch();
+    EmailService.sendToUser(user, 'welcome-social-email', {
+      provider: "Google",
+      userInfo: user
+    });
   }
 
   user.role = 'student';

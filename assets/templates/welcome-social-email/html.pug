@@ -1,0 +1,20 @@
+extends ../layout/index
+
+block content
+  div#welcome-social-email
+    p
+      | Hi 
+      strong !{`${_data.userInfo.firstName} ${_data.userInfo.lastName}` }
+      | ,
+    p
+      | Welcome to 
+      strong JuniorViec
+      | ! You have just signed up via !{_data.provider} with this email: 
+      em !{_data.userInfo.email}
+      |. This email will be used to receive our recommendation jobs.
+    div.block
+      p
+        | Thanks,
+        br
+        strong The JuniorViec Team
+        | .

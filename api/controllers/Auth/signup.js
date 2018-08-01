@@ -27,7 +27,11 @@ module.exports = async function (req, res) {
           message: "This email already exists."
         });
       } else {
-        await Company.create(companyReq);
+        let userInfo = await Company.create(companyReq).fetch();
+        EmailService.sendToUser(userInfo, 'verify-company-email', {
+          verificationLink: process.env.WEB_URL, // TODO: create verification link later
+          userInfo
+        });
       }
     } catch(err) {
       return res.serverError(err);
@@ -57,7 +61,11 @@ module.exports = async function (req, res) {
           message: "This email already exists."
         });
       } else {
-        await Student.create(studentReq);
+        let userInfo = await Student.create(studentReq).fetch();
+        EmailService.sendToUser(userInfo, 'verify-student-email', {
+          verificationLink: process.env.WEB_URL, // TODO: create verification link later
+          userInfo
+        });
       }
     } catch(err) {
       return res.serverError(err);
