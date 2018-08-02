@@ -22,7 +22,7 @@ module.exports.policies = {
 
   'auth/*': true,
 
-  'job/find': 'isStudent',
+  'job/find': true,
 
   'job/create': 'isCompany'
 
