@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "juniorviec-api",
+      "script": "app.js",
+      "error_file"  : "/dev/null",
+      "out_file"    : "/dev/null"
+    }
+  ]
+}
