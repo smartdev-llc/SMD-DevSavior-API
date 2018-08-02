@@ -1,3 +1,4 @@
+
 const path = require('path');
 
 const TEMPLATE_BASE_DIR = path.resolve(__dirname, '../assets/templates');
@@ -12,8 +13,6 @@ function getTemplate(opts) {
   const templateOpts = {};
   
   templateOpts.dir = opts.templateDir;
-  
-  templateOpts.path = path.join(TEMPLATE_BASE_DIR, templateOpts.dir);
   
   templateOpts.template = new EmailTemplate({
     views: {

@@ -24,4 +24,41 @@ This app was originally generated on Thu Jun 28 2018 20:31:29 GMT+0700 (+07) usi
 <!--
 Note:  Generators are usually run using the globally-installed `sails` CLI (command-line interface).  This CLI version is _environment-specific_ rather than app-specific, thus over time, as a project's dependencies are upgraded or the project is worked on by different developers on different computers using different versions of Node.js, the Sails dependency in its package.json file may differ from the globally-installed Sails CLI release it was originally generated with.  (Be sure to always check out the relevant [upgrading guides](https://sailsjs.com/upgrading) before upgrading the version of Sails used by your app.  If you're stuck, [get help here](https://sailsjs.com/support).)
 -->
+### Requirements
+NodeJS version 8 LTS  
+Sails v1.0.2  
+### How to run
+- Install node packages
+```sh
+npm i
+```
+- Create .env file and Copy environment variables from .env.example to .env, then edit it if needed
+## Local
+- Run https in localhost: Replace these codes on /config/local.js file
+```javascript
+const fs = require('fs');
+const path = require('path');
+
+module.exports = {
+  ssl: {
+    key: fs.readFileSync(path.resolve(__dirname, '../keys/api_key.pem')),
+    cert: fs.readFileSync(path.resolve(__dirname, '../keys/api_cert.pem'))
+  }
+};
+```
+- Start it:
+```sh
+node app.js
+```  
+Or  
+```sh
+sails lift
+```
+## Production
+- Modify .env to set prod environment variables
+- Use pm2 to start it:
+```sh
+pm2 start pm2.json
+```
+
 
