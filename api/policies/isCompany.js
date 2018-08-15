@@ -62,6 +62,12 @@ module.exports = async function (req, res, proceed) {
     });
   }
 
+  if (!user.emailVerified) {
+    return res.forbidden({
+      message: "Email is not verified."
+    });
+  }
+
   req.user = user;
 
   proceed();

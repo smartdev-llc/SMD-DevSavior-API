@@ -44,6 +44,10 @@ module.exports = {
       type: 'json',
       defaultsTo: {}
     },
+    emailVerified: {
+      type: 'boolean',
+      defaultsTo: false
+    },
     skills: {
       collection: 'skill',
       via: 'student',

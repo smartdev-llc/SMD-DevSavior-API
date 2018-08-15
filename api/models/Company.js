@@ -32,6 +32,10 @@ module.exports = {
       type: 'string',
       defaultsTo: 'ACTIVE'
     },
+    emailVerified: {
+      type: 'boolean',
+      defaultsTo: false
+    },
     jobs: {
       collection: 'job',
       via: 'company'
