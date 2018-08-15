@@ -5,6 +5,7 @@ module.exports = async function (req, res) {
   const { email, password, firstName, lastName, name, profileImageURL } = req.body;
   let gender = req.body.gender || "UNKNOWN";
   const providers = ['local'];
+  let userInfo;
 
   if (role === 'company') {
     if (!email || !password || !name) {
@@ -17,7 +18,8 @@ module.exports = async function (req, res) {
       email,
       password,
       name,
-      profileImageURL
+      profileImageURL,
+      emailVerified: false
     }
 
     try {
@@ -27,9 +29,14 @@ module.exports = async function (req, res) {
           message: "This email already exists."
         });
       } else {
-        let userInfo = await Company.create(companyReq).fetch();
+        userInfo = await Company.create(companyReq).fetch();
+
+        const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role: 'company' });
+        const verificationToken = JwtService.issue(decodedInfo, { expiresIn: '1h' });
+
         EmailService.sendToUser(userInfo, 'verify-company-email', {
-          verificationLink: process.env.WEB_URL, // TODO: create verification link later
+          // verificationLink: `${process.env.WEB_URL}/email/verify?token=${verificationToken}`,
+          verificationLink: `${process.env.API_URL}/auth/verify?token=${verificationToken}`, // temporary
           userInfo
         });
       }
@@ -61,9 +68,13 @@ module.exports = async function (req, res) {
           message: "This email already exists."
         });
       } else {
-        let userInfo = await Student.create(studentReq).fetch();
+        userInfo = await Student.create(studentReq).fetch();
+        const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role: 'student' });
+        const verificationToken = JwtService.issue(decodedInfo, { expiresIn: '1h' });
+
         EmailService.sendToUser(userInfo, 'verify-student-email', {
-          verificationLink: process.env.WEB_URL, // TODO: create verification link later
+          // verificationLink: `${process.env.WEB_URL}/email/verify?token=${verificationToken}`,
+          verificationLink: `${process.env.API_URL}/auth/verify?token=${verificationToken}`, // temporary
           userInfo
         });
       }
@@ -72,18 +83,5 @@ module.exports = async function (req, res) {
     }
   }
 
-  passport.authenticate('local', function (err, user, info) {
-    // Remove sensitive data before login
-    user.password = undefined;
-    req.logIn(user, function (err) {
-      if (err) {
-        res.serverError(err);
-      } else {
-        var token = JwtService.issue(user);
-        user = JSON.parse(JSON.stringify(user));
-        user.token = token;
-        res.ok(user);
-      }
-    });
-  })(req, res);
+  res.ok(userInfo);
 }

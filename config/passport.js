@@ -1,11 +1,12 @@
 const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
+  BearerStrategy = require('passport-http-bearer').Strategy,
   FacebookStrategy = require('passport-facebook').Strategy,
   GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
   bcrypt = require('bcrypt-nodejs');
 
 passport.serializeUser(function (user, cb) {
-  cb(null, _.pick(user, ['id', 'role']));
+  cb(null, _.pick(user, ['id', 'role', 'emailVerified']));
 });
 
 passport.deserializeUser(async function (userInfo, cb) {
@@ -40,6 +41,15 @@ passport.use(
     handleLocalAuthentication
   )
 );
+
+passport.use(
+  new BearerStrategy(
+    {
+      passReqToCallback: true
+    },
+    handleBearerAuthentication
+  )
+)
 
 passport.use(
   new FacebookStrategy(
@@ -99,6 +109,10 @@ async function handleLocalAuthentication(req, email, password, cb) {
   return cb(null, user);
 }
 
+async function handleBearerAuthentication(req, token, cb) {
+  
+}
+
 async function handleFacebookAuthentication(req, accessToken, refreshToken, profile, cb) {
   const providerData = _.get(profile, '_json');
   if (!providerData) {
@@ -111,7 +125,8 @@ async function handleFacebookAuthentication(req, accessToken, refreshToken, prof
     lastName: `${providerData.last_name || ''} ${providerData.middle_name || ''}`.trim(),
     email: providerData.email,
     gender: getUserGender(providerData.gender),
-    profileImageURL: (providerData.id) ? `https://graph.facebook.com/${profile.id}/picture?type=large` : undefined
+    profileImageURL: (providerData.id) ? `https://graph.facebook.com/${profile.id}/picture?type=large` : undefined,
+    emailVerified: true
   }
 
   if (!userProfile.email) {
@@ -127,16 +142,17 @@ async function handleFacebookAuthentication(req, accessToken, refreshToken, prof
     if (_.indexOf(existingUser.providers, 'facebook') == -1) {
       const updatedData = {
         providers: _.concat(existingUser.providers, 'facebook'),
-        providerData: _.assign(existingUser.providerData, { 'facebook': providerData })
+        providerData: _.assign(existingUser.providerData, { 'facebook': providerData }),
+        emailVerified: true
       }
 
-      const updatedUsers = await Student.update({ id: existingUser.id}).set(updatedData).fetch();
+      const updatedUsers = await Student.update({ id: existingUser.id }).set(updatedData).fetch();
       user = _.get(updatedUsers, '0', existingUser);
     } else {
       user = existingUser;
     }
   } else {
-    userProfile.providers = [ 'facebook' ];
+    userProfile.providers = ['facebook'];
     userProfile.providerData = {
       'facebook': providerData
     };
@@ -165,7 +181,8 @@ async function handleGoogleAuthentication(req, accessToken, refreshToken, profil
     lastName: _.get(providerData, 'name.givenName'),
     email: _.get(providerData, 'emails.0.value'),
     gender: getUserGender(providerData.gender),
-    profileImageURL: _.get(providerData, 'image.url')
+    profileImageURL: _.get(providerData, 'image.url'),
+    emailVerified: true
   }
 
   if (!userProfile.email) {
@@ -181,16 +198,17 @@ async function handleGoogleAuthentication(req, accessToken, refreshToken, profil
     if (_.indexOf(existingUser.providers, 'google') == -1) {
       const updatedData = {
         providers: _.concat(existingUser.providers, 'google'),
-        providerData: _.assign(existingUser.providerData, { 'google': providerData })
+        providerData: _.assign(existingUser.providerData, { 'google': providerData }),
+        emailVerified: true
       }
 
-      const updatedUsers = await Student.update({ id: existingUser.id}).set(updatedData).fetch();
+      const updatedUsers = await Student.update({ id: existingUser.id }).set(updatedData).fetch();
       user = _.get(updatedUsers, '0', existingUser);
     } else {
       user = existingUser;
     }
   } else {
-    userProfile.providers = [ 'google' ];
+    userProfile.providers = ['google'];
     userProfile.providerData = {
       'google': providerData
     };

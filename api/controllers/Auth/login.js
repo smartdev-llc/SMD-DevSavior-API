@@ -10,6 +10,12 @@ module.exports = async function (req, res) {
       return res.unauthorized(info);
     }
 
+    if (!user.emailVerified) {
+      return res.forbidden({
+        message: "Email is not verified."
+      });
+    }
+
     // Remove sensitive data before login
     user.password = undefined;
     req.logIn(user, function (err) {
