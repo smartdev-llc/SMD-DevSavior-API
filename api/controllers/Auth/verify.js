@@ -1,5 +1,10 @@
 module.exports = async function (req, res) {
   const token = _.get(req, 'query.token');
+  if (!token) {
+    return res.badRequest({
+      message: "Please provide token to verify your account."
+    });
+  }
   let decoded;
   try {
     decoded = JwtService.verify(token, { ignoreExpiration: true });

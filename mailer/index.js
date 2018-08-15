@@ -9,21 +9,17 @@ const defaultFromEmail = {
   address: process.env.MAILER_FROM_ADDRESS
 };
 
+const MAIL_SERVICE = process.env.MAIL_SERVICE || 'gmail';
+
 module.exports = mailerFactory();
 
 function mailerFactory() {
 
-  const mailConfig = {
-    auth: {
-      api_key: process.env.MAILGUN_APIKEY,
-      domain: process.env.MAILGUN_DOMAIN
-    },
-    from: defaultFromEmail
-  };
+  const mailConfig = getMailConfig();
 
   function Mailer(templateDir) {
     // transporter
-    const transporter = nmMailGunTransporter(mailConfig);
+    const transporter = MAIL_SERVICE == 'mailgun' ? nmMailGunTransporter(mailConfig) : mailConfig;
     this.transporter = nodemailer.createTransport(transporter);
 
     this.transporter.sendMail = Promise.promisify(this.transporter.sendMail, this.transporter);
@@ -109,6 +105,7 @@ function mailerFactory() {
   };
 
   //Send to an email with cc other email
+  // Note: This option is only available for mailgun service
   Mailer.prototype.sendToEmailWithBccAdmin = function(email, contentData) {
     if (!email) return;
     const self = this;
@@ -137,4 +134,26 @@ function mailerFactory() {
   };
 
   return Mailer;
+}
+
+function getMailConfig() {
+  let options;
+  if (MAIL_SERVICE == 'mailgun') {
+    options = {
+      auth: {
+        api_key: process.env.MAILGUN_APIKEY,
+        domain: process.env.MAILGUN_DOMAIN
+      },
+      from: defaultFromEmail
+    }
+  } else {
+    options = {
+      service: 'gmail',
+      auth: {
+        user: process.env.MAILER_FROM_ADDRESS,
+        pass: process.env.MAILER_FROM_PASSWORD
+      }
+    }
+  }
+  return options;
 }
