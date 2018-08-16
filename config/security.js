@@ -32,6 +32,7 @@ module.exports.security = {
     allRoutes: true,
     allowOrigins: '*',
     allowCredentials: false,
+    allowRequestHeaders: 'content-type,authorization,x-csrf-token,access-control-allow-headers'
   },
 
 
