@@ -31,13 +31,17 @@ module.exports = async function (req, res) {
     const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role });
     const verificationToken = JwtService.issue(decodedInfo, { expiresIn: '1h' });
 
-    await EmailService.sendToUser(userInfo, role === 'company' ? 'verify-company-email' : 'verify-student-email', {
-      verificationLink: `${process.env.API_URL}/auth/verify?token=${verificationToken}`, // temporary
-      userInfo
-    });
-  }
-  res.ok({
-    message: "Sent email."
-  })
+    try {
+      await EmailService.sendToUser(userInfo, role === 'company' ? 'verify-company-email' : 'verify-student-email', {
+        verificationLink: `${process.env.API_URL}/auth/verify?token=${verificationToken}`, // temporary
+        userInfo
+      });
 
+      res.ok({
+        message: "Sent email."
+      })
+    } catch(err) {
+      return res.serverError(err);
+    }
+  }
 }
