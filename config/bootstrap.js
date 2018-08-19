@@ -26,6 +26,35 @@ module.exports.bootstrap = async function(done) {
   //   // etc.
   // ]);
   // ```
+  const numberOfSkills = await Skill.count();
+
+  if (numberOfSkills == 0) {
+    await Skill.createEach([
+      { name: 'Java' },
+      { name: 'Android' },
+      { name: 'IOS' },
+      { name: 'NodeJS' },
+      { name: 'PHP' },
+      { name: '.NET' },
+      { name: 'AngularJS' },
+      { name: 'React Native' },
+      { name: 'ReactJS' },
+      { name: 'HTML, CSS' },
+      { name: 'Automation Testing' },
+      { name: 'Manual Testing' }
+    ]);
+  }
+
+  const numberOfCategories = await Category.count();
+
+  if (numberOfCategories == 0) {
+    await Category.createEach([
+      { name: 'Backend Developer' },
+      { name: 'Frontend Developer' },
+      { name: 'Designer' },
+      { name: 'Tester' }
+    ]);
+  }
 
   // Don't forget to trigger `done()` when this bootstrap function's logic is finished.
   // (otherwise your server will never lift, since it's waiting on the bootstrap)
