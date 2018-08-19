@@ -5,7 +5,7 @@ module.exports = async function (req, res) {
 
   if (!email) {
     return res.badRequest({
-      message: "Missing parameters."
+      message: "You should provide your email to receive verification email."
     });
   }
 
