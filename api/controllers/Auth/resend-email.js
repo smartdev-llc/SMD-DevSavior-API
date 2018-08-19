@@ -15,7 +15,6 @@ module.exports = async function (req, res) {
     } catch(err) {
       return res.serverError(err);
     }
-
   } else {
     try {
       userInfo = await Student.findOne({ email });
