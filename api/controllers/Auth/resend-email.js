@@ -1,5 +1,3 @@
-const passport = require('passport');
-
 module.exports = async function (req, res) {
   const role = req.param('role') || 'student';
   const { email } = req.body;
