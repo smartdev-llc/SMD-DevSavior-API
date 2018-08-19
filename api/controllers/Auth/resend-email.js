@@ -32,7 +32,7 @@ module.exports = async function (req, res) {
 
     if (isVerified) {
       return res.ok({
-        message: "This email is already verified"
+        message: "This email is already verified."
       });
     }
     const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role });
