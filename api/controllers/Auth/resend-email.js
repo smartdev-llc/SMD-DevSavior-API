@@ -1,3 +1,7 @@
+const constants = require('../../../constants')
+const { VERIFICATION_TOKEN } = constants.TOKEN_TYPE;
+const { VERIFICATION_TOKEN_EXPIRATION: expiresIn } = constants.JWT_OPTIONS;
+
 module.exports = async function (req, res) {
   const role = req.param('role') || 'student';
   const { email } = req.body;
@@ -35,8 +39,8 @@ module.exports = async function (req, res) {
         message: "This email is already verified."
       });
     }
-    const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role });
-    const verificationToken = JwtService.issue(decodedInfo, { expiresIn: '1h' });
+    const decodedInfo = _.assign({}, _.pick(userInfo, ['id']), { role, token_type: VERIFICATION_TOKEN });
+    const verificationToken = JwtService.issue(decodedInfo, { expiresIn });
 
     try {
       await EmailService.sendToUser(userInfo, role === 'company' ? 'verify-company-email' : 'verify-student-email', {

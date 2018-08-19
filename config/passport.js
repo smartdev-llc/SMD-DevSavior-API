@@ -124,7 +124,7 @@ async function handleFacebookAuthentication(req, accessToken, refreshToken, prof
     firstName: providerData.first_name,
     lastName: `${providerData.last_name || ''} ${providerData.middle_name || ''}`.trim(),
     email: providerData.email,
-    gender: getUserGender(providerData.gender),
+    gender: transformGender(providerData.gender),
     profileImageURL: (providerData.id) ? `https://graph.facebook.com/${profile.id}/picture?type=large` : undefined,
     emailVerified: true
   }
@@ -180,7 +180,7 @@ async function handleGoogleAuthentication(req, accessToken, refreshToken, profil
     firstName: _.get(providerData, 'name.familyName'),
     lastName: _.get(providerData, 'name.givenName'),
     email: _.get(providerData, 'emails.0.value'),
-    gender: getUserGender(providerData.gender),
+    gender: transformGender(providerData.gender),
     profileImageURL: _.get(providerData, 'image.url'),
     emailVerified: true
   }
@@ -224,7 +224,8 @@ async function handleGoogleAuthentication(req, accessToken, refreshToken, profil
   cb(null, user);
 }
 
-function getUserGender(givenGender) {
+function transformGender(givenGender) {
+  givenGender = _.toLower(givenGender);
   switch (givenGender) {
     case 'male': return 'MALE';
     case 'female': return 'FEMALE';

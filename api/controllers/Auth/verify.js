@@ -1,3 +1,6 @@
+
+const { VERIFICATION_TOKEN } = require('../../../constants').TOKEN_TYPE;
+
 module.exports = async function (req, res) {
   const token = _.get(req, 'query.token');
   if (!token) {
@@ -18,8 +21,9 @@ module.exports = async function (req, res) {
 
   const userId = _.get(decoded, 'id');
   const role = _.get(decoded, 'role');
+  const type = _.get(decoded, 'token_type');
 
-  if (_.isNil(userId) || !role) {
+  if (_.isNil(userId) || !role || type !== VERIFICATION_TOKEN) {
     return res.forbidden({
       message: "Invalid token."
     });

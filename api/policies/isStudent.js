@@ -1,3 +1,6 @@
+const constants = require('../../constants');
+const { ACCESS_TOKEN } = constants.TOKEN_TYPE;
+
 module.exports = async function (req, res, proceed) {
   const authorizationHeader = _.get(req, 'headers.authorization', _.get(req, 'headers.Authorization'));
   let accessToken;
@@ -42,8 +45,9 @@ module.exports = async function (req, res, proceed) {
   
   const userId = _.get(decoded, 'id');
   const role = _.get(decoded, 'role');
+  const type = _.get(decoded, 'token_type');
 
-  if (_.isNil(userId) || role !== 'student') {
+  if (_.isNil(userId) || role !== 'student'  || type !== ACCESS_TOKEN) {
     return res.unauthorized({
       message: "Permission denied."
     });

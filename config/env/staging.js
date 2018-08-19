@@ -1,13 +1,13 @@
 /**
- * Production environment settings
+ * Staging environment settings
  * (sails.config.*)
  *
  * What you see below is a quick outline of the built-in settings you need
- * to configure your Sails app for production.  The configuration in this file
- * is only used in your production environment, i.e. when you lift your app using:
+ * to configure your Sails app for staging (a demo for production env).  The configuration in this file
+ * is only used in your staging environment, i.e. when you lift your app using:
  *
  * ```
- * NODE_ENV=production node app
+ * NODE_ENV=staging node app
  * ```
  *
  * > If you're using git as a version control solution for your Sails app,
@@ -118,7 +118,8 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   blueprints: {
-    shortcuts: false,
+    // shortcuts: false,
+    // actions: false
   },
 
 

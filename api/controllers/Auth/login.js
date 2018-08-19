@@ -1,4 +1,6 @@
 const passport = require('passport');
+const constants = require('../../../constants');
+const { ACCESS_TOKEN } = constants.TOKEN_TYPE;
 
 module.exports = async function (req, res) {
   passport.authenticate('local', function (err, user, info) {
@@ -23,7 +25,8 @@ module.exports = async function (req, res) {
         res.serverError(err);
       }
 
-      const token = JwtService.issue(user);
+      const decodedInfo = _.assign({}, _.pick(user, [ 'id', 'role' ]), { token_type: ACCESS_TOKEN })
+      const token = JwtService.issue(decodedInfo);
       user = JSON.parse(JSON.stringify(user));
       user.token = token;
 
