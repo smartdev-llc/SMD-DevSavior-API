@@ -30,8 +30,8 @@ module.exports = async function (req, res) {
   } else {
     const isVerified = _.get(userInfo, 'emailVerified', false)
 
-    if (!!isVerified) {
-      return res.badRequest({
+    if (isVerified) {
+      return res.ok({
         message: "This email is already verified"
       });
     }
