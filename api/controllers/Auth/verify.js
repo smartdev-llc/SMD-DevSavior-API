@@ -7,7 +7,7 @@ module.exports = async function (req, res) {
   }
   let decoded;
   try {
-    decoded = JwtService.verify(token, { ignoreExpiration: true });
+    decoded = JwtService.verify(token);
   } catch (err) {
     if (err) {
       return res.forbidden({
