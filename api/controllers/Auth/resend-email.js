@@ -14,7 +14,7 @@ module.exports = async function (req, res) {
       userInfo = await Company.findOne({ email });
       if (!userInfo) {
         return res.badRequest({
-          message: "This email is not exists."
+          message: "This email does not match any account."
         });
       } else {
         const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role: 'company' });
@@ -41,7 +41,7 @@ module.exports = async function (req, res) {
       userInfo = await Student.findOne({ email });
       if (!userInfo) {
         return res.conflict({
-          message: "This email is not exists."
+          message: "This email does not match any account."
         });
       } else {
         const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role: 'student' });
