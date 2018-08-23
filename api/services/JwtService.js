@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
-const { ACCESS_TOKEN_EXPIRATION: expiresIn, ALGORITHM: algorithm } = require('../../constants').JWT_OPTIONS;
+const { ACCESS_TOKEN_EXPIRATION: expiresIn, ALGORITHM: algorithm, DECODED_KEYS } = require('../../constants').JWT_OPTIONS;
 
 module.exports = {
 
@@ -12,7 +12,7 @@ module.exports = {
       expiresIn
     }
     options = _.assign({}, defaultOptions, options);
-    payload = _.pick(payload, ['id', 'email', 'role']);
+    payload = _.pick(payload, DECODED_KEYS);
     return jwt.sign(payload, apiKey, options)
   },
 

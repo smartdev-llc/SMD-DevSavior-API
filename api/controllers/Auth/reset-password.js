@@ -1,14 +1,30 @@
 
+const validator = require('validator');
+const bcrypt = require('bcrypt-nodejs');
 const constants = require('../../../constants');
-const { VERIFICATION_TOKEN } = constants.TOKEN_TYPE;
+const { RESET_PASSWORD_TOKEN } = constants.TOKEN_TYPE;
 
 module.exports = async function (req, res) {
   const token = _.get(req, 'query.token');
+  const { password } = req.body;
   if (!token) {
     return res.badRequest({
-      message: "Please provide token to verify your account."
+      message: "Please provide token to reset your password."
     });
   }
+
+  if (!password) {
+    return res.badRequest({
+      message: "New password cannot be empty."
+    });
+  }
+
+  if (!isValidPassword(password)) {
+    return res.badRequest({
+      message: "Password must be at least 8 characters."
+    })
+  }
+
   let decoded;
   try {
     decoded = JwtService.verify(token);
@@ -24,7 +40,7 @@ module.exports = async function (req, res) {
   const role = _.get(decoded, 'role');
   const type = _.get(decoded, 'token_type');
 
-  if (_.isNil(userId) || !role || type !== VERIFICATION_TOKEN) {
+  if (_.isNil(userId) || !role || type !== RESET_PASSWORD_TOKEN) {
     return res.forbidden({
       message: "Invalid token."
     });
@@ -54,46 +70,30 @@ module.exports = async function (req, res) {
     });
   }
 
-  if (user.emailVerified) {
-    return res.ok({
-      message: "Email is already verified."
-    });
+  let hashPassword; 
+  try {
+    const salt = bcrypt.genSaltSync(10);
+    hashPassword = bcrypt.hashSync(password, salt);
+  } catch(err) {
+    return res.serverError(err);
   }
 
+
   try {
-    const verifiedUsers = await UserModel.update({ id: userId })
-      .set({ emailVerified: true })
-      .fetch();
-    user = _.first(verifiedUsers);
+    await UserModel.update({ id: userId })
+      .set({ password: hashPassword });
   } catch (err) {
     return res.serverError(err);
   }
 
-  if (!_.get(user, 'emailVerified')) {
-    return res.forbidden({
-      message: "Cannot verify the email. Please try again."
-    });
-  }
-
   res.ok({
-    message: "Email is verified successfully."
+    message: "Reset password successfully."
   });
 
-
-  // Login automatically after verifying email
-
-  // user.role = role;
-  // // Remove sensitive data before login
-  // user.password = undefined;
-  // req.logIn(user, function (err) {
-  //   if (err) { 
-  //     res.serverError(err);
-  //   }
-
-  //   const token = JwtService.issue(user);
-  //   user = JSON.parse(JSON.stringify(user));
-  //   user.token = token;
-
-  //   res.ok(user);
-  // });
+  function isValidPassword(password) {
+    return validator.isLength(password, {
+      min: 8,
+      max: undefined
+    });
+  }
 }
