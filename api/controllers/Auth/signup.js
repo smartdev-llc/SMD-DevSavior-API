@@ -10,17 +10,29 @@ module.exports = async function (req, res) {
   const providers = ['local'];
   let userInfo;
 
+  if (!email || !password) {
+    return res.badRequest({
+      message: "Missing parameters."
+    });
+  }
+
+  if (!validator.isEmail(email)) {
+    return res.badRequest({
+      message: "Invalid email."
+    });
+  }
+
+  if (isValidPassword(password)) {
+    return res.badRequest({
+      message: "Password must be at least 8 characters."
+    })
+  }
+
   if (role === 'company') {
-    if (!email || !password || !name) {
+    if (!name) {
       return res.badRequest({
         message: "Missing parameters."
       });
-    }
-
-    if (!validator.isEmail(email)) {
-      return res.badRequest({
-        message: "Invalid email."
-      })
     }
 
     const companyReq = {
@@ -54,16 +66,10 @@ module.exports = async function (req, res) {
     }
 
   } else {
-    if (!email || !password || !firstName || !lastName) {
+    if (!firstName || !lastName) {
       return res.badRequest({
         message: "Missing parameters."
       });
-    }
-
-    if (!validator.isEmail(email)) {
-      return res.badRequest({
-        message: "Invalid email."
-      })
     }
 
     const studentReq = {
@@ -108,5 +114,12 @@ module.exports = async function (req, res) {
       case 'other': return 'OTHER';
       default: return 'OTHER';
     }
+  }
+
+  function isValidPassword(password) {
+    return validator.isLength(password, {
+      min: 8,
+      max: undefined
+    });
   }
 }

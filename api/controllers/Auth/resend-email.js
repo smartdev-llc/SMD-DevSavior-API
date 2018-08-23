@@ -21,7 +21,7 @@ module.exports = async function (req, res) {
     }
   } else {
     try {
-      userInfo = await Student.findOne({ email });
+      userInfo = await Student.findOne({ email, providers: 'local' });
     } catch(err) {
       return res.serverError(err);
     }
@@ -32,7 +32,7 @@ module.exports = async function (req, res) {
       message: "This email does not match any account."
     });
   } else {
-    const isVerified = _.get(userInfo, 'emailVerified', false)
+    const isVerified = _.get(userInfo, 'emailVerified', false);
 
     if (isVerified) {
       return res.ok({
@@ -52,7 +52,7 @@ module.exports = async function (req, res) {
         message: "Sent email."
       })
     } catch(err) {
-      return res.serverError({ message: "Cannot send email."});
+      return res.serverError({ message: "Cannot send verification email."});
     }
   }
 }

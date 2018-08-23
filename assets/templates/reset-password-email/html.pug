@@ -1,0 +1,30 @@
+extends ../layout/index
+
+block content
+  div#reset-password-email
+    p
+      | Hi 
+      strong !{_data.userInfo.name}
+      | ,
+    p
+      | You have requested to reset your password on 
+      strong JuniorViec
+      | ! Please click this button and follow the instructions to reset your password:
+    div.block
+      table.button.large.expand
+        tr
+          td
+            table
+              tr
+                td
+                  a.float-center(href= _data.resetPasswordLink, align='center') Reset Password
+      p
+        | Note: This is temporary link, will change to web link later. For the moment, make a POST request to this api with req.body.password=[new password]
+      p.note
+        | If you didn't make this request, you can ignore this email.
+    div.block
+      p
+        | Thanks,
+        br
+        strong The JuniorViec Team
+        | .
