@@ -22,7 +22,7 @@ module.exports = async function (req, res) {
     });
   }
 
-  if (isValidPassword(password)) {
+  if (!isValidPassword(password)) {
     return res.badRequest({
       message: "Password must be at least 8 characters."
     })
