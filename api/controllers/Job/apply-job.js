@@ -15,8 +15,9 @@ module.exports = async function(req, res) {
       })
     }
     
-    const users = await Job.find({id: jobId}).populate("students").populate("skills")
-    const students = _.get(users, '0.students')
+    const users = await Job.findOne({ id: jobId }).populate("students")
+
+    const students = _.get(users, 'students')
 
     const studentIds = _.chain(students).map('id').concat(_.parseInt(userId)).value()
     
