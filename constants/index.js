@@ -4,7 +4,7 @@ module.exports = {
     VERIFICATION_TOKEN_EXPIRATION: '1h',
     RESET_PASSWORD_TOKEN_EXPIRATION: '1h',
     ALGORITHM: 'RS256',
-    DECODED_KEY: ['id', 'token_type', 'role']
+    DECODED_KEYS: ['id', 'token_type', 'role']
   },
 
   TOKEN_TYPE: {
