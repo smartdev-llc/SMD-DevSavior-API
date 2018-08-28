@@ -55,7 +55,7 @@ module.exports.routes = {
   'post /auth/resend-email': 'Auth.resend-email',
 
   'post /job': 'Job.create',
-
+  'post /job/:jobId/apply': 'Job.apply',
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
