@@ -26,6 +26,6 @@ module.exports.policies = {
 
   'job/create': 'isCompany',
 
-  'job/apply-job': 'isStudent'
+  'job/apply': 'isStudent'
 
 };
