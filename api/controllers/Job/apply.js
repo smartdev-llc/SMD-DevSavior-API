@@ -15,17 +15,18 @@ module.exports = async function(req, res) {
       })
     }
     
-    const users = await Job.findOne({ id: jobId }).populate("students")
+    const job = await Job.findOne({ id: jobId }).populate("students")
 
-    const students = _.get(users, 'students')
+    if (!job) {
+      return res.badRequest({
+        message: 'Job is not found'
+      })
+    }
 
-    const studentIds = _.chain(students).map('id').concat(_.parseInt(userId)).value()
-    
-    await Job.update({ id: jobId })
-          .set({ students: studentIds });
+    await Job.addToCollection(_.parseInt(jobId), 'students')
+            .members([_.parseInt(userId)]);
 
     res.ok()
-
   } catch(err) {
     res.serverError(err);
   }
