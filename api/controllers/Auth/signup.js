@@ -61,8 +61,10 @@ module.exports = async function (req, res) {
           userInfo
         });
       }
-    } catch(err) {
-      return res.serverError(err);
+    } catch (err) {
+      return res.serverError({
+        message: "Something went wrong."
+      });
     }
 
   } else {
@@ -99,8 +101,10 @@ module.exports = async function (req, res) {
           userInfo
         });
       }
-    } catch(err) {
-      return res.serverError(err);
+    } catch (err) {
+      return res.serverError({
+        message: "Something went wrong."
+      });
     }
   }
 
@@ -108,7 +112,7 @@ module.exports = async function (req, res) {
 
   function transformGender(reqGender) {
     reqGender = _.toUpper(reqGender);
-    switch(reqGender) {
+    switch (reqGender) {
       case 'male': return 'MALE';
       case 'female': return 'FEMALE';
       case 'other': return 'OTHER';

@@ -39,7 +39,9 @@ module.exports = async function (req, res) {
     }
     user = await UserModel.findOne({ id: userId });
   } catch (err) {
-    return res.serverError(err);
+    return res.serverError({
+      message: "Something went wrong."
+    });
   }
 
   if (!UserModel) {
@@ -66,7 +68,9 @@ module.exports = async function (req, res) {
       .fetch();
     user = _.first(verifiedUsers);
   } catch (err) {
-    return res.serverError(err);
+    return res.serverError({
+      message: "Something went wrong."
+    });
   }
 
   if (!_.get(user, 'emailVerified')) {
@@ -87,7 +91,9 @@ module.exports = async function (req, res) {
   // user.password = undefined;
   // req.logIn(user, function (err) {
   //   if (err) { 
-  //     res.serverError(err);
+  //     res.serverError({
+  //      message: "Something went wrong."
+  //      });
   //   }
 
   //   const token = JwtService.issue(user);

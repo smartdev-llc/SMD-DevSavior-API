@@ -16,14 +16,23 @@ module.exports = async function (req, res) {
   if (role === 'company') {
     try {
       userInfo = await Company.findOne({ email });
-    } catch(err) {
-      return res.serverError(err);
+    } catch (err) {
+      return res.serverError({
+        message: "Something went wrong."
+      });
     }
   } else {
     try {
-      userInfo = await Student.findOne({ email, providers: 'local' });
-    } catch(err) {
-      return res.serverError(err);
+      userInfo = await Student.findOne({ email });
+      if (_.indexOf(userInfo.providers, 'local') == - 1) {
+        return res.badRequest({
+          message: "This email does not match any account."
+        });
+      }
+    } catch (err) {
+      return res.serverError({
+        message: "Something went wrong."
+      });
     }
   }
 
@@ -45,8 +54,10 @@ module.exports = async function (req, res) {
       res.ok({
         message: "Sent email."
       });
-    } catch(err) {
-      return res.serverError({ message: "Cannot send reset password email."});
+    } catch (err) {
+      return res.serverError({
+        message: "Something went wrong."
+      });
     }
   }
 }

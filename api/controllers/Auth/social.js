@@ -10,9 +10,11 @@ module.exports = async function (req, res) {
 
   const socialScope = getSocialScope(provider);
 
-  passport.authenticate(provider, { scope: socialScope }, function(err) {
+  passport.authenticate(provider, { scope: socialScope }, function (err) {
     if (err) {
-      return res.serverError(err);
+      return res.serverError({
+        message: "Something went wrong."
+      });
     }
     res.ok();
   })(req, res);
@@ -25,9 +27,9 @@ function isValidSocialProvider(provider) {
 }
 
 function getSocialScope(provider) {
-  switch(provider) {
-    case 'facebook': return [ 
-      'email', 
+  switch (provider) {
+    case 'facebook': return [
+      'email',
       'user_gender'
     ];
     case 'google': return [

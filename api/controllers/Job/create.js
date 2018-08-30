@@ -1,19 +1,19 @@
-module.exports = async function(req, res) {
-  try {
-    const companyId = _.get(req, 'user.id');
-    if (!companyId) {
-      return res.unauthorized({
-        message: "You need login as a company to create a new job."
-      });
-    }
-    const { skillIds, title, description, categoryId } = req.allParams();
+module.exports = async function (req, res) {
+  const companyId = _.get(req, 'user.id');
+  if (!companyId) {
+    return res.unauthorized({
+      message: "You need login as a company to create a new job."
+    });
+  }
+  const { skillIds, title, description, categoryId } = req.allParams();
 
-    if (!title || !categoryId) {
-      return res.badRequest({
-        message: "Missing parameters."
-      })
-    }
-    
+  if (!title || !categoryId) {
+    return res.badRequest({
+      message: "Missing parameters."
+    })
+  }
+
+  try {
     const job = await Job.create({
       company: companyId,
       title,
@@ -21,15 +21,11 @@ module.exports = async function(req, res) {
       category: categoryId,
       skills: skillIds
     }).fetch();
-  
-    if (!job) {
-      return res.serverError({
-        message: 'Cannot create job.'
-      });
-    }
-
+    
     res.ok(job);
   } catch (err) {
-    res.serverError(err);
+    return res.serverError({
+      message: "Something went wrong."
+    });
   }
 }

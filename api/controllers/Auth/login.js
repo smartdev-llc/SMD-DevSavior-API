@@ -5,7 +5,9 @@ const { ACCESS_TOKEN } = constants.TOKEN_TYPE;
 module.exports = async function (req, res) {
   passport.authenticate('local', function (err, user, info) {
     if (err) {
-      return res.serverError(err);
+      return res.serverError({
+        message: "Something went wrong."
+      });
     }
 
     if (!user) {
@@ -21,11 +23,13 @@ module.exports = async function (req, res) {
     // Remove sensitive data before login
     user.password = undefined;
     req.logIn(user, function (err) {
-      if (err) { 
-        res.serverError(err);
+      if (err) {
+        res.serverError({
+          message: "Something went wrong."
+        });
       }
 
-      const decodedInfo = _.assign({}, _.pick(user, [ 'id', 'role' ]), { token_type: ACCESS_TOKEN })
+      const decodedInfo = _.assign({}, _.pick(user, ['id', 'role']), { token_type: ACCESS_TOKEN })
       const token = JwtService.issue(decodedInfo);
       user = JSON.parse(JSON.stringify(user));
       user.token = token;

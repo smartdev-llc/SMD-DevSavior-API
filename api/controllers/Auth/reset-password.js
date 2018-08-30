@@ -55,7 +55,9 @@ module.exports = async function (req, res) {
     }
     user = await UserModel.findOne({ id: userId });
   } catch (err) {
-    return res.serverError(err);
+    return res.serverError({
+      message: "Something went wrong."
+    });
   }
 
   if (!UserModel) {
@@ -70,12 +72,14 @@ module.exports = async function (req, res) {
     });
   }
 
-  let hashPassword; 
+  let hashPassword;
   try {
     const salt = bcrypt.genSaltSync(10);
     hashPassword = bcrypt.hashSync(password, salt);
-  } catch(err) {
-    return res.serverError(err);
+  } catch (err) {
+    return res.serverError({
+      message: "Something went wrong."
+    });
   }
 
 
@@ -83,7 +87,9 @@ module.exports = async function (req, res) {
     await UserModel.update({ id: userId })
       .set({ password: hashPassword });
   } catch (err) {
-    return res.serverError(err);
+    return res.serverError({
+      message: "Something went wrong."
+    });
   }
 
   res.ok({

@@ -5,7 +5,7 @@ const { ACCESS_TOKEN_EXPIRATION: expiresIn, ALGORITHM: algorithm, DECODED_KEYS }
 
 module.exports = {
 
-  issue: function(payload, options = {}) {
+  issue: function (payload, options = {}) {
     const apiKey = fs.readFileSync(__dirname + '/../../keys/api_key.pem');
     const defaultOptions = {
       algorithm,
@@ -16,7 +16,7 @@ module.exports = {
     return jwt.sign(payload, apiKey, options)
   },
 
-  verify: function(token, options = {}) {
+  verify: function (token, options = {}) {
     const apiCert = fs.readFileSync(__dirname + '/../../keys/api_cert.pem');
     const defaultOptions = {
       algorithms: [algorithm]

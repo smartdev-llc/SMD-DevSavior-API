@@ -57,7 +57,9 @@ module.exports = async function (req, res, proceed) {
   try {
     user = await Company.findOne({ id: userId });
   } catch(err) {
-    return res.serverError(err);
+    return res.serverError({
+      message: "Something went wrong."
+    });
   }
 
   if (!user) {
