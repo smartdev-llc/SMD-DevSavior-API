@@ -112,10 +112,10 @@ module.exports = async function (req, res) {
   function transformGender(reqGender) {
     reqGender = _.toUpper(reqGender);
     switch (reqGender) {
-      case 'male': return 'MALE';
-      case 'female': return 'FEMALE';
-      case 'other': return 'OTHER';
-      default: return 'OTHER';
+      case 'MALE': return 'MALE';
+      case 'FEMALE': return 'FEMALE';
+      case 'OTHER': return 'OTHER';
+      default: return 'UNKNOWN';
     }
   }
 

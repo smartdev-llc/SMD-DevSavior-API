@@ -225,11 +225,11 @@ async function handleGoogleAuthentication(req, accessToken, refreshToken, profil
 }
 
 function transformGender(givenGender) {
-  givenGender = _.toLower(givenGender);
+  givenGender = _.toUpper(givenGender);
   switch (givenGender) {
-    case 'male': return 'MALE';
-    case 'female': return 'FEMALE';
-    case 'other': return 'OTHER';
+    case 'MALE': return 'MALE';
+    case 'FEMALE': return 'FEMALE';
+    case 'OTHER': return 'OTHER';
     default: return 'UNKNOWN';
   }
 }
