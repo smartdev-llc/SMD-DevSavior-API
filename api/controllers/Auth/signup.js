@@ -96,8 +96,7 @@ module.exports = async function (req, res) {
         const verificationToken = JwtService.issue(decodedInfo, { expiresIn });
 
         EmailService.sendToUser(userInfo, 'verify-student-email', {
-          // verificationLink: `${process.env.WEB_URL}/email/verify?token=${verificationToken}`,
-          verificationLink: `${process.env.API_URL}/auth/verify?token=${verificationToken}`, // temporary
+          verificationLink: `${process.env.WEB_URL}/verify-account?token=${verificationToken}`,
           userInfo
         });
       }

@@ -47,7 +47,7 @@ module.exports = async function (req, res) {
 
     try {
       await EmailService.sendToUser(userInfo, 'reset-password-email', {
-        resetPasswordLink: `${process.env.API_URL}/auth/reset-password?token=${resetPasswordToken}`, // temporary
+        resetPasswordLink: `${process.env.WEB_URL}/reset-password?token=${resetPasswordToken}`,
         userInfo
       });
 

@@ -53,7 +53,7 @@ module.exports = async function (req, res) {
 
     try {
       await EmailService.sendToUser(userInfo, role === 'company' ? 'verify-company-email' : 'verify-student-email', {
-        verificationLink: `${process.env.API_URL}/auth/verify?token=${verificationToken}`, // temporary
+        verificationLink: `${process.env.WEB_URL}/verify-account?token=${verificationToken}`,
         userInfo
       });
 
