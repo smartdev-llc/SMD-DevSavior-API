@@ -1,0 +1,25 @@
+{
+  "properties": {
+    "companyId": {
+      "type": "keyword"
+    },
+    "companyName": {
+      "type": "text"
+    },
+    "category": {
+      "type": "text"
+    },
+    "status": {
+      "type": "keyword"
+    },
+    "title": {
+      "type": "text"
+    },
+    "description": {
+      "type": "text"
+    },
+    "skills": {
+      "type": "text"
+    }
+  }
+}
