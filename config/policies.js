@@ -20,12 +20,20 @@ module.exports.policies = {
 
   '*': false, // set to admin later
 
+  // Auth
   'auth/*': true,
 
+  // Job
   'job/find': true,
 
   'job/create': 'isCompany',
 
-  'job/apply': 'isStudent'
+  'job/apply': 'isStudent',
+
+  // Category
+  'category/find': true,
+
+  // Job Skill
+  'skill/find': true
 
 };
