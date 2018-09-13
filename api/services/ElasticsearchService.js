@@ -38,19 +38,32 @@ module.exports = {
           "status": "ACTIVE"
         }
       }),
-      textSearch: ({ text, keys }) => {
-        return {
-          bool: {
-            should: keys.map(key => ({
+      textSearch: ({ text, options }) => {
+        let shouldArr = [];
+        shouldArr = shouldArr.concat((options.keys || []).map(key => ({
+          wildcard: {
+            [key]: `*${lodash.toLower(text)}*`
+          }
+        })));
+        shouldArr = shouldArr.concat((options.nestedKeys || []).map(key => ({
+          nested: {
+            path: key.split('.').shift(),
+            query: {
               wildcard: {
                 [key]: `*${lodash.toLower(text)}*`
               }
-            }))
+            }
+          }
+        })));
+
+        return {
+          bool: {
+            should: shouldArr
           }
         }
       }
     }
-  },
+  }
 
   transformResult: (options) => {
     return {

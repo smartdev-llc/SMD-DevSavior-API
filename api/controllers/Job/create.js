@@ -30,13 +30,16 @@ module.exports = async function (req, res) {
       id: job.id,
       body: {
         company: {
-          companyId,
+          id: companyId,
           name: companyName
         },
         title,
         description,
-        skills: _.map(skills, 'name'),
-        category: category.name,
+        skills: _.map(skills, skill => _.pick(skill, ['name', 'id'])),
+        category: {
+          id: category.id,
+          name: category.name
+        },
         status: job.status
       }
     });

@@ -8,10 +8,12 @@ module.exports = async function (req, res) {
     query.bool.must.push(buildQuery.activeJob());
     query.bool.must.push(buildQuery.textSearch({
       text: qs,
-      keys: [
-        "skills",
-        "category",
-      ]
+      options: {
+        nestedKeys: [
+          "skills.name",
+          "category.name",
+        ]
+      }
     }));
 
     let result = await ElasticsearchService.search({
