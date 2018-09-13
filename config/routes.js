@@ -56,6 +56,7 @@ module.exports.routes = {
 
   'post /job': 'Job.create',
   'post /job/:jobId/apply': 'Job.apply',
+  'get /job/search': 'Job.search'
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
