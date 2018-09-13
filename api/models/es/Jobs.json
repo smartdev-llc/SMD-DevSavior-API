@@ -1,24 +1,29 @@
 {
   "properties": {
-    "companyId": {
-      "type": "keyword"
-    },
-    "companyName": {
+    "category": {
       "type": "text"
     },
-    "category": {
+    "company": {
+      "type": "nested",
+      "properties": {
+        "companyId": {
+          "type": "keyword"
+        },
+        "name": {
+          "type": "text"
+        }
+      }
+    },
+    "description": {
+      "type": "text"
+    },
+    "skills": {
       "type": "text"
     },
     "status": {
       "type": "keyword"
     },
     "title": {
-      "type": "text"
-    },
-    "description": {
-      "type": "text"
-    },
-    "skills": {
       "type": "text"
     }
   }
