@@ -63,7 +63,7 @@ module.exports = {
         }
       }
     }
-  }
+  },
 
   transformResult: (options) => {
     return {

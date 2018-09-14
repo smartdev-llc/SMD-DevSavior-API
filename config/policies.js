@@ -29,12 +29,19 @@ module.exports.policies = {
   'job/create': 'isCompany',
 
   'job/apply': 'isStudent',
+  
   'job/search': true,
 
   // Category
   'category/find': true,
 
-  // Job Skill
-  'skill/find': true
+  // Skill
+  'skill/find': true,
+
+  // Photo
+
+  'photo/upload': true,
+  
+  'photo/read': true
 
 };
