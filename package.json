@@ -15,6 +15,7 @@
     "elasticsearch": "15.1.1",
     "email-templates": "^4.0.3",
     "grunt": "1.0.1",
+    "is-image": "^2.0.0",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.10",
     "nodemailer": "^4.6.7",
