@@ -3,6 +3,8 @@ const passport = require('passport'),
   BearerStrategy = require('passport-http-bearer').Strategy,
   FacebookStrategy = require('passport-facebook').Strategy,
   GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
+  FacebookTokenStrategy = require('passport-facebook-token'),
+  GoogleTokenStrategy = require('passport-google-token').Strategy,
   bcrypt = require('bcrypt-nodejs');
 
 passport.serializeUser(function (user, cb) {
@@ -65,11 +67,34 @@ passport.use(
 );
 
 passport.use(
+  new FacebookTokenStrategy(
+    {
+      clientID: process.env.FACEBOOK_ID,
+      clientSecret: process.env.FACEBOOK_SECRET,
+      profileFields: ['id', 'displayName', 'name', 'photos', 'email', 'gender', 'birthday'],
+      passReqToCallback: true
+    },
+    handleFacebookAuthentication
+  )
+);
+
+passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
       callbackURL: process.env.GOOGLE_CALLBACK,
+      passReqToCallback: true
+    },
+    handleGoogleAuthentication
+  )
+);
+
+passport.use(
+  new GoogleTokenStrategy(
+    {
+      clientID: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
       passReqToCallback: true
     },
     handleGoogleAuthentication
@@ -110,7 +135,7 @@ async function handleLocalAuthentication(req, email, password, cb) {
 }
 
 async function handleBearerAuthentication(req, token, cb) {
-  
+
 }
 
 async function handleFacebookAuthentication(req, accessToken, refreshToken, profile, cb) {
@@ -120,6 +145,7 @@ async function handleFacebookAuthentication(req, accessToken, refreshToken, prof
       message: "Cannot get provider data."
     })
   }
+
   const userProfile = {
     firstName: providerData.first_name,
     lastName: `${providerData.last_name || ''} ${providerData.middle_name || ''}`.trim(),
@@ -176,12 +202,13 @@ async function handleGoogleAuthentication(req, accessToken, refreshToken, profil
       message: "Cannot get provider data."
     })
   }
+
   const userProfile = {
-    firstName: _.get(providerData, 'name.familyName'),
-    lastName: _.get(providerData, 'name.givenName'),
-    email: _.get(providerData, 'emails.0.value'),
+    firstName: _.get(providerData, 'family_name'),
+    lastName: _.get(providerData, 'given_name'),
+    email: _.get(providerData, 'email', _.get(providerData, 'emails.0.value')),
     gender: transformGender(providerData.gender),
-    profileImageURL: _.get(providerData, 'image.url'),
+    profileImageURL: _.get(providerData, 'picture'),
     emailVerified: true
   }
 

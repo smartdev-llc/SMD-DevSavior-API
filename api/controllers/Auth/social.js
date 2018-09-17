@@ -1,4 +1,6 @@
 const passport = require('passport');
+const constants = require('../../../constants');
+const { ACCESS_TOKEN } = constants.TOKEN_TYPE;
 
 module.exports = async function (req, res) {
   const provider = req.params.provider;
@@ -8,15 +10,31 @@ module.exports = async function (req, res) {
     });
   }
 
-  const socialScope = getSocialScope(provider);
-
-  passport.authenticate(provider, { scope: socialScope }, function (err) {
+  passport.authenticate(`${provider}-token`, function(err, user, info) {
     if (err) {
       return res.serverError({
         message: "Something went wrong."
       });
     }
-    res.ok();
+
+    if (!user) {
+      return res.unauthorized(info);
+    }
+
+    req.logIn(user, function (err) {
+      if (err) {
+        return res.serverError({
+          message: "Something went wrong."
+        });
+      }
+
+      const decodedInfo = _.assign({}, _.pick(user, ['id', 'role']), { token_type: ACCESS_TOKEN })
+      const token = JwtService.issue(decodedInfo);
+      user = JSON.parse(JSON.stringify(user));
+      user.token = token;
+
+      res.ok(user);
+    });
   })(req, res);
 
 }
@@ -24,18 +42,4 @@ module.exports = async function (req, res) {
 function isValidSocialProvider(provider) {
   const validProviders = ["facebook", "google"];
   return _.indexOf(validProviders, provider) !== -1;
-}
-
-function getSocialScope(provider) {
-  switch (provider) {
-    case 'facebook': return [
-      'email',
-      'user_gender'
-    ];
-    case 'google': return [
-      'https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/userinfo.email'
-    ];
-    default: return [];
-  }
 }
