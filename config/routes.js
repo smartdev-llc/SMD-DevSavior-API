@@ -53,8 +53,7 @@ module.exports.routes = {
   'get /auth/verify': 'Auth.verify',
   'post /auth/forgot-password': 'Auth.forgot-password',
   'post /auth/reset-password': 'Auth.reset-password',
-  'get /auth/:provider': 'Auth.social',
-  'get /auth/:provider/callback': 'Auth.social-callback',
+  'post /auth/:provider': 'Auth.social',
   'post /auth/resend-email': 'Auth.resend-email',
 
   'post /job': 'Job.create',
