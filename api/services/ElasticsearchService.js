@@ -1,30 +1,32 @@
 const elasticsearch = require('elasticsearch');
-const lodash = _;
-const config = sails.config.custom.elasticsearch;
-const indexName = config.indexName;
 const Promise = require('bluebird');
+const indexName = process.env.ES_INDEX_NAME || 'juniorviec';
+const connectionConfig = {
+  host: process.env.ES_HOST || '127.0.0.1:9200',
+  log: process.env.ES_LOG_LEVEL || 'trace'
+}
 
-let es = new elasticsearch.Client(config.connection);
+let es = new elasticsearch.Client(connectionConfig);
 const esClient = Promise.promisifyAll(es, { context: es });
 
 module.exports = {
 
   create: async function (options) {
     return await esClient.create(
-      lodash.extend({
+      _.extend({
         index: indexName
       },
-        lodash.pick(options, ['type', 'id', 'body'])
+        _.pick(options, ['type', 'id', 'body'])
       )
     )
   },
 
   search: async function (params) {
     return await esClient.search(
-      lodash.extend({
+      _.extend({
         index: indexName
       },
-        lodash.pick(params, ['type', 'body'])
+        _.pick(params, ['type', 'body'])
       )
     ).then(result => {
       return this.transformResult().getHits(result);
@@ -42,7 +44,7 @@ module.exports = {
         let shouldArr = [];
         shouldArr = shouldArr.concat((options.keys || []).map(key => ({
           wildcard: {
-            [key]: `*${lodash.toLower(text)}*`
+            [key]: `*${_.toLower(text)}*`
           }
         })));
         shouldArr = shouldArr.concat((options.nestedKeys || []).map(key => ({
@@ -50,7 +52,7 @@ module.exports = {
             path: key.split('.').shift(),
             query: {
               wildcard: {
-                [key]: `*${lodash.toLower(text)}*`
+                [key]: `*${_.toLower(text)}*`
               }
             }
           }
@@ -70,7 +72,7 @@ module.exports = {
       getHits: (result) => {
         return {
           total: result.hits.total,
-          list: result.hits.hits.map(hit => lodash.extend(hit._source, { _id: hit._id }))
+          list: result.hits.hits.map(hit => _.extend(hit._source, { _id: hit._id }))
         };
       }
     }

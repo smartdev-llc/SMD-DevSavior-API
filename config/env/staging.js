@@ -374,19 +374,6 @@ module.exports = {
   custom: {
     baseUrl: 'https://example.com',
     internalEmailAddress: 'support@example.com',
-    elasticsearch: {
-      connection: {
-        host: process.env.ES_HOST || '127.0.0.1:9200',
-        log: process.env.ES_LOG_LEVEL || 'trace'
-      },
-      indexName: process.env.ES_INDEX_NAME || 'juniorviec',
-      settings: {
-        "index": {
-          "number_of_shards": 5,
-          "number_of_replicas": 0
-        }
-      }
-    }
 
     // mailgunDomain: 'mg.example.com',
     // mailgunSecret: 'key-prod_fake_bd32301385130a0bafe030c',
