@@ -28,7 +28,7 @@ module.exports = async function (req, res) {
         });
       }
 
-      const decodedInfo = _.assign({}, _.pick(user, ['id', 'role']), { token_type: ACCESS_TOKEN })
+      const decodedInfo = _.assign({}, _.pick(user, ['id', 'role', 'email']), { token_type: ACCESS_TOKEN })
       const token = JwtService.issue(decodedInfo);
       user = JSON.parse(JSON.stringify(user));
       user.token = token;

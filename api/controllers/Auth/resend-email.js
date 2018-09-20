@@ -48,7 +48,7 @@ module.exports = async function (req, res) {
         message: "This email is already verified."
       });
     }
-    const decodedInfo = _.assign({}, _.pick(userInfo, ['id']), { role, token_type: VERIFICATION_TOKEN });
+    const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role, token_type: VERIFICATION_TOKEN });
     const verificationToken = JwtService.issue(decodedInfo, { expiresIn });
 
     try {
