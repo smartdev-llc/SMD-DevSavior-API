@@ -42,6 +42,8 @@ module.exports.policies = {
 
   'photo/upload': true,
   
-  'photo/read': true
+  'photo/read': true,
 
+  // Student
+  'student/create-cv': 'isStudent'
 };

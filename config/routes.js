@@ -65,7 +65,9 @@ module.exports.routes = {
     controller: 'Photo',
     action: 'read',
     skipAssets: false
-  }
+  },
+
+  'post /student/cv': 'Student.create-cv'
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝

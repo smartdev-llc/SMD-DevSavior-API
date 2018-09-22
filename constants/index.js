@@ -13,5 +13,12 @@ module.exports = {
     RESET_PASSWORD_TOKEN: 'RESET_PASSWORD_TOKEN'
   },
 
-  FILE_LIMIT_SIZE: 10000000 // 10MB
+  FILE_LIMIT_SIZE: 10000000, // 10MB
+  QUALIFICATION: {
+    NAM_1_TO_3: '1-3',
+    NAM_4: '4',
+    NAM_CUOI: 'last',
+    GRADUATED: 'graduated',
+    WORKED: 'worked'
+  }
 }
