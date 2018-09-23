@@ -13,5 +13,7 @@ module.exports = {
     RESET_PASSWORD_TOKEN: 'RESET_PASSWORD_TOKEN'
   },
 
-  FILE_LIMIT_SIZE: 10000000 // 10MB
+  FILE_LIMIT_SIZE: 10000000, // 10MB,
+
+  COMPANY_PUBLIC_FIELDS: [ 'id', 'name', 'city', 'contactName', 'phoneNumber', 'website', 'description', 'logoURL', 'videoURL']
 }
