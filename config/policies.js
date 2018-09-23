@@ -25,11 +25,8 @@ module.exports.policies = {
 
   // Job
   'job/find': true,
-
   'job/create': 'isCompany',
-
   'job/apply': 'isStudent',
-  
   'job/search': true,
 
   // Category
@@ -39,9 +36,13 @@ module.exports.policies = {
   'skill/find': true,
 
   // Photo
-
   'photo/upload': true,
   
-  'photo/read': true
+  'photo/read': true,
+
+  // Company
+  'company/find': true,
+  'company/find-one': true,
+  'company/update': 'isCompany'
 
 };
