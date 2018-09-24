@@ -6,6 +6,16 @@ module.exports = async function (req, res) {
 
   const { subject, university, qualification, fromDate, toDate, achievements } = req.allParams();
 
+  const checkYourCVExist = await Resume.findOne({
+    student: studentId
+  });
+
+  if (checkYourCVExist) {
+    return res.conflict({
+      message: "Your CV already created."
+    });
+  }
+
   if (!subject || !university || !qualification) {
     return res.badRequest({
       message: "Missing parameters."

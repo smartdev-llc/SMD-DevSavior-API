@@ -56,8 +56,7 @@ module.exports.routes = {
   'post /auth/:provider': 'Auth.social',
   'post /auth/resend-email': 'Auth.resend-email',
 
-  'post /jobs': 'Job.create',
-  'post /jobs/:jobId/apply': 'Job.apply',
+  'post /jobs/:jobId/applications': 'Job.apply',
   'get /jobs/search': 'Job.search',
 
   'post /photos/upload': 'Photo.upload',
@@ -68,9 +67,8 @@ module.exports.routes = {
   },
 
   'get /companies': "Company.find",
-  'get /companies/:id': "Company.find-one",
+  'get /companies/:id': "Company.find-one"
 
-  'post /CVs': 'CV.create'
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
