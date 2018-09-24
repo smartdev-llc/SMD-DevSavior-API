@@ -8,17 +8,17 @@ const passport = require('passport'),
   bcrypt = require('bcrypt-nodejs');
 
 passport.serializeUser(function (user, cb) {
-  cb(null, _.pick(user, ['id', 'role', 'emailVerified']));
+  cb(null, _.pick(user, ['id', 'role', 'email']));
 });
 
 passport.deserializeUser(async function (userInfo, cb) {
-  const { id, role } = userInfo;
+  const { id, email, role } = userInfo;
   let user;
   try {
     if (role === 'company') {
-      user = await Company.findOne({ id });
+      user = await Company.findOne({ id, email });
     } else {
-      user = await Student.findOne({ id })
+      user = await Student.findOne({ id, email })
     }
 
     if (!user) {

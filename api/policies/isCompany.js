@@ -44,10 +44,11 @@ module.exports = async function (req, res, proceed) {
   }
   
   const userId = _.get(decoded, 'id');
+  const email = _.get(decoded, 'email');
   const role = _.get(decoded, 'role');
   const type = _.get(decoded, 'token_type');
 
-  if (_.isNil(userId) || role !== 'company' || type !== ACCESS_TOKEN) {
+  if (_.isNil(userId) || _.isNil(email) || role !== 'company' || type !== ACCESS_TOKEN) {
     return res.unauthorized({
       message: "Permission denied."
     });
@@ -55,7 +56,7 @@ module.exports = async function (req, res, proceed) {
   
   let user;
   try {
-    user = await Company.findOne({ id: userId });
+    user = await Company.findOne({ id: userId, email });
   } catch(err) {
     return res.serverError({
       message: "Something went wrong."

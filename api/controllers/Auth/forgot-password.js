@@ -42,7 +42,7 @@ module.exports = async function (req, res) {
     });
   } else {
 
-    const decodedInfo = _.assign({}, _.pick(userInfo, ['id']), { role, token_type: RESET_PASSWORD_TOKEN });
+    const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role, token_type: RESET_PASSWORD_TOKEN });
     const resetPasswordToken = JwtService.issue(decodedInfo, { expiresIn });
 
     try {

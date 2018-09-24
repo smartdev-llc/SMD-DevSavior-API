@@ -56,16 +56,19 @@ module.exports.routes = {
   'post /auth/:provider': 'Auth.social',
   'post /auth/resend-email': 'Auth.resend-email',
 
-  'post /job': 'Job.create',
-  'post /job/:jobId/apply': 'Job.apply',
-  'get /job/search': 'Job.search',
+  'post /jobs': 'Job.create',
+  'post /jobs/:jobId/apply': 'Job.apply',
+  'get /jobs/search': 'Job.search',
 
-  'post /photo/upload': 'Photo.upload',
-  'get /photo/:photoName': {
+  'post /photos/upload': 'Photo.upload',
+  'get /photos/:photoName': {
     controller: 'Photo',
     action: 'read',
     skipAssets: false
   },
+
+  'get /companies': "Company.find",
+  'get /companies/:id': "Company.find-one",
 
   'post /student/cv': 'Student.create-cv'
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗

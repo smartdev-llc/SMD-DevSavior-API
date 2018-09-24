@@ -4,7 +4,7 @@ module.exports = {
     VERIFICATION_TOKEN_EXPIRATION: '1h',
     RESET_PASSWORD_TOKEN_EXPIRATION: '1h',
     ALGORITHM: 'RS256',
-    DECODED_KEYS: ['id', 'token_type', 'role']
+    DECODED_KEYS: ['id', 'email', 'token_type', 'role']
   },
 
   TOKEN_TYPE: {
@@ -13,7 +13,10 @@ module.exports = {
     RESET_PASSWORD_TOKEN: 'RESET_PASSWORD_TOKEN'
   },
 
-  FILE_LIMIT_SIZE: 10000000, // 10MB
+  FILE_LIMIT_SIZE: 10000000, // 10MB,
+
+  COMPANY_PUBLIC_FIELDS: [ 'id', 'name', 'city', 'contactName', 'phoneNumber', 'website', 'description', 'logoURL', 'videoURL'],
+
   QUALIFICATION: {
     NAM_1_TO_3: '1-3',
     NAM_4: '4',
