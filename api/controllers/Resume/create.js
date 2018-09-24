@@ -62,7 +62,7 @@ module.exports = async function (req, res) {
   if (_.isArray(achievements) && _.size(achievements) > 0) {
     try {
       const newAchievements = _.map(achievements, element => {
-        return _.assign({}, element, { award: resume.id });
+        return _.assign({}, element, { resume: resume.id });
       });
 
       await Achievement.createEach(newAchievements);
@@ -76,13 +76,13 @@ module.exports = async function (req, res) {
 
   return res.ok({
     message: 'You have created your CV successfully.'
-  })
+  });
 }
 
 const isValidDate = date => {
-  return moment(date, "YYYY-MM-DD").isValid()
+  return moment(date, "YYYY-MM-DD").isValid();
 }
 
 const isBeforeDate = (fromDate, toDate) => {
-  return moment(fromDate).isBefore(moment(toDate))
+  return moment(fromDate).isBefore(moment(toDate));
 }

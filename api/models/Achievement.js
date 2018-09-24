@@ -13,7 +13,7 @@ module.exports = {
     major: {
       type: 'string'
     },
-    award: {
+    resume: {
       model: 'resume'
     }
   }

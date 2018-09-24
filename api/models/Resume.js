@@ -34,7 +34,7 @@ module.exports = {
     },
     achievements: {
       collection: 'achievement',
-      via: 'award'
+      via: 'resume'
     }
   },
 
