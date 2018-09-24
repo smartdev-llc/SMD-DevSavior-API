@@ -4,7 +4,25 @@ module.exports = async function (req, res) {
 
   const studentId = _.get(req, "user.id");
 
-  const { subject, university, qualification, fromDate, toDate, achievements } = req.allParams();
+  const { subject, university, qualification, fromDate, toDate, achievements } = req.body;
+
+  let checkYourCVExist, resume;
+
+  try {
+    checkYourCVExist = await Resume.findOne({
+      student: studentId
+    });
+  } catch (err) {
+    return res.serverError({
+      message: `Something went wrong: ${err}`
+    });
+  }
+
+  if (checkYourCVExist) {
+    return res.conflict({
+      message: "Your CV already created."
+    });
+  }
 
   if (!subject || !university || !qualification) {
     return res.badRequest({
@@ -15,19 +33,19 @@ module.exports = async function (req, res) {
   if (fromDate && toDate) {
     if (!isValidDate(fromDate) || !isValidDate(toDate)) {
       return res.badRequest({
-        message: "Invalid date"
+        message: "Invalid date."
       });
     }
   }
 
   if (!isBeforeDate(fromDate, toDate)) {
     return res.badRequest({
-      message: "fromDate is not before toDate"
+      message: "fromDate is not before toDate."
     });
   }
 
   try {
-    var resume = await Resume.create({
+    resume = await Resume.create({
       subject,
       university,
       qualification,
@@ -57,7 +75,7 @@ module.exports = async function (req, res) {
   };
 
   return res.ok({
-    message: 'You have created your CV successfully'
+    message: 'You have created your CV successfully.'
   })
 }
 

@@ -5,7 +5,8 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 const constants = require('../../constants');
-const { NAM_1_TO_3, NAM_4, NAM_CUOI, GRADUATED, WORKED } = constants.QUALIFICATION
+const { NAM_1_TO_3, NAM_4, NAM_CUOI, GRADUATED, WORKED } = constants.QUALIFICATION;
+
 module.exports = {
 
   attributes: {
