@@ -70,7 +70,7 @@ module.exports.routes = {
   'get /companies': "Company.find",
   'get /companies/:id': "Company.find-one",
 
-  'post /students/my-cv': 'Student.create-cv'
+  'post /CVs': 'CV.create'
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝

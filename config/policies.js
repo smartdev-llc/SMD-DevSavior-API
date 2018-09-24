@@ -46,5 +46,5 @@ module.exports.policies = {
   'company/update': 'isCompany',
 
   // Student
-  'student/create-cv': 'isStudent'
+  'cv/create': 'isStudent'
 };
