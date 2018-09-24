@@ -25,7 +25,28 @@ module.exports = {
     address: {
       type: 'string'
     },
-    profileImageURL: {
+    city: {
+      type: 'string'
+    },
+    contactName: {
+      type: 'string'
+    },
+    phoneNumber: {
+      type: 'string'
+    },
+    website: {
+      type: 'string'
+    },
+    description: {
+      type: 'string'
+    },
+    logoURL: {
+      type: 'string'
+    },
+    photoURLs: {
+      type: 'json'
+    },
+    videoURL: {
       type: 'string'
     },
     status: {

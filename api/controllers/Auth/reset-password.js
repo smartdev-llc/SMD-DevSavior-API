@@ -37,10 +37,11 @@ module.exports = async function (req, res) {
   }
 
   const userId = _.get(decoded, 'id');
+  const email = _.get(decoded, 'email');
   const role = _.get(decoded, 'role');
   const type = _.get(decoded, 'token_type');
 
-  if (_.isNil(userId) || !role || type !== RESET_PASSWORD_TOKEN) {
+  if (_.isNil(userId) || _.isNil(email) || !role || type !== RESET_PASSWORD_TOKEN) {
     return res.forbidden({
       message: "Invalid token."
     });
@@ -53,7 +54,7 @@ module.exports = async function (req, res) {
     } else {
       UserModel = Student;
     }
-    user = await UserModel.findOne({ id: userId });
+    user = await UserModel.findOne({ id: userId, email });
   } catch (err) {
     return res.serverError({
       message: "Something went wrong."
@@ -68,7 +69,7 @@ module.exports = async function (req, res) {
 
   if (!user) {
     return res.forbidden({
-      message: "Something went wrong."
+      message: "Invalid token."
     });
   }
 

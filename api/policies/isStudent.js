@@ -44,6 +44,7 @@ module.exports = async function (req, res, proceed) {
   }
   
   const userId = _.get(decoded, 'id');
+  const email = _.get(decoded, 'email');
   const role = _.get(decoded, 'role');
   const type = _.get(decoded, 'token_type');
 
@@ -55,7 +56,7 @@ module.exports = async function (req, res, proceed) {
   
   let user;
   try {
-    user = await Student.findOne({ id: userId });
+    user = await Student.findOne({ id: userId, email });
   } catch(err) {
     return res.serverError({
       message: "Something went wrong."
