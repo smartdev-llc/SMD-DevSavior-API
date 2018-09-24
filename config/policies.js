@@ -43,6 +43,8 @@ module.exports.policies = {
   // Company
   'company/find': true,
   'company/find-one': true,
-  'company/update': 'isCompany'
+  'company/update': 'isCompany',
 
+  // Student
+  'resume/create': 'isStudent'
 };
