@@ -14,7 +14,7 @@ module.exports = async function (req, res) {
     });
   } catch (err) {
     return res.serverError({
-      message: `Something went wrong: ${err}`
+      message: "Something went wrong."
     });
   }
 
@@ -55,7 +55,7 @@ module.exports = async function (req, res) {
     }).fetch();
   } catch (err) {
     return res.serverError({
-      message: `Something went wrong: ${err}`
+      message: "Something went wrong."
     });
   };
 
@@ -68,7 +68,7 @@ module.exports = async function (req, res) {
       await Achievement.createEach(newAchievements);
     } catch (err) {
       return res.serverError({
-        message: `Something went wrong: ${err}`
+        message: "Something went wrong."
       });
     };
 
