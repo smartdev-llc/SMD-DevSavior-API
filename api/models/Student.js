@@ -57,7 +57,10 @@ module.exports = {
       collection: 'job',
       via: 'student',
       through: 'jobapplication'
-    }
+    },
+    birthday: {
+      type: 'string'
+    },
   },
 
   customToJSON: function() {

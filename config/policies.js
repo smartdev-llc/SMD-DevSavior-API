@@ -24,6 +24,7 @@ module.exports.policies = {
   'auth/*': true,
 
   // Job
+  'job/find-by-company': 'isCompany',
   'job/find': true,
   'job/create': 'isCompany',
   'job/apply': 'isStudent',

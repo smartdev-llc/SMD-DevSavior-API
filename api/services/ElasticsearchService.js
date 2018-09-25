@@ -33,13 +33,29 @@ module.exports = {
     })
   },
 
-  buildQuery: (options) => {
+  buildQuery: (params) => {
     return {
       activeJob: () => ({
         "term": {
           "status": "ACTIVE"
         }
       }),
+      identifiers: (options) => {
+        let mustList = [];
+        if(options.nestedIdNames) {
+          mustList = mustList.concat(options.nestedIdNames.map(item => ({
+            nested: {
+              path: item.path,
+              query: {
+                term: {
+                  [item.field]: params[item.request]
+                }
+              }
+            }
+          })))
+        }
+        return mustList;
+      },
       textSearch: ({ text, options }) => {
         let shouldArr = [];
         shouldArr = shouldArr.concat((options.keys || []).map(key => ({
