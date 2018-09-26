@@ -58,10 +58,8 @@ module.exports.routes = {
 
   'post /jobs/:jobId/applications': 'Job.apply',
   'get /jobs/search': 'Job.search',
-  'post /job': 'Job.create',
-  'post /job/:jobId/apply': 'Job.apply',
-  'get /job': 'Job.find-by-company',
-  'get /job/search': 'Job.search',
+  'post /jobs': 'Job.create',
+  'get /jobs': 'Job.find-by-company',
 
   'post /photos/upload': 'Photo.upload',
   'get /photos/:photoName': {
@@ -70,7 +68,6 @@ module.exports.routes = {
     skipAssets: false
   },
 
-  'get /companies': "Company.find",
   'get /companies/:id': "Company.find-one"
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
