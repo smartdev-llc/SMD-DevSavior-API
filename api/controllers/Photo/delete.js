@@ -5,7 +5,7 @@ module.exports = async function (req, res) {
   const photoName = req.params.photoName;
 
   if (!photoName || !isImage(photoName)) {
-    return res.notFound({
+    return res.badRequest({
       message: "Photo not found."
     });
   }

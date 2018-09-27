@@ -32,7 +32,7 @@ module.exports = async function (req, res) {
     const photoName = _.get(uploadedFiles, '0.fd', '').split('/').pop();
 
     res.ok({
-      photoUrl: `/photo/${photoName}`
+      photoUrl: `/photos/${photoName}`
     });
   })
 }
