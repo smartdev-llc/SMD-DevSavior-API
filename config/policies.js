@@ -28,23 +28,26 @@ module.exports.policies = {
   'job/create': 'isCompany',
   'job/apply': 'isStudent',
   'job/search': true,
-
+  
   // Category
   'category/find': true,
-
+  
   // Skill
   'skill/find': true,
-
+  
   // Photo
   'photo/upload': true,
   'photo/read': true,
   'photo/delete': true,
-
+  
   // Company
   'company/find': true,
   'company/find-one': true,
   'company/update': 'isCompany',
-
+  
   // Student
-  'resume/create': 'isStudent'
+  'resume/create': 'isStudent',
+
+  // JobApplication
+  'jobapplication/find': 'isCompany'
 };
