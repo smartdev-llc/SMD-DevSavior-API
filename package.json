@@ -28,6 +28,7 @@
     "passport-google-token": "^0.1.2",
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
+    "phone": "^2.1.0",
     "pug": "^2.0.3",
     "sails": "^1.0.2",
     "sails-hook-grunt": "^3.0.2",
