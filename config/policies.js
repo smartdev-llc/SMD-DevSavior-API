@@ -37,8 +37,8 @@ module.exports.policies = {
 
   // Photo
   'photo/upload': true,
-  
   'photo/read': true,
+  'photo/delete': true,
 
   // Company
   'company/find': true,

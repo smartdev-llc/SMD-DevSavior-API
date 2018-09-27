@@ -66,6 +66,7 @@ module.exports.routes = {
     action: 'read',
     skipAssets: false
   },
+  'delete /photos/:photoName': 'Photo.delete',
 
   'get /companies/:id': "Company.find-one"
 
