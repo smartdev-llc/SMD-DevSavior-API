@@ -12,7 +12,7 @@ module.exports = async function (req, res) {
     });
   }
 
-  const uploadFolder = process.env.UPLOAD_FOLDER || '.tmp';
+  const uploadFolder = process.env.UPLOAD_FOLDER || '.';
 
   uploadFile.upload({
     dirname: `${uploadFolder}/photos`,
