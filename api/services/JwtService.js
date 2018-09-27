@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
-const { ACCESS_TOKEN_EXPIRATION: expiresIn, ALGORITHM: algorithm, DECODED_KEYS } = require('../../constants').JWT_OPTIONS;
+const constants = require('../../constants');
+const { ACCESS_TOKEN_EXPIRATION: expiresIn, ALGORITHM: algorithm, DECODED_KEYS } = constants.JWT_OPTIONS;
 
 module.exports = {
 

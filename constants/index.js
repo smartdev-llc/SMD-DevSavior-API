@@ -23,5 +23,9 @@ module.exports = {
     NAM_CUOI: 'last',
     GRADUATED: 'graduated',
     WORKED: 'worked'
+  },
+
+  REGEX: {
+    PHONE: /^[0-9\+]{1,}[0-9\-]{3,15}$/
   }
 }

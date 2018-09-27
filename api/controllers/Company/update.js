@@ -9,6 +9,7 @@ module.exports = async function (req, res) {
     website,
     description,
     logoURL,
+    coverURL,
     photoURLs,
     videoURL
   } = req.body;
@@ -34,6 +35,7 @@ module.exports = async function (req, res) {
     website,
     description,
     logoURL,
+    coverURL,
     photoURLs,
     videoURL
   }
@@ -55,14 +57,14 @@ module.exports = async function (req, res) {
       message: "Something went wrong."
     });
   }
-
-  function transformCity(reqCity) {
-    reqCity = _.toUpper(reqCity);
-    switch (reqCity) {
-      case 'HN': return 'HN';
-      case 'TPHCM': return 'TPHCM';
-      case 'DN': return 'DN';
-      default: return 'OTHER';
-    }
-  }
 }
+
+const transformCity = (reqCity) => {
+  reqCity = _.toUpper(reqCity);
+  switch (reqCity) {
+    case 'HN': return 'HN';
+    case 'TPHCM': return 'TPHCM';
+    case 'DN': return 'DN';
+    default: return 'OTHER';
+  }
+};

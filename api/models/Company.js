@@ -43,6 +43,9 @@ module.exports = {
     logoURL: {
       type: 'string'
     },
+    coverURL: {
+      type: 'string'
+    },
     photoURLs: {
       type: 'json'
     },

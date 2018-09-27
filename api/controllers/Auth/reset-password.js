@@ -96,11 +96,6 @@ module.exports = async function (req, res) {
   res.ok({
     message: "Reset password successfully."
   });
-
-  function isValidPassword(password) {
-    return validator.isLength(password, {
-      min: 8,
-      max: undefined
-    });
-  }
 }
+
+const isValidPassword = (password) => validator.isLength(password, { min: 8, max: undefined });

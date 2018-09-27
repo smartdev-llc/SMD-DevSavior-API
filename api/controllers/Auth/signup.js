@@ -2,6 +2,7 @@ const validator = require('validator');
 const constants = require('../../../constants');
 const { VERIFICATION_TOKEN } = constants.TOKEN_TYPE;
 const { VERIFICATION_TOKEN_EXPIRATION: expiresIn } = constants.JWT_OPTIONS;
+const { PHONE } = constants.REGEX;
 
 module.exports = async function (req, res) {
   const role = req.param('role') || 'student';
@@ -83,8 +84,7 @@ module.exports = async function (req, res) {
       city,
       contactName,
       phoneNumber,
-      website,
-      logoURL
+      website
     } = req.body;
 
     if (!email || !password) {
@@ -111,6 +111,12 @@ module.exports = async function (req, res) {
       });
     }
 
+    if (!isValidPhoneNumber(phoneNumber)) {
+      return res.badRequest({
+        message: "Invalid phone number."
+      });
+    }
+
     const companyReq = {
       email,
       password,
@@ -120,7 +126,6 @@ module.exports = async function (req, res) {
       contactName,
       phoneNumber,
       website,
-      logoURL,
       emailVerified: false
     }
 
@@ -149,21 +154,20 @@ module.exports = async function (req, res) {
       });
     }
   }
-
-  function transformCity(reqCity) {
-    reqCity = _.toUpper(reqCity);
-    switch (reqCity) {
-      case 'HN': return 'HN';
-      case 'TPHCM': return 'TPHCM';
-      case 'DN': return 'DN';
-      default: return 'OTHER';
-    }
-  }
-
-  function isValidPassword(password) {
-    return validator.isLength(password, {
-      min: 8,
-      max: undefined
-    });
-  }
 }
+
+const transformCity = (reqCity) => {
+  reqCity = _.toUpper(reqCity);
+  switch (reqCity) {
+    case 'HN': return 'HN';
+    case 'TPHCM': return 'TPHCM';
+    case 'DN': return 'DN';
+    default: return 'OTHER';
+  }
+};
+
+const isValidPassword = (password) => {
+  return validator.isLength(password, { min: 8, max: undefined })
+};
+
+const isValidPhoneNumber = (phone) => PHONE.test(phone);

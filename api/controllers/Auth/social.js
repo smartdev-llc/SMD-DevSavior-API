@@ -39,7 +39,7 @@ module.exports = async function (req, res) {
 
 }
 
-function isValidSocialProvider(provider) {
+const isValidSocialProvider = (provider) => {
   const validProviders = ["facebook", "google"];
   return _.indexOf(validProviders, provider) !== -1;
 }
