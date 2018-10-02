@@ -47,6 +47,7 @@ module.exports.policies = {
   
   // Student
   'resume/create': 'isStudent',
+  'student/find-one': true,
 
   // JobApplication
   'jobapplication/find': 'isCompany'

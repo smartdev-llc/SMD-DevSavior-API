@@ -69,7 +69,8 @@ module.exports.routes = {
   },
   'delete /photos/:photoName': 'Photo.delete',
 
-  'get /companies/:id': "Company.find-one"
+  'get /companies/:id': "Company.find-one",
+  'get /students/:id': "Student.find-one"
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
