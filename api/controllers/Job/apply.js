@@ -29,6 +29,20 @@ module.exports = async function (req, res) {
   }
 
   try {
+    const isApplied = await JobApplication.findOne({ job: jobId, student: userId });
+
+    if (isApplied) {
+      return res.conflict({
+        message: 'Job is already applied.'
+      });
+    }
+  } catch (err) {
+    return res.serverError({
+      message: "Something went wrong."
+    });
+  }
+
+  try {
     await Job.addToCollection(jobId, 'students')
       .members([userId]);
   } catch (err) {
