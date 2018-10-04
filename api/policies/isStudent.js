@@ -75,6 +75,7 @@ module.exports = async function (req, res, proceed) {
     });
   }
 
+  user.role = "student"
   req.user = user;
 
   proceed();

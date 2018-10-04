@@ -75,6 +75,7 @@ module.exports = async function (req, res, proceed) {
     });
   }
 
+  user.role = "company";
   req.user = user;
 
   proceed();
