@@ -1,27 +1,11 @@
 module.exports = async function (req, res) {
   const userId = _.get(req, "user.id");
   const role = _.get(req, "user.role");
-
-  if (role !== "company") {
-    try {
-      const job = await Job
-        .find({ })
-        .populate('students', { select: ['id', 'firstName', 'lastName'] })
-        .populate('skills', { select: ['id', 'name'] })
-        .populate('company')
-        .populate('category');
-
-      return res.ok(job);
-    } catch (err) {
-      return res.serverError({
-        message: `Something went wrong. ${err}`
-      });
-    }
-  }
+  const criteria = role == "company" ? { company: userId } : {};
 
   try {
     const job = await Job
-      .find({ company: userId })
+      .find(criteria)
       .populate('students', { select: ['id', 'firstName', 'lastName'] })
       .populate('skills', { select: ['id', 'name'] })
       .populate('category');
