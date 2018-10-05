@@ -30,7 +30,8 @@ module.exports = {
     },
     gender: {
       type: 'string',
-      defaultsTo: 'UNKNOWN'
+      defaultsTo: 'UNKNOWN',
+      isIn: ['MALE', 'FEMALE', 'OTHER', 'UNKNOWN']
     },
     status: { 
       type: 'string', 
