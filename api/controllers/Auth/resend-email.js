@@ -24,7 +24,7 @@ module.exports = async function (req, res) {
   } else {
     try {
       userInfo = await Student.findOne({ email });
-      if (_.indexOf(userInfo.providers, 'local') == - 1) {
+      if (userInfo && _.indexOf(userInfo.providers, 'local') == - 1) {
         return res.badRequest({
           message: "This email does not match any account."
         });
