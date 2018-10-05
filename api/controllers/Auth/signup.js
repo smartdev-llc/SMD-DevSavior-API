@@ -14,7 +14,7 @@ module.exports = async function (req, res) {
   }
 
   async function registerStudent(req, res) {
-    const { email, password, firstName, lastName, profileImageURL } = req.body;
+    const { email, password, firstName, lastName, profileImageURL, gender } = req.body;
     const providers = ['local'];
 
     if (!email || !password) {
@@ -47,7 +47,8 @@ module.exports = async function (req, res) {
       firstName: _.escape(firstName),
       lastName: _.escape(lastName),
       profileImageURL,
-      providers
+      providers,
+      gender: _.toUpper(gender)
     }
 
     try {
