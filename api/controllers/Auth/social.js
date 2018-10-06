@@ -10,7 +10,7 @@ module.exports = async function (req, res) {
     });
   }
 
-  passport.authenticate(`${provider}-token`, function(err, user, info) {
+  passport.authenticate(`${provider}-token`, function (err, user, info) {
     if (err) {
       return res.serverError({
         message: "Something went wrong."
@@ -21,20 +21,12 @@ module.exports = async function (req, res) {
       return res.unauthorized(info);
     }
 
-    req.logIn(user, function (err) {
-      if (err) {
-        return res.serverError({
-          message: "Something went wrong."
-        });
-      }
+    const decodedInfo = _.assign({}, _.pick(user, ['id', 'role', 'email']), { token_type: ACCESS_TOKEN })
+    const token = JwtService.issue(decodedInfo);
+    user = JSON.parse(JSON.stringify(user));
+    user.token = token;
 
-      const decodedInfo = _.assign({}, _.pick(user, ['id', 'role', 'email']), { token_type: ACCESS_TOKEN })
-      const token = JwtService.issue(decodedInfo);
-      user = JSON.parse(JSON.stringify(user));
-      user.token = token;
-
-      res.ok(user);
-    });
+    res.ok(user);
   })(req, res);
 
 }
