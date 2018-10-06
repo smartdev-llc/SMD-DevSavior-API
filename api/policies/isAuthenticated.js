@@ -34,7 +34,7 @@ module.exports = async function (req, res, proceed) {
 
   let decoded;
   try {
-    decoded = JwtService.verify(accessToken);
+    decoded = await JwtService.verify(accessToken);
   } catch(err) {
     if (err) {
       return res.unauthorized({
@@ -49,7 +49,7 @@ module.exports = async function (req, res, proceed) {
   const type = _.get(decoded, 'token_type');
   const jwtid = _.get(decoded, 'jwtid');
 
-  if (_.isNil(jwtid) || _.isNil(userId) || _.isNil(email) || role !== 'company' || type !== ACCESS_TOKEN) {
+  if (_.isNil(jwtid) || _.isNil(userId) || _.isNil(email) || type !== ACCESS_TOKEN) {
     return res.unauthorized({
       message: "Permission denied."
     });
@@ -60,10 +60,11 @@ module.exports = async function (req, res, proceed) {
       message: "Permission denied."
     });
   }
-
+  
   let user;
   try {
-    user = await Company.findOne({ id: userId, email });
+    const UserModel = role == 'company' ? Company : Student;
+    user = await UserModel.findOne({ id: userId, email });
   } catch(err) {
     return res.serverError({
       message: "Something went wrong."
@@ -82,7 +83,6 @@ module.exports = async function (req, res, proceed) {
     });
   }
 
-  user.role = "company";
   req.user = user;
   req.accessToken = accessToken;
 

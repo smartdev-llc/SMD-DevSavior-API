@@ -47,8 +47,15 @@ module.exports = async function (req, res, proceed) {
   const email = _.get(decoded, 'email');
   const role = _.get(decoded, 'role');
   const type = _.get(decoded, 'token_type');
+  const jwtid = _.get(decoded, 'jwtid');
 
-  if (_.isNil(userId) || role !== 'student'  || type !== ACCESS_TOKEN) {
+  if (_.isNil(jwtid) || _.isNil(userId) || _.isNil(email) || role !== 'student' || type !== ACCESS_TOKEN) {
+    return res.unauthorized({
+      message: "Permission denied."
+    });
+  }
+
+  if (await JwtService.isInBlackList(jwtid)) {
     return res.unauthorized({
       message: "Permission denied."
     });
@@ -77,6 +84,7 @@ module.exports = async function (req, res, proceed) {
 
   user.role = "student"
   req.user = user;
+  req.accessToken = accessToken;
 
   proceed();
   

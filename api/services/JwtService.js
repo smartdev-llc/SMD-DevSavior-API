@@ -1,8 +1,12 @@
 const jwt = require('jsonwebtoken');
+const shortid = require('shortid');
+const Redis = require('ioredis');
 const fs = require('fs');
 
 const constants = require('../../constants');
 const { ACCESS_TOKEN_EXPIRATION: expiresIn, ALGORITHM: algorithm, DECODED_KEYS } = constants.JWT_OPTIONS;
+
+const redisClient = new Redis(`${process.env.REDIS_URL}/${process.env.REDIS_DB}`, { showFriendlyErrorStack: true });
 
 module.exports = {
 
@@ -14,6 +18,7 @@ module.exports = {
     }
     options = _.assign({}, defaultOptions, options);
     payload = _.pick(payload, DECODED_KEYS);
+    payload.jwtid = constants.AUTH_PREFIX + shortid.generate();
     return jwt.sign(payload, apiKey, options)
   },
 
@@ -25,6 +30,15 @@ module.exports = {
     options = _.assign({}, defaultOptions, options);
 
     return jwt.verify(token, apiCert, options);
+  },
+
+  addToBlackList: function(key, expInSecond) {
+    redisClient.set(key, 'true', 'EX', expInSecond);
+  },
+
+  isInBlackList: async function(key) {
+    const redisKey = await redisClient.get(key);
+    return !!redisKey;
   }
 
 };

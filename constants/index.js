@@ -1,6 +1,6 @@
 module.exports = {
   JWT_OPTIONS: {
-    ACCESS_TOKEN_EXPIRATION: '30 days',
+    ACCESS_TOKEN_EXPIRATION: '24h',
     VERIFICATION_TOKEN_EXPIRATION: '1h',
     RESET_PASSWORD_TOKEN_EXPIRATION: '1h',
     ALGORITHM: 'RS256',
@@ -27,5 +27,7 @@ module.exports = {
 
   REGEX: {
     PHONE: /^[0-9\+]{1,}[0-9\-]{3,15}$/
-  }
+  },
+
+  AUTH_PREFIX: 'auth_token_id:'
 }
