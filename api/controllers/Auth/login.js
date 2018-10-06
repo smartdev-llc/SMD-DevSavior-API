@@ -24,19 +24,11 @@ module.exports = async function (req, res) {
 
     // Remove sensitive data before login
     user.password = undefined;
-    req.logIn(user, async function (err) {
-      if (err) {
-        res.serverError({
-          message: "Something went wrong."
-        });
-      }
+    const decodedInfo = _.assign({}, _.pick(user, ['id', 'email', 'role']), { token_type: ACCESS_TOKEN })
+    const token = JwtService.issue(decodedInfo);
+    user = JSON.parse(JSON.stringify(user));
+    user.token = token;
 
-      const decodedInfo = _.assign({}, _.pick(user, ['id', 'email', 'role']), { token_type: ACCESS_TOKEN })
-      const token = await JwtService.issue(decodedInfo);
-      user = JSON.parse(JSON.stringify(user));
-      user.token = token;
-
-      res.ok(user);
-    });
+    res.ok(user);
   })(req, res);
 }

@@ -7,7 +7,6 @@ module.exports = async function (req, res) {
     }
   }
 
-  // await req.logOut();
   res.ok({
     message: "Logged out."
   });

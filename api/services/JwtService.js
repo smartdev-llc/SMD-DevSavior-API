@@ -6,7 +6,8 @@ const fs = require('fs');
 const constants = require('../../constants');
 const { ACCESS_TOKEN_EXPIRATION: expiresIn, ALGORITHM: algorithm, DECODED_KEYS } = constants.JWT_OPTIONS;
 
-const redisClient = new Redis(`${process.env.REDIS_URL}/${process.env.REDIS_DB}`, { showFriendlyErrorStack: true });
+// Init Redis, use options { showFriendlyErrorStack: true } in development mode if see more error details
+const redisClient = new Redis(`${process.env.REDIS_URL}/${process.env.REDIS_DB}`);
 
 module.exports = {
 
@@ -32,13 +33,17 @@ module.exports = {
     return jwt.verify(token, apiCert, options);
   },
 
-  addToBlackList: function(key, expInSecond) {
+  addToBlackList: function (key, expInSecond) {
     redisClient.set(key, 'true', 'EX', expInSecond);
   },
 
-  isInBlackList: async function(key) {
-    const redisKey = await redisClient.get(key);
-    return !!redisKey;
+  isInBlackList: async function (key) {
+    try {
+      const redisKey = await redisClient.get(key);
+      return !!redisKey;
+    } catch (err) {
+      return false;
+    }
   }
 
 };
