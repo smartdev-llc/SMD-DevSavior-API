@@ -61,7 +61,7 @@ module.exports = async function (req, res) {
         const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role: 'student', token_type: VERIFICATION_TOKEN });
         const verificationToken = JwtService.issue(decodedInfo, { expiresIn });
 
-        EmailService.sendToUser(userInfo, 'verify-student-email', {
+        await EmailService.sendToUser(userInfo, 'verify-student-email', {
           verificationLink: `${process.env.WEB_URL}/verify-account?token=${verificationToken}`,
           userInfo
         });
@@ -140,7 +140,7 @@ module.exports = async function (req, res) {
         const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role: 'company', token_type: VERIFICATION_TOKEN });
         const verificationToken = JwtService.issue(decodedInfo, { expiresIn });
 
-        EmailService.sendToUser(userInfo, 'verify-company-email', {
+        await EmailService.sendToUser(userInfo, 'verify-company-email', {
           verificationLink: `${process.env.WEB_URL}/verify-account?token=${verificationToken}`,
           userInfo
         });
@@ -149,8 +149,7 @@ module.exports = async function (req, res) {
       }
     } catch (err) {
       return res.serverError({
-        message: "Something went wrong.",
-        err
+        message: "Something went wrong."
       });
     }
   }
