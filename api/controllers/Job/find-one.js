@@ -4,13 +4,13 @@ module.exports = async function (req, res) {
   const id = _.get(req, "params.id");
 
   if (userId && role == 'company') {
-    await findByCompanyId(req, res, userId, id);
+    await findOneByCompanyId(req, res, userId, id);
   } else {
-    await findByNormalUser(req, res, id);
+    await findOne(req, res, id);
   }
 }
 
-const findByCompanyId = async (req, res, userId, id) => {
+const findOneByCompanyId = async (req, res, userId, id) => {
   try {
     const job = await Job
       .findOne({ id, company: userId })
@@ -32,7 +32,7 @@ const findByCompanyId = async (req, res, userId, id) => {
   }
 }
 
-const findByNormalUser = async (req, res, id) => {
+const findOne = async (req, res, id) => {
   try {
     const job = await Job
       .findOne({ id })
