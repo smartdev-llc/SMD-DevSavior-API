@@ -6,12 +6,26 @@ module.exports = async function (req, res) {
       message: "You need login as a company to create a new job."
     });
   }
-  const { skillIds, title, description, categoryId } = req.allParams();
+  const { skillIds, title, description, categoryId, salary, jobRequirements } = req.body;
 
-  if (!title || !categoryId) {
+  if (!title || !categoryId || !description || !salary || !jobRequirements) {
     return res.badRequest({
       message: "Missing parameters."
     });
+  }
+
+  const from = (!!_.get(salary, "from") && _.get(salary, "from") > 0) ? _.get(salary, "from") : 0;
+  const to = _.get(salary, "to") || 0;
+
+  if (!_.isNumber(from) || !_.isNumber(to) || from >= to) {
+    return res.badRequest({
+      message: "TO must be greater than FROM"
+    });
+  }
+
+  var convertedSalary = {
+    from,
+    to
   }
 
   try {
@@ -20,7 +34,9 @@ module.exports = async function (req, res) {
       title,
       description,
       category: categoryId,
-      skills: skillIds
+      skills: skillIds,
+      jobRequirements,
+      salary: convertedSalary
     }).fetch();
 
     const category = await Category.findOne({ id: categoryId });
@@ -40,7 +56,9 @@ module.exports = async function (req, res) {
           id: category.id,
           name: category.name
         },
-        status: job.status
+        status: job.status,
+        jobRequirements: job.jobRequirements,
+        salary: job.salary
       }
     });
 
