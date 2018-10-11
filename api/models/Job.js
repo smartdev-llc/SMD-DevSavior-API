@@ -9,6 +9,7 @@ module.exports = {
 
   attributes: {
     company: { model: 'company' },
+    salary: { model: 'salary' },
     category: { model: 'category' },
     status: { type: 'string', defaultsTo: 'ACTIVE' },
     title: { type: 'string', required: true },

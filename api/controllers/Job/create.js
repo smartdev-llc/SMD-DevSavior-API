@@ -29,6 +29,18 @@ module.exports = async function (req, res) {
   }
 
   try {
+    salary = await Salary.create({
+      from,
+      to
+    }).fetch();
+
+  } catch (err) {
+    return res.serverError({
+      message: `Something went wrong. ${err}`
+    });
+  }
+
+  try {
     const job = await Job.create({
       company: companyId,
       title,
