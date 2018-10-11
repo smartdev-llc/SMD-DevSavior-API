@@ -45,7 +45,7 @@ module.exports = {
         if (options.nestedIdNames) {
           mustList = mustList.concat(options.nestedIdNames.reduce((arr, item) => {
             if(params[item.request]){
-              arr.concat({
+              arr.push({
                 nested: {
                   path: item.path,
                   query: {
