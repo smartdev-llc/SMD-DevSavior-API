@@ -9,11 +9,11 @@ module.exports = {
 
   attributes: {
     company: { model: 'company' },
-    salary: { model: 'salary' },
     category: { model: 'category' },
     status: { type: 'string', defaultsTo: 'ACTIVE' },
     title: { type: 'string', required: true },
-    salary: { type: 'json', required: true },
+    fromSalary: { type: 'number' },
+    toSalary: { type: 'number', required: true },
     description: { type: 'string', required: true },
     jobRequirements: { type: 'string', required: true },
     students: {
