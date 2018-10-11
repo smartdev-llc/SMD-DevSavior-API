@@ -1,7 +1,9 @@
 module.exports = async function (req, res) {
   try {
-    const qs = _.get(req, 'query.qs');
+    const { qs, size, page } = _.get(req, 'query');
     const queryBody = _.pick(req.query, ['qs', 'category']);
+    let limit = parseInt(size) || 10;
+    let skip = (parseInt(page) || 0) * limit;
 
     const buildQuery = ElasticsearchService.buildQuery(queryBody);
 
@@ -28,11 +30,13 @@ module.exports = async function (req, res) {
     let result = await ElasticsearchService.search({
       type: 'Job',
       body: {
+	"size": limit,
+        "from": skip,
         "query": query
       }
     });
 
-    res.ok(result);
+    res.ok(_.extend(result, { size: limit, from: skip }));
   } catch (err) {
     res.serverError(err);
   }
