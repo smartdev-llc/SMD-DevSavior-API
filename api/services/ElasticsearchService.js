@@ -42,17 +42,22 @@ module.exports = {
       }),
       identifiers: (options) => {
         let mustList = [];
-        if(options.nestedIdNames) {
-          mustList = mustList.concat(options.nestedIdNames.map(item => ({
-            nested: {
-              path: item.path,
-              query: {
-                term: {
-                  [item.field]: params[item.request]
+        if (options.nestedIdNames) {
+          mustList = mustList.concat(options.nestedIdNames.reduce((arr, item) => {
+            if(params[item.request]){
+              arr.push({
+                nested: {
+                  path: item.path,
+                  query: {
+                    term: {
+                      [item.field]: params[item.request]
+                    }
+                  }
                 }
-              }
+              })
             }
-          })))
+            return arr;
+          }, []))
         }
         return mustList;
       },

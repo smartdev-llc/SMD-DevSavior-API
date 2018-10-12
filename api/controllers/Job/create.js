@@ -6,11 +6,23 @@ module.exports = async function (req, res) {
       message: "You need login as a company to create a new job."
     });
   }
-  const { skillIds, title, description, categoryId } = req.allParams();
+  const { skillIds, title, description, categoryId, fromSalary, toSalary, jobRequirements } = req.body;
 
-  if (!title || !categoryId) {
+  if (!title || !categoryId || !description || !jobRequirements) {
     return res.badRequest({
       message: "Missing parameters."
+    });
+  }
+
+  if (!isValidSalary(fromSalary, toSalary)) {
+    return res.badRequest({
+      message: "Invalid Salary."
+    });
+  }
+  
+  if (fromSalary > toSalary) {
+    return res.badRequest({
+      message: "toSalary must be greater than or equal to fromSalary."
     });
   }
 
@@ -20,7 +32,10 @@ module.exports = async function (req, res) {
       title,
       description,
       category: categoryId,
-      skills: skillIds
+      skills: skillIds,
+      jobRequirements,
+      fromSalary,
+      toSalary
     }).fetch();
 
     const category = await Category.findOne({ id: categoryId });
@@ -40,14 +55,19 @@ module.exports = async function (req, res) {
           id: category.id,
           name: category.name
         },
-        status: job.status
+        status: job.status,
+        jobRequirements: job.jobRequirements,
+        fromSalary: job.fromSalary,
+        toSalary: job.toSalary
       }
     });
 
-    res.ok(job);
+    return res.ok(job);
   } catch (err) {
     return res.serverError({
       message: "Something went wrong."
     });
   }
 };
+
+const isValidSalary = (fromSalary, toSalary) =>  (_.isNumber(fromSalary)  && _.isNumber(toSalary) && fromSalary >= 0 && toSalary >= 0);
