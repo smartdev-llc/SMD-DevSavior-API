@@ -12,7 +12,7 @@ module.exports = {
     category: { model: 'category' },
     status: { type: 'string', defaultsTo: 'ACTIVE' },
     title: { type: 'string', required: true },
-    fromSalary: { type: 'number' },
+    fromSalary: { type: 'number', required: true },
     toSalary: { type: 'number', required: true },
     description: { type: 'string', required: true },
     jobRequirements: { type: 'string', required: true },

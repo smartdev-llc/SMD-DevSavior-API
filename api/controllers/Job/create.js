@@ -8,13 +8,23 @@ module.exports = async function (req, res) {
   }
   const { skillIds, title, description, categoryId, fromSalary, toSalary, jobRequirements } = req.body;
 
-  if (!title || !categoryId || !description || !_.isNumber(toSalary) || !jobRequirements) {
+  if (!title || !categoryId || !description || !jobRequirements) {
     return res.badRequest({
       message: "Missing parameters."
     });
   }
 
-  const salary = salaryCoverted(res, fromSalary, toSalary);
+  if (!isValidSalary(fromSalary, toSalary)) {
+    return res.badRequest({
+      message: "Invalid Salary."
+    });
+  }
+  
+  if (fromSalary > toSalary) {
+    return res.badRequest({
+      message: "toSalary must be greater than fromSalary."
+    });
+  }
 
   try {
     const job = await Job.create({
@@ -24,8 +34,8 @@ module.exports = async function (req, res) {
       category: categoryId,
       skills: skillIds,
       jobRequirements,
-      fromSalary: salary.from,
-      toSalary: salary.to
+      fromSalary,
+      toSalary
     }).fetch();
 
     const category = await Category.findOne({ id: categoryId });
@@ -60,18 +70,4 @@ module.exports = async function (req, res) {
   }
 };
 
-const salaryCoverted = (res, fromSalary, toSalary) => {
-  const from = (_.isNumber(fromSalary) > 0) ? fromSalary : 0;
-  const to = (_.isNumber(toSalary) > 0) ? toSalary : 0;
-
-  if (from > to) {
-    return res.badRequest({
-      message: "TO must be greater than FROM"
-    });
-  }
-
-  return convertedSalary = {
-    from,
-    to
-  }
-} 
+const isValidSalary = (fromSalary, toSalary) =>  (_.isNumber(fromSalary)  && _.isNumber(toSalary) && fromSalary >= 0 && toSalary >= 0);
