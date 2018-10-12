@@ -29,7 +29,8 @@ module.exports.policies = {
   'job/create': 'isCompany',
   'job/apply': 'isStudent',
   'job/search': true,
-  
+  'job/find-one': true,
+
   // Category
   'category/find': true,
   
