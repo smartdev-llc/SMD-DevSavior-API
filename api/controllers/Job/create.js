@@ -8,7 +8,7 @@ module.exports = async function (req, res) {
   }
   const { skillIds, title, description, categoryId, fromSalary, toSalary, jobRequirements } = req.body;
 
-  if (!title || !categoryId || !description || !toSalary || !jobRequirements) {
+  if (!title || !categoryId || !description || !_.isNumber(toSalary) || !jobRequirements) {
     return res.badRequest({
       message: "Missing parameters."
     });
@@ -47,11 +47,12 @@ module.exports = async function (req, res) {
         },
         status: job.status,
         jobRequirements: job.jobRequirements,
-        salary: job.salary
+        fromSalary: job.fromSalary,
+        toSalary: job.toSalary
       }
     });
 
-    res.ok(job);
+    return res.ok(job);
   } catch (err) {
     return res.serverError({
       message: "Something went wrong."
