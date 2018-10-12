@@ -22,7 +22,7 @@ module.exports = async function (req, res) {
   
   if (fromSalary > toSalary) {
     return res.badRequest({
-      message: "toSalary must be greater than fromSalary."
+      message: "toSalary must be greater than or equal to fromSalary."
     });
   }
 
