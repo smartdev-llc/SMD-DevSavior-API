@@ -14,7 +14,7 @@ module.exports = {
     title: { type: 'string', required: true },
     fromSalary: { type: 'number', required: true },
     toSalary: { type: 'number', required: true },
-    description: { type: 'string', required: true },
+    description: { type: 'json', required: true },
     requirements: { type: 'json', required: true },
     students: {
       collection: 'student',
