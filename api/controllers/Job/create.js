@@ -6,9 +6,9 @@ module.exports = async function (req, res) {
       message: "You need login as a company to create a new job."
     });
   }
-  const { skillIds, title, description, categoryId, fromSalary, toSalary, jobRequirements } = req.body;
+  const { skillIds, title, description, categoryId, fromSalary, toSalary, requirements } = req.body;
 
-  if (!title || !categoryId || !description || !jobRequirements) {
+  if (!title || !categoryId || !description || !requirements) {
     return res.badRequest({
       message: "Missing parameters."
     });
@@ -33,7 +33,7 @@ module.exports = async function (req, res) {
       description,
       category: categoryId,
       skills: skillIds,
-      jobRequirements,
+      requirements,
       fromSalary,
       toSalary
     }).fetch();
@@ -56,7 +56,7 @@ module.exports = async function (req, res) {
           name: category.name
         },
         status: job.status,
-        jobRequirements: job.jobRequirements,
+        requirements: job.requirements,
         fromSalary: job.fromSalary,
         toSalary: job.toSalary
       }
