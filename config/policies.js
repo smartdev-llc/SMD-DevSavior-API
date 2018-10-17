@@ -58,4 +58,7 @@ module.exports.policies = {
   'resume/upsert-personal-information': 'isStudent',
   'resume/upsert-basic-information': 'isStudent',
   'resume/upsert-working-preference': 'isStudent',
+
+  // Client
+  'client/contact-admin': true
 };
