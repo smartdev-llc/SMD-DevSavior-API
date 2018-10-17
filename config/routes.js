@@ -73,9 +73,11 @@ module.exports.routes = {
 
   'get /students/:id': "Student.find-one",
 
-  'put /my-resume/personal-info': 'Resume.upsert-personal-information',
-  'put /my-resume/basic-info': 'Resume.upsert-basic-information',
-  'put /my-resume/working-preference': 'Resume.upsert-working-preference',
+  'get /profile/me': 'Profile.find-me',
+  'get /profile/:studentId': 'Profile.find-one',
+  'put /profile/me/personal-info': 'Profile.upsert-personal-info',
+  'put /profile/me/basic-info': 'Profile.upsert-basic-info',
+  'put /profile/me/working-preference': 'Profile.upsert-working-preference',
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

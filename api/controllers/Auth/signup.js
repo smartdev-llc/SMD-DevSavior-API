@@ -53,6 +53,7 @@ module.exports = async function (req, res) {
         });
       } else {
         const userInfo = await Student.create(studentReq).fetch();
+        await Profile.create({ owner: userInfo.id });
         const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role: 'student', token_type: VERIFICATION_TOKEN });
         const verificationToken = JwtService.issue(decodedInfo, { expiresIn });
 

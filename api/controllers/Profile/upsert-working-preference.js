@@ -5,10 +5,10 @@ const {
 
 module.exports = async function (req, res) {
   const userId = _.get(req, 'user.id');
-  let userCV;
+  let userProfile;
 
   try {
-    userCV = await Resume.findOrCreate({ student: userId}, { student: userId });
+    userProfile = await Profile.findOne({ owner: userId});
   } catch (err) {
     return res.serverError({
       message: "Something went wrong."
@@ -67,22 +67,21 @@ module.exports = async function (req, res) {
     expectedSalaryTo,
     jobType,
     careerObjectives,
-    studentCV: userCV.id
+    studentProfile: userProfile.id
   }
 
   try {
-    const existingWorkingPreference = await WorkingPreference.findOne({ studentCV: userCV.id });
+    const existingWorkingPreference = await WorkingPreference.findOne({ studentProfile: userProfile.id });
     let workingPreference;
     if (!existingWorkingPreference) {
-      workingPreference = await WorkingPreference.create(workingPreferenceBody);
+      workingPreference = await WorkingPreference.create(workingPreferenceBody).fetch();
     } else {
-      updatedorkingPreferences = await WorkingPreference.update({ studentCV: userCV.id }).set(workingPreferenceBody).fetch();
-      workingPreference = updatedorkingPreferences[0];
+      updatedWorkingPreferences = await WorkingPreference.update({ studentProfile: userProfile.id }).set(workingPreferenceBody).fetch();
+      workingPreference = updatedWorkingPreferences[0];
     }
 
     res.ok(workingPreference);
   } catch (err) {
-    console.log(err);
     return res.serverError({
       message: "Something went wrong."
     });

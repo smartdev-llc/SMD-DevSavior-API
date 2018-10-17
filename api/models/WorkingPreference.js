@@ -35,8 +35,8 @@ module.exports = {
       type: 'json'
     },
 
-    studentCV: {
-      model: 'resume'
+    studentProfile: {
+      model: 'profile'
     }
     
   }
