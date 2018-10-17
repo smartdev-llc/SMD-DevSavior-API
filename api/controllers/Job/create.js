@@ -1,3 +1,7 @@
+const { 
+  isValidSalary
+} = require('../../../utils/validator');
+
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
   const companyName = _.get(req, "user.name");
@@ -17,12 +21,6 @@ module.exports = async function (req, res) {
   if (!isValidSalary(fromSalary, toSalary)) {
     return res.badRequest({
       message: "Invalid Salary."
-    });
-  }
-  
-  if (fromSalary > toSalary) {
-    return res.badRequest({
-      message: "toSalary must be greater than or equal to fromSalary."
     });
   }
 
@@ -69,5 +67,3 @@ module.exports = async function (req, res) {
     });
   }
 };
-
-const isValidSalary = (fromSalary, toSalary) =>  (_.isNumber(fromSalary)  && _.isNumber(toSalary) && fromSalary >= 0 && toSalary >= 0);

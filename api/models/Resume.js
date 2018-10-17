@@ -5,37 +5,76 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 const constants = require('../../constants');
-const { NAM_1_TO_3, NAM_4, NAM_CUOI, GRADUATED, WORKED } = constants.QUALIFICATION;
+const { FIRST_TO_THIRD_YEAR, FOURTH_YEAR, FINAL_YEAR, GRADUATED } = constants.EDUCATIONAL_STATUS;
+const { SINGLE, MARRIED } = constants.MARITAL_STATUS;
+const { MALE, FEMALE } = constants.GENDER;
 
 module.exports = {
 
   attributes: {
-    subject: {
-      type: 'string',
-      required: true
-    },
-    university: {
-      type: 'string',
-      required: true
-    },
-    qualification: {
-      type: 'string',
-      isIn: [NAM_1_TO_3, NAM_4, NAM_CUOI, GRADUATED, WORKED],
-      required: true
-    },
-    fromDate: {
+    fullName: {
       type: 'string'
     },
-    toDate: {
+    email: {
       type: 'string'
+    },
+    gender: {
+      type: 'string',
+      isIn: [MALE, FEMALE]
+    },
+    dateOfBirth: {
+      type: 'string'
+    },
+    maritalStatus: {
+      type: 'string',
+      isIn: [SINGLE, MARRIED]
+    },
+    country: {
+      type: 'string'
+    },
+    city: {
+      type: 'string'
+    },
+    currentAddress: {
+      type: 'string'
+    },
+    jobTitle: {
+      type: 'string'
+    },
+    yearsOfExperience: {
+      type: 'number'
+    },
+    educationalStatus: {
+      type: 'string',
+      isIn: [FIRST_TO_THIRD_YEAR, FOURTH_YEAR, FINAL_YEAR, GRADUATED]
+    },
+    isPrivate: { // will or will not show public information: phone, email
+      type: 'boolean',
+      defaultsTo: true
+    },
+    skills: {
+      type: 'json', // use json type to store string array
+      defaultsTo: []
+    },
+    languages: {
+      type: 'json', // use json type to store object array
+      defaultsTo: []
+    },
+    educations: {
+      collection: 'resumeeducation',
+      via: 'studentCV'
+    },
+    workingPreference: {
+      collection: 'workingpreference',
+      via: 'studentCV'
+    },
+    workingExperiences: {
+      collection: 'workingexperience',
+      via: 'studentCV'
     },
     student: {
       model: 'student'
     },
-    achievements: {
-      collection: 'achievement',
-      via: 'resume'
-    }
   },
 
 };

@@ -6,6 +6,9 @@
  */
 const bcrypt = require('bcrypt-nodejs');
 
+const constants = require('../../constants');
+const { ACTIVE } = constants.STATUS;
+
 module.exports = {
 
   attributes: {
@@ -28,14 +31,9 @@ module.exports = {
     profileImageURL: {
       type: 'string'
     },
-    gender: {
-      type: 'string',
-      defaultsTo: 'UNKNOWN',
-      isIn: ['MALE', 'FEMALE', 'OTHER', 'UNKNOWN']
-    },
     status: { 
       type: 'string', 
-      defaultsTo: 'ACTIVE' 
+      defaultsTo: ACTIVE
     },
     providers: {
       type: 'json', 
@@ -49,19 +47,16 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     },
-    skills: {
-      collection: 'skill',
-      via: 'student',
-      through: 'skillsubscription'
-    },
     jobs: {
       collection: 'job',
       via: 'student',
       through: 'jobapplication'
     },
-    birthday: {
-      type: 'string'
-    },
+    skills: {
+      collection: 'skill',
+      via: 'student',
+      through: 'skillsubscription'
+    }
   },
 
   customToJSON: function() {

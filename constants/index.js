@@ -17,12 +17,38 @@ module.exports = {
 
   COMPANY_PUBLIC_FIELDS: [ 'id', 'name', 'city', 'contactName', 'phoneNumber', 'website', 'description', 'logoURL', 'videoURL'],
 
-  QUALIFICATION: {
-    NAM_1_TO_3: '1-3',
-    NAM_4: '4',
-    NAM_CUOI: 'last',
-    GRADUATED: 'graduated',
-    WORKED: 'worked'
+  EDUCATIONAL_STATUS: {
+    FIRST_TO_THIRD_YEAR: 'FIRST_TO_THIRD_YEAR',
+    FOURTH_YEAR: 'FOURTH_YEAR',
+    FINAL_YEAR: 'FINAL_YEAR',
+    GRADUATED: 'GRADUATED'
+  },
+
+  MARITAL_STATUS: {
+    SINGLE: 'SINGLE',
+    MARRIED: 'MARRIED'
+  },
+
+  GENDER: {
+    MALE: 'MALE',
+    FEMALE: 'FEMALE'
+  },
+
+  STATUS: {
+    ACTIVE: 'ACTIVE',
+    INACTIVE: 'INACTIVE'
+  },
+
+  WORKING_LOCATION: {
+    HN: "Ha Noi",
+    TPHCM: "TP Ho Chi Minh",
+    DN: 'Da Nang'
+  },
+
+  JOB_TYPE: {
+    FULL_TIME: 'FULL_TIME', 
+    PART_TIME: 'PART_TIME', 
+    INTERSHIP: 'INTERSHIP'
   },
 
   REGEX: {

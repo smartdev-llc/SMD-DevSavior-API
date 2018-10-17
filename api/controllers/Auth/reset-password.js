@@ -1,6 +1,7 @@
 
 const validator = require('validator');
 const bcrypt = require('bcrypt-nodejs');
+const validatorUtils = require('../../../utils/validator');
 const constants = require('../../../constants');
 const { RESET_PASSWORD_TOKEN } = constants.TOKEN_TYPE;
 
@@ -19,7 +20,7 @@ module.exports = async function (req, res) {
     });
   }
 
-  if (!isValidPassword(password)) {
+  if (!validatorUtils.isValidPassword(password)) {
     return res.badRequest({
       message: "Password must be at least 8 characters."
     })
@@ -97,5 +98,3 @@ module.exports = async function (req, res) {
     message: "Reset password successfully."
   });
 }
-
-const isValidPassword = (password) => validator.isLength(password, { min: 8, max: undefined });

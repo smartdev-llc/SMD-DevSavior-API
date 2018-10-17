@@ -52,5 +52,10 @@ module.exports.policies = {
   'student/find-one': true,
 
   // JobApplication
-  'jobapplication/find': 'isCompany'
+  'jobapplication/find': 'isCompany',
+
+  // Resume
+  'resume/upsert-personal-information': 'isStudent',
+  'resume/upsert-basic-information': 'isStudent',
+  'resume/upsert-working-preference': 'isStudent',
 };

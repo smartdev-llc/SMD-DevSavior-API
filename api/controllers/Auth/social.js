@@ -1,10 +1,11 @@
 const passport = require('passport');
+const validatorUtils = require('../../../utils/validator');
 const constants = require('../../../constants');
 const { ACCESS_TOKEN } = constants.TOKEN_TYPE;
 
 module.exports = async function (req, res) {
   const provider = req.params.provider;
-  if (!isValidSocialProvider(provider)) {
+  if (!validatorUtils.isValidSocialProvider(provider)) {
     return res.badRequest({
       message: "Invalid social provider."
     });
@@ -31,7 +32,3 @@ module.exports = async function (req, res) {
 
 }
 
-const isValidSocialProvider = (provider) => {
-  const validProviders = ["facebook", "google"];
-  return _.indexOf(validProviders, provider) !== -1;
-}

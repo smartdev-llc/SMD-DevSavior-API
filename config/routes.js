@@ -70,7 +70,12 @@ module.exports.routes = {
   'delete /photos/:photoName': 'Photo.delete',
 
   'get /companies/:id': "Company.find-one",
-  'get /students/:id': "Student.find-one"
+
+  'get /students/:id': "Student.find-one",
+
+  'put /my-resume/personal-info': 'Resume.upsert-personal-information',
+  'put /my-resume/basic-info': 'Resume.upsert-basic-information',
+  'put /my-resume/working-preference': 'Resume.upsert-working-preference',
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

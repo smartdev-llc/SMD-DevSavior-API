@@ -1,10 +1,5 @@
 module.exports = async function (req, res) {
   const userId = _.get(req, 'user.id');
-  if (!userId) {
-    return res.unauthorized({
-      message: "You need to login as a user to apply a new job."
-    });
-  }
 
   const { jobId } = req.params;
 

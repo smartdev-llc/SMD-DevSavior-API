@@ -15,8 +15,9 @@ module.exports = {
       model: 'skill'
     },
     // Student subcribes to receive email or not
-    status: {
-      type: 'string'
+    isSubscribing: {
+      type: 'boolean',
+      defaultsTo: false
     },
     // How good at this skill is student?
     strengh: {
