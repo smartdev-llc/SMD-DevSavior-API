@@ -15,7 +15,7 @@ module.exports = {
 
   FILE_LIMIT_SIZE: 10000000, // 10MB,
 
-  COMPANY_PUBLIC_FIELDS: [ 'id', 'name', 'city', 'contactName', 'phoneNumber', 'website', 'description', 'logoURL', 'videoURL'],
+  COMPANY_PUBLIC_FIELDS: [ 'id', 'name', 'email', 'address', 'city', 'contactName', 'phoneNumber', 'website', 'description', 'logoURL', 'coverURL', 'videoURL'],
 
   EDUCATIONAL_STATUS: {
     FIRST_TO_THIRD_YEAR: 'FIRST_TO_THIRD_YEAR',
