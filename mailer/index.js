@@ -88,8 +88,8 @@ function mailerFactory() {
     const sendOptions = {
       to: user.email
     };
-
-    return self.send(sendOptions, contentData);
+    const data = _.assign({}, contentData, { admin: user })
+    return self.send(sendOptions, data);
   };
   
   //Send to an email with lang

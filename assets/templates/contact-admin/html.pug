@@ -1,0 +1,21 @@
+extends ../layout/index
+
+block content
+  div#contact-admin
+    p
+      | Hi admin
+      |
+      strong !{`${_data.admin.email}`}
+      | , here is my report: 
+    p
+      | Name:
+      |
+      strong !{`${_data.userInfo.name}`}
+    p
+      | Email:
+      |
+      strong !{`${_data.userInfo.email}`}
+    p
+      | Message:
+      |
+      strong !{`${_data.userInfo.message}`}
