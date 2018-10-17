@@ -60,5 +60,5 @@ module.exports.policies = {
   'resume/upsert-working-preference': 'isStudent',
 
   // Client
-  'client/contact-admin': true
+  'common/contact-admin': true
 };

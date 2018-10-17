@@ -77,7 +77,8 @@ module.exports.routes = {
   'put /my-resume/basic-info': 'Resume.upsert-basic-information',
   'put /my-resume/working-preference': 'Resume.upsert-working-preference',
 
-  'post /contact-admin': 'Client.contact-admin'
+  'post /contact': 'Common.contact-admin'
+  
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝

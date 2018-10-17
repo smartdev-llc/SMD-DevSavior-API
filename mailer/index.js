@@ -48,7 +48,7 @@ function mailerFactory() {
 
   Mailer.prototype.getMailOptions = function(sendOptions, templateResults) {
     const truncatedSubject = _.truncate(`${templateResults.subject} ${subject}`, {
-      'length': 40,
+      'length': 100,
       'separator': ' '
     });
     const mailOptions = {
@@ -75,7 +75,7 @@ function mailerFactory() {
   Mailer.prototype.send = function(sendOptions, contentData) {
 
     contentData = contentData || {};
-    subject = _.get(contentData, 'userInfo.subject', '');
+    subject = `${_.get(contentData, 'name', '')} - ${_.get(contentData, 'email', '')}`;
     const self = this;
 
     return self.template
