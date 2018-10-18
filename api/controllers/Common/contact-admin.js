@@ -34,7 +34,7 @@ module.exports = async function (req, res) {
     })
   } catch (err) {
     return res.serverError({
-      message: `Something went wrong.${err}`
+      message: `Something went wrong.`
     });
   }
 }
