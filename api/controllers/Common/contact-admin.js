@@ -29,9 +29,9 @@ module.exports = async function (req, res) {
 
   try {
     await EmailService.sendToAdmins(admins, 'contact-admin', contactData);
-    res.ok({
+    return res.ok({
       message: "Your request successfully."
-    })
+    });
   } catch (err) {
     return res.serverError({
       message: `Something went wrong.`
