@@ -47,6 +47,10 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     },
+    profile: {
+      collection: 'profile',
+      via: 'owner'
+    },
     jobs: {
       collection: 'job',
       via: 'student',

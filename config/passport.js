@@ -184,6 +184,7 @@ async function handleFacebookAuthentication(req, accessToken, refreshToken, prof
     };
 
     user = await Student.create(userProfile).fetch();
+    await Profile.create({ owner: user.id });
 
     EmailService.sendToUser(user, 'welcome-social-email', {
       provider: "Facebook",
@@ -241,6 +242,7 @@ async function handleGoogleAuthentication(req, accessToken, refreshToken, profil
     };
 
     user = await Student.create(userProfile).fetch();
+    await Profile.create({ owner: user.id });
     EmailService.sendToUser(user, 'welcome-social-email', {
       provider: "Google",
       userInfo: user

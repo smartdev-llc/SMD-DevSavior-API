@@ -1,5 +1,5 @@
 /**
- * Resume.js
+ * Profile.js
  *
  * @description :: A model definition.  Represents a database table/collection/etc.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -61,19 +61,20 @@ module.exports = {
       defaultsTo: []
     },
     educations: {
-      collection: 'resumeeducation',
-      via: 'studentCV'
+      collection: 'education',
+      via: 'studentProfile'
     },
     workingPreference: {
       collection: 'workingpreference',
-      via: 'studentCV'
+      via: 'studentProfile'
     },
     workingExperiences: {
       collection: 'workingexperience',
-      via: 'studentCV'
+      via: 'studentProfile'
     },
-    student: {
-      model: 'student'
+    owner: {
+      model: 'student',
+      unique: true
     },
   },
 

@@ -57,7 +57,7 @@ module.exports = async function (req, res) {
     })
   }
 
-  const resumeBody = {
+  const profileBody = {
     fullName,
     phoneNumber,
     email,
@@ -67,19 +67,13 @@ module.exports = async function (req, res) {
     country,
     city,
     currentAddress,
-    student: userId
+    owner: userId
   };
 
   try {
-    const existingCV = await Resume.findOne({ student: userId });
-    let userCV;
-    if (!existingCV) {
-      userCV = await Resume.create(resumeBody);
-    } else {
-      const updatedCVs = await Resume.update({ student: userId }).set(resumeBody).fetch();
-      userCV = updatedCVs[0];
-    }
-    res.ok(userCV);
+    const updatedProfiles = await Profile.update({ owner: userId }).set(profileBody).fetch();
+    const userProfile = updatedProfiles[0];
+    res.ok(userProfile);
   } catch(err) {
     return res.serverError({
       message: "Something went wrong."

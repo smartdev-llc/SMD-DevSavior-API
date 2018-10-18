@@ -48,16 +48,17 @@ module.exports.policies = {
   'company/update': 'isCompany',
   
   // Student
-  'resume/create': 'isStudent',
   'student/find-one': true,
 
   // JobApplication
   'jobapplication/find': 'isCompany',
 
-  // Resume
-  'resume/upsert-personal-information': 'isStudent',
-  'resume/upsert-basic-information': 'isStudent',
-  'resume/upsert-working-preference': 'isStudent',
+  // Profile
+  'profile/find-me': 'isStudent',
+  'profile/find-one': true,
+  'profile/upsert-personal-info': 'isStudent',
+  'profile/upsert-basic-info': 'isStudent',
+  'profile/upsert-working-preference': 'isStudent',
 
   // Client
   'common/contact-admin': true
