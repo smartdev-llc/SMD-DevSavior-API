@@ -59,6 +59,8 @@ module.exports.policies = {
   'profile/upsert-personal-info': 'isStudent',
   'profile/upsert-basic-info': 'isStudent',
   'profile/upsert-working-preference': 'isStudent',
+  'profile/upsert-skills': 'isStudent',
+  'profile/upsert-languages': 'isStudent',
 
   // Client
   'common/contact-admin': true

@@ -19,8 +19,8 @@ const findOneByCompanyId = async (req, res, userId, id) => {
       .populate('category');
 
     if (!job) {
-      return res.badRequest({
-        message: 'Job is not found'
+      return res.notFound({
+        message: 'Job is not found.'
       });
     }
 

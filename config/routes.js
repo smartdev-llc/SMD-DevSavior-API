@@ -78,6 +78,8 @@ module.exports.routes = {
   'put /profile/me/personal-info': 'Profile.upsert-personal-info',
   'put /profile/me/basic-info': 'Profile.upsert-basic-info',
   'put /profile/me/working-preference': 'Profile.upsert-working-preference',
+  'put /profile/me/skills': 'Profile.upsert-skills',
+  'put /profile/me/languages': 'Profile.upsert-languages',
 
   'post /contact': 'Common.contact-admin'
   

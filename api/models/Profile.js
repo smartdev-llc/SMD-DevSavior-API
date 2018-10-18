@@ -18,6 +18,9 @@ module.exports = {
     email: {
       type: 'string'
     },
+    phoneNumber: {
+      type: 'string'
+    },
     gender: {
       type: 'string',
       isIn: [MALE, FEMALE]

@@ -8,7 +8,12 @@ module.exports = async function (req, res) {
       .populate('workingPreference')
       .populate('workingExperiences')
       .populate('educations');
-      
+
+    if (!profile) {
+      return res.notFound({
+        message: 'Student profile is not found.'
+      });
+    }
     res.ok(profile);
   } catch (err) {
     return res.serverError({

@@ -6,6 +6,12 @@ module.exports = async function (req, res) {
     const student = await Student.findOne({ id })
       .omit(["password"])
       .populate("skills");
+
+    if (!student) {
+      return res.notFound({
+        message: 'Student is not found.'
+      });
+    }
     res.ok(student);
   } catch (err) {
     debuglog(err);

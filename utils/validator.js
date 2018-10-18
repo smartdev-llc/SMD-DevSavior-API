@@ -6,6 +6,8 @@ const { FIRST_TO_THIRD_YEAR, FOURTH_YEAR, FINAL_YEAR, GRADUATED } = constants.ED
 const { SINGLE, MARRIED } = constants.MARITAL_STATUS;
 const { MALE, FEMALE } = constants.GENDER;
 const { FULL_TIME, PART_TIME, INTERSHIP } = constants.JOB_TYPE;
+const { ENGLISH, FRENCH, GERMAN, SPANISH, RUSSIAN, KOREAN, CHINESE, JAPANESE } = constants.LANGUAGES;
+const { NO, BEGINNER, INTERMEDIATE, ADVANCED, NATIVE } = constants.LANGUAGE_LEVELS;
 
 const isValidPassword = (password) => {
   return validator.isLength(password, { min: 8, max: undefined })
@@ -33,6 +35,21 @@ const isValidSalary = (fromSalary, toSalary) =>  (_.isNumber(fromSalary)  && _.i
 
 const isValidJobType = (jobType) => _.indexOf([FULL_TIME, PART_TIME, INTERSHIP], jobType) > -1;
 
+const isArrayOfStrings = (strArr) => _.isArray(strArr) && _.every(strArr, str => _.isString(str));
+
+const isArrayOfObjects = (objArr) => _.isArray(objArr) && _.every(objArr, obj => _.isObject(obj));
+
+const isValidLanguagesObject = (langsObj) => {
+  if (!_.isObject(langsObj)) return false;
+  const keys = _.keys(langsObj), values = _.values(langsObj);
+  console.log(keys);
+  console.log(values);
+  const langArr = [ENGLISH, FRENCH, GERMAN, SPANISH, RUSSIAN, KOREAN, CHINESE, JAPANESE];
+  const levelArr = [NO, BEGINNER, INTERMEDIATE, ADVANCED, NATIVE];
+  if (!_.isEmpty(_.xor(langArr, keys))) return false;
+  return _.every(values, value => _.indexOf[levelArr, value]) > -1;
+};
+
 module.exports = {
   isValidPassword,
   isValidPhoneNumber,
@@ -42,5 +59,8 @@ module.exports = {
   isValidMaritalStatus,
   isValidEducationalStatus,
   isValidSalary,
-  isValidJobType
+  isValidJobType,
+  isArrayOfStrings,
+  isArrayOfObjects,
+  isValidLanguagesObject
 }
