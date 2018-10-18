@@ -70,11 +70,15 @@ module.exports.routes = {
   'delete /photos/:photoName': 'Photo.delete',
 
   'get /companies/:id': "Company.find-one",
+  'put /my-company/info': "Company.update-my-info",
+  'put /my-company/logo': "Company.upsert-my-logo",
+  'put /my-company/cover': "Company.upsert-my-cover",
 
   'get /students/:id': "Student.find-one",
 
   'get /profile/me': 'Profile.find-me',
   'get /profile/:studentId': 'Profile.find-one',
+  'put /profile/me/avatar': 'Profile.upsert-avatar',
   'put /profile/me/personal-info': 'Profile.upsert-personal-info',
   'put /profile/me/basic-info': 'Profile.upsert-basic-info',
   'put /profile/me/working-preference': 'Profile.upsert-working-preference',

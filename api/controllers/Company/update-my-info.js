@@ -8,17 +8,9 @@ module.exports = async function (req, res) {
     phoneNumber,
     website,
     description,
-    logoURL,
-    coverURL,
     photoURLs,
     videoURL
   } = req.body;
-
-  if (!companyId) {
-    return res.unauthorized({
-      message: "You need login as a company to create a new job."
-    });
-  }
 
   if (!name || !contactName || !phoneNumber || !address) {
     return res.badRequest({
@@ -34,8 +26,6 @@ module.exports = async function (req, res) {
     phoneNumber,
     website,
     description,
-    logoURL,
-    coverURL,
     photoURLs,
     videoURL
   }

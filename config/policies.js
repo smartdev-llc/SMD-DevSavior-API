@@ -45,7 +45,9 @@ module.exports.policies = {
   // Company
   'company/find': true,
   'company/find-one': true,
-  'company/update': 'isCompany',
+  'company/update-my-info': 'isCompany',
+  'company/upsert-my-logo': 'isCompany',
+  'company/upsert-my-cover': 'isCompany',
   
   // Student
   'student/find-one': true,
@@ -56,6 +58,7 @@ module.exports.policies = {
   // Profile
   'profile/find-me': 'isStudent',
   'profile/find-one': true,
+  'profile/upsert-avatar': 'isStudent',
   'profile/upsert-personal-info': 'isStudent',
   'profile/upsert-basic-info': 'isStudent',
   'profile/upsert-working-preference': 'isStudent',
