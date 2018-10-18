@@ -79,6 +79,8 @@ module.exports.routes = {
   'put /profile/me/basic-info': 'Profile.upsert-basic-info',
   'put /profile/me/working-preference': 'Profile.upsert-working-preference',
 
+  'post /contact': 'Common.contact-admin'
+  
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝

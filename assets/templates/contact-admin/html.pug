@@ -1,0 +1,23 @@
+extends ../layout/index
+
+block content
+  div#contact-admin
+    p
+      | Hi admin, There is a message from our customer. Detail:
+      br
+    p
+      | From:
+      |
+      strong !{`${_data.name}`}
+    p
+      | Email:
+      |
+      strong !{`${_data.email}`}
+    p
+      | About:
+      |
+      strong !{`${_data.subject}`}
+    p
+      | Content:
+      |
+      strong !{`${_data.message}`}

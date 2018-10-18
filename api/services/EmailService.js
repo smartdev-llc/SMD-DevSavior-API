@@ -22,8 +22,9 @@ module.exports = {
     await mailer.sendToEmailWithBccAdmin(email, data);
   },
 
-  sendToAdmins: async function (email, type, data) {
-
+  sendToAdmins: async function (users, type, data) {
+    const mailer = Mailer.getMailer(type);
+    await mailer.sendToUsers(users, data);
   }
 
 }
