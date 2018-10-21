@@ -63,8 +63,8 @@ module.exports = {
       type: 'json', // use json type to store object array
       defaultsTo: []
     },
-    educations: {
-      collection: 'education',
+    educationDegrees: {
+      collection: 'educationdegree',
       via: 'studentProfile'
     },
     workingPreference: {

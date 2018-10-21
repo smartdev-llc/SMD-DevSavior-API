@@ -2,7 +2,7 @@
 module.exports = {
 
   attributes: {
-    position: {
+    jobTitle: {
       type: 'string'
     },
 
@@ -10,17 +10,12 @@ module.exports = {
       type: 'string'
     },
 
-    from: {
-      type: 'json'
+    fromMonth: {
+      type: 'string'
     },
 
-    to: {
-      type: 'json'
-    },
-
-    isCurrentJob: {
-      type: 'boolean',
-      defaultsTo: false
+    toMonth: {
+      type: 'string'
     },
 
     additionalInformation: {

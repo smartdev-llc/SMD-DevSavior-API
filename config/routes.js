@@ -84,6 +84,12 @@ module.exports.routes = {
   'put /profile/me/working-preference': 'Profile.upsert-working-preference',
   'put /profile/me/skills': 'Profile.upsert-skills',
   'put /profile/me/languages': 'Profile.upsert-languages',
+  'post /profile/me/education-degrees': 'Profile.create-education-degree',
+  'put /profile/me/education-degrees/:id': 'Profile.update-education-degree',
+  'delete /profile/me/education-degrees/:id': 'Profile.delete-education-degree',
+  'post /profile/me/working-experiences': 'Profile.create-working-experience',
+  'put /profile/me/working-experiences/:id': 'Profile.update-working-experience',
+  'delete /profile/me/working-experiences/:id': 'Profile.delete-working-experience',
 
   'post /contact': 'Common.contact-admin'
   

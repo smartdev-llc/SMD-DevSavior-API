@@ -10,12 +10,20 @@ module.exports = {
       type: 'string'
     },
 
-    from: {
-      type: 'json'
+    degreeType: {
+      type: 'string'
     },
 
-    to: {
-      type: 'json'
+    degreeClassification: {
+      type: 'string'
+    },
+
+    fromMonth: {
+      type: 'string'
+    },
+
+    toMonth: {
+      type: 'string'
     },
 
     additionalInformation: {

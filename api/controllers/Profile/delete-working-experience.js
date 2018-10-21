@@ -1,7 +1,3 @@
-const { 
-  isValidPeriodOfMonthYear
-} = require('../../../utils/validator');
-
 module.exports = async function (req, res) {
   const userId = _.get(req, 'user.id');
   let userProfile;
@@ -45,36 +41,11 @@ module.exports = async function (req, res) {
     });
   }
 
-  const {
-    jobTitle, company, additionalInformation
-  } = req.body;
-
-  let fromMonth = req.body.fromMonth || workingExperience.fromMonth;
-  let toMonth = req.body.toMonth || workingExperience.toMonth;
-
-  if (jobTitle == "" || company == "") {
-    return res.badRequest({
-      message: "Invalid parameters (`jobTitle`, `company` cannot be EMPTY string)."
-    })
-  }
-
-  if (!isValidPeriodOfMonthYear(fromMonth, toMonth)) {
-    return res.badRequest({
-      message: "Invalid `fromMonth` and `toMonth` parameters (should be in format MM-YYYY and fromMonth <= toMonth)."
-    });
-  }
-
-  const workingExperienceBody = {
-    jobTitle, 
-    company,
-    fromMonth, 
-    toMonth, 
-    additionalInformation
-  };
-
   try {
-    const updatedWEs = await WorkingExperience.update({ id }, workingExperienceBody).fetch();
-    res.ok(updatedWEs[0]);
+    await WorkingExperience.destroy({ id });
+    res.ok({
+      message: "Working experience is deleted."
+    })
   } catch (err) {
     return res.serverError({
       message: "Something went wrong."

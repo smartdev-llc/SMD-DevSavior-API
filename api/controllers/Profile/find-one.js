@@ -1,5 +1,3 @@
-const { STUDENT_PUBLIC_FIELDS } = require('../../../constants');
-
 module.exports = async function (req, res) {
   const { studentId } = req.params;
   try {
@@ -7,7 +5,7 @@ module.exports = async function (req, res) {
       .populate('owner')
       .populate('workingPreference')
       .populate('workingExperiences')
-      .populate('educations');
+      .populate('educationDegrees');
 
     if (!profile) {
       return res.notFound({

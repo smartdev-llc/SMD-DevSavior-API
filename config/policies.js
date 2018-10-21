@@ -64,6 +64,12 @@ module.exports.policies = {
   'profile/upsert-working-preference': 'isStudent',
   'profile/upsert-skills': 'isStudent',
   'profile/upsert-languages': 'isStudent',
+  'profile/create-education-degree': 'isStudent',
+  'profile/update-education-degree': 'isStudent',
+  'profile/delete-education-degree': 'isStudent',
+  'profile/create-working-experience': 'isStudent',
+  'profile/update-working-experience': 'isStudent',
+  'profile/delete-working-experience': 'isStudent',
 
   // Client
   'common/contact-admin': true

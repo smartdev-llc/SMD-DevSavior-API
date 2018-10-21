@@ -5,7 +5,7 @@ module.exports = async function (req, res) {
       .populate('owner')
       .populate('workingPreference')
       .populate('workingExperiences')
-      .populate('educations');
+      .populate('educationDegrees');
 
     res.ok(profile);
   } catch (err) {

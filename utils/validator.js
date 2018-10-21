@@ -21,7 +21,8 @@ const isValidSocialProvider = (provider) => {
 }
 
 const isValidDateOfBirth = (date) => {
-  const dateMoment = moment(date, 'DD-MM-YYYY');
+  if (!_.isString(date)) return false;
+  const dateMoment = moment(date, 'DD-MM-YYYY', true);
   return dateMoment.isValid() && dateMoment.isBetween('1970-01-01');
 }
 
@@ -42,13 +43,20 @@ const isArrayOfObjects = (objArr) => _.isArray(objArr) && _.every(objArr, obj =>
 const isValidLanguagesObject = (langsObj) => {
   if (!_.isObject(langsObj)) return false;
   const keys = _.keys(langsObj), values = _.values(langsObj);
-  console.log(keys);
-  console.log(values);
   const langArr = [ENGLISH, FRENCH, GERMAN, SPANISH, RUSSIAN, KOREAN, CHINESE, JAPANESE];
   const levelArr = [NO, BEGINNER, INTERMEDIATE, ADVANCED, NATIVE];
   if (!_.isEmpty(_.xor(langArr, keys))) return false;
   return _.every(values, value => _.indexOf[levelArr, value]) > -1;
 };
+
+const isValidPeriodOfMonthYear = (fromMonth, toMonth) => {
+  const fromMoment = moment(fromMonth, 'MM-YYYY', true);
+  const toMoment = toMonth == 'NOW' ? moment(moment().format('MM-YYYY'), 'MM-YYYY', true) : moment(fromMonth, 'MM-YYYY', true);
+  const isValidFrom = fromMoment.isValid() && fromMoment.isBetween('1970-01');
+  const isValidTo = toMoment.isValid() && toMoment.isBetween('1970-01');
+  if (!isValidFrom || !isValidTo) return false;
+  return fromMoment <= toMoment;
+}
 
 module.exports = {
   isValidPassword,
@@ -62,5 +70,6 @@ module.exports = {
   isValidJobType,
   isArrayOfStrings,
   isArrayOfObjects,
-  isValidLanguagesObject
+  isValidLanguagesObject,
+  isValidPeriodOfMonthYear
 }
