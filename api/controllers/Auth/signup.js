@@ -101,7 +101,7 @@ module.exports = async function (req, res) {
       })
     }
 
-    if (!_.isString(name) || !_.isString(address) || !_.isString(description)) {
+    if (!_.isString(name) || !_.isString(address)) {
       return res.badRequest({
         message: "Invalid parameters."
       });
