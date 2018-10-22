@@ -26,7 +26,7 @@ module.exports = {
       required: true
     },
     address: {
-      type: 'string'
+      type: 'json'
     },
     city: {
       type: 'string'
@@ -41,7 +41,7 @@ module.exports = {
       type: 'string'
     },
     description: {
-      type: 'string'
+      type: 'json'
     },
     logoURL: {
       type: 'string'

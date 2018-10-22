@@ -101,6 +101,12 @@ module.exports = async function (req, res) {
       })
     }
 
+    if (!_.isString(name) || !_.isString(address) || !_.isString(description)) {
+      return res.badRequest({
+        message: "Invalid parameters."
+      });
+    }
+
     if (!validatorUtils.isValidPhoneNumber(phoneNumber)) {
       return res.badRequest({
         message: "Invalid phone number."
