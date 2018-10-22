@@ -6,7 +6,7 @@ module.exports = async function (req, res) {
   const uploadFile = req.file('file');
   const originalFilename = _.get(uploadFile, '_files.0.stream.filename');
   
-  if (!isImage(originalFilename)) {
+  if (!originalFilename || !isImage(originalFilename)) {
     return res.badRequest({
       message: "Invalid file extension."
     });
