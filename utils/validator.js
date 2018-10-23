@@ -61,8 +61,9 @@ const isValidPeriodOfMonthYear = (fromMonth, toMonth) => {
 }
 
 const isImage = (imageName) => {
+  if (_.isString(imageName)) return false;
   const acceptedExts = ['.jpg', '.png', '.jpeg'];
-  const imageExt = path.extname(imageName);
+  const imageExt = path.extname(imageName).toLowerCase();
   return _.indexOf(acceptedExts, imageExt) > -1;
 }
 
