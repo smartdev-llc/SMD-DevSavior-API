@@ -1,5 +1,7 @@
 const moment = require('moment');
+const path = require('path');
 const validator = require('validator');
+
 const constants = require('../constants');
 const { PHONE } = constants.REGEX;
 const { FIRST_TO_THIRD_YEAR, FOURTH_YEAR, FINAL_YEAR, GRADUATED } = constants.EDUCATIONAL_STATUS;
@@ -58,6 +60,12 @@ const isValidPeriodOfMonthYear = (fromMonth, toMonth) => {
   return fromMoment <= toMoment;
 }
 
+const isImage = (imageName) => {
+  const acceptedExts = ['.jpg', '.png', '.jpeg'];
+  const imageExt = path.extname(imageName);
+  return _.indexOf(acceptedExts, imageExt) > -1;
+}
+
 module.exports = {
   isValidPassword,
   isValidPhoneNumber,
@@ -71,5 +79,6 @@ module.exports = {
   isArrayOfStrings,
   isArrayOfObjects,
   isValidLanguagesObject,
-  isValidPeriodOfMonthYear
+  isValidPeriodOfMonthYear,
+  isImage
 }

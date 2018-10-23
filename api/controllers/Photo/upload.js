@@ -1,6 +1,8 @@
 const constants = require('../../../constants');
 const { FILE_LIMIT_SIZE: maxBytes } = constants;
-const isImage = require('is-image');
+const { 
+  isImage
+} = require('../../../utils/validator');
 
 module.exports = async function (req, res) {
   const uploadFile = req.file('file');

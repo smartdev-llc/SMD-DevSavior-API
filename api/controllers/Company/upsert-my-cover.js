@@ -1,8 +1,12 @@
-const isImage = require('is-image');
 const fs = require('fs');
 
 const constants = require('../../../constants');
 const { FILE_LIMIT_SIZE: maxBytes } = constants;
+
+const { 
+  isImage
+} = require('../../../utils/validator');
+
 
 module.exports = async function (req, res) {
   const companyId = _.get(req, 'user.id');
@@ -33,16 +37,24 @@ module.exports = async function (req, res) {
     }
 
     const photoName = _.get(uploadedFiles, '0.fd', '').split('/').pop();
+    const photoUrl = `/photos/${photoName}`;
 
     const oldCoverURL = _.get(req, 'user.coverURL');
 
-    const updatedCompanies = await Company.update({ id: companyId }).set({ coverURL: `/photos/${photoName}` }).fetch();
-
-    if (oldCoverURL) {
-      deleteOldImage(oldCoverURL);
+    try {
+      await Company.update({ id: companyId }).set({ coverURL: photoUrl });
+      if (oldCoverURL) {
+        deleteOldImage(oldCoverURL);
+      }
+  
+      res.ok({
+        photoUrl
+      });
+    } catch (err) {
+      return res.serverError({
+        message: "Something went wrong."
+      })
     }
-
-    res.ok(updatedCompanies[0]);
   })
 
   function deleteOldImage(imageURL) {
