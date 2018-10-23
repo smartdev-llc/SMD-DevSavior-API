@@ -39,9 +39,15 @@ const findOne = async (req, res, id) => {
   try {
     const job = await Job
       .findOne({ id })
-      .populate('company', { select: COMPANY_PUBLIC_FIELDS })
+      .populate('company')
       .populate('skills', { select: ['id', 'name'] })
       .populate('category');
+
+    if (!job) {
+      return res.notFound({
+        message: 'Job is not found.'
+      });
+    }
 
     return res.ok(job);
   } catch (err) {

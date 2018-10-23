@@ -17,7 +17,7 @@ const findByCompanyId = async (req, res, userId) => {
       .populate('students', { select: ['id', 'firstName', 'lastName'] })
       .populate('skills', { select: ['id', 'name'] })
       .populate('category')
-      .populate('company', { select: COMPANY_PUBLIC_FIELDS });
+      .populate('company');
 
     if (!job) {
       return res.badRequest({
@@ -27,6 +27,7 @@ const findByCompanyId = async (req, res, userId) => {
 
     return res.ok(job);
   } catch (err) {
+    console.log(err);
     return res.serverError({
       message: `Something went wrong .`
     });
@@ -40,10 +41,11 @@ const findAll = async (req, res) => {
       .populate('students', { select: ['id', 'firstName', 'lastName'] })
       .populate('skills', { select: ['id', 'name'] })
       .populate('category')
-      .populate('company', { select: COMPANY_PUBLIC_FIELDS });
+      .populate('company');
 
     return res.ok(job);
   } catch (err) {
+    console.log(err);
     return res.serverError({
       message: `Something went wrong .`
     });
