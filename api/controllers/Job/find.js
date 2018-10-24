@@ -36,16 +36,19 @@ const findByCompanyId = async (req, res, userId) => {
 
 const findAll = async (req, res) => {
   try {
-    const job = await Job
+    const jobs = await Job
       .find({})
       .populate('students', { select: ['id', 'firstName', 'lastName'] })
       .populate('skills', { select: ['id', 'name'] })
       .populate('category')
       .populate('company');
 
-    return res.ok(job);
+    const jobConverted = _.map(jobs, job => {
+      job.numberOfCandidates = _.size(_.get(job, 'students'))
+      return _.omit(job, ['students']);;
+    })
+    return res.ok(jobConverted);
   } catch (err) {
-    console.log(err);
     return res.serverError({
       message: `Something went wrong .`
     });
