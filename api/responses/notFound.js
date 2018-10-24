@@ -18,7 +18,7 @@
  * ```
  */
 
-module.exports = function notFound () {
+module.exports = function notFound (data) {
 
   // Get access to `req` and `res`
   var req = this.req;
