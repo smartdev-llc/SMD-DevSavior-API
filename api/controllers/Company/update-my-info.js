@@ -8,21 +8,19 @@ module.exports = async function (req, res) {
     phoneNumber,
     website,
     description,
-    logoURL,
-    coverURL,
     photoURLs,
     videoURL
   } = req.body;
 
-  if (!companyId) {
-    return res.unauthorized({
-      message: "You need login as a company to create a new job."
-    });
-  }
-
   if (!name || !contactName || !phoneNumber || !address) {
     return res.badRequest({
       message: "Missing parameters."
+    });
+  }
+
+  if (!_.isString(name) || !_.isString(address) || !_.isString(description)) {
+    return res.badRequest({
+      message: "Invalid parameters."
     });
   }
 
@@ -34,8 +32,6 @@ module.exports = async function (req, res) {
     phoneNumber,
     website,
     description,
-    logoURL,
-    coverURL,
     photoURLs,
     videoURL
   }

@@ -53,6 +53,25 @@ module.exports = {
     INTERSHIP: 'INTERSHIP'
   },
 
+  LANGUAGES: {
+    ENGLISH: 'ENGLISH',
+    FRENCH: 'FRENCH',
+    GERMAN: 'GERMAN',
+    SPANISH: 'SPANISH',
+    RUSSIAN: 'RUSSIAN',
+    KOREAN: 'KOREAN',
+    CHINESE: 'CHINESE',
+    JAPANESE: 'JAPANESE'
+  },
+
+  LANGUAGE_LEVELS: {
+    NO: 'NO',
+    BEGINNER: 'BEGINNER',
+    INTERMEDIATE: 'INTERMEDIATE',
+    ADVANCED: 'ADVANCED',
+    NATIVE: 'NATIVE'
+  },
+
   REGEX: {
     PHONE: /^[0-9\+]{1,}[0-9\-]{3,15}$/
   },

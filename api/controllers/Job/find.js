@@ -1,3 +1,4 @@
+const { COMPANY_PUBLIC_FIELDS } = require('../../../constants');
 module.exports = async function (req, res) {
   const userId = _.get(req, "user.id");
   const role = _.get(req, "user.role");
@@ -15,7 +16,8 @@ const findByCompanyId = async (req, res, userId) => {
       .find({ company: userId })
       .populate('students', { select: ['id', 'firstName', 'lastName'] })
       .populate('skills', { select: ['id', 'name'] })
-      .populate('category');
+      .populate('category')
+      .populate('company');
 
     if (!job) {
       return res.badRequest({
@@ -25,6 +27,7 @@ const findByCompanyId = async (req, res, userId) => {
 
     return res.ok(job);
   } catch (err) {
+    console.log(err);
     return res.serverError({
       message: `Something went wrong .`
     });
@@ -37,10 +40,12 @@ const findAll = async (req, res) => {
       .find({})
       .populate('students', { select: ['id', 'firstName', 'lastName'] })
       .populate('skills', { select: ['id', 'name'] })
-      .populate('category');
+      .populate('category')
+      .populate('company');
 
     return res.ok(job);
   } catch (err) {
+    console.log(err);
     return res.serverError({
       message: `Something went wrong .`
     });

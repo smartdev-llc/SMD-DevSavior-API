@@ -66,8 +66,7 @@ module.exports = async function (req, res) {
     maritalStatus,
     country,
     city,
-    currentAddress,
-    owner: userId
+    currentAddress
   };
 
   try {

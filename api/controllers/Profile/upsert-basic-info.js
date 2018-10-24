@@ -26,8 +26,7 @@ module.exports = async function (req, res) {
   const profileBody = {
     jobTitle,
     yearsOfExperience,
-    educationalStatus,
-    owner: userId
+    educationalStatus
   };
 
   try {

@@ -1,4 +1,6 @@
-const isImage = require('is-image');
+const { 
+  isImage
+} = require('../../../utils/validator');
 
 module.exports = async function (req, res) {
   const photoName = req.params.photoName;

@@ -18,6 +18,9 @@ module.exports = {
     email: {
       type: 'string'
     },
+    phoneNumber: {
+      type: 'string'
+    },
     gender: {
       type: 'string',
       isIn: [MALE, FEMALE]
@@ -60,8 +63,8 @@ module.exports = {
       type: 'json', // use json type to store object array
       defaultsTo: []
     },
-    educations: {
-      collection: 'education',
+    educationDegrees: {
+      collection: 'educationdegree',
       via: 'studentProfile'
     },
     workingPreference: {

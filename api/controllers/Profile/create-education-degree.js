@@ -15,10 +15,10 @@ module.exports = async function (req, res) {
   }
 
   const {
-    jobTitle, company, fromMonth, toMonth, additionalInformation
+    university, major, degreeType, degreeClassification, fromMonth, toMonth, additionalInformation
   } = req.body;
 
-  if (!jobTitle || !company || !fromMonth ||  !toMonth) {
+  if (!university || !major || !degreeType || !degreeClassification || !fromMonth ||  !toMonth) {
     return res.badRequest({
       message: "Missing parameters."
     });
@@ -30,9 +30,11 @@ module.exports = async function (req, res) {
     });
   }
 
-  const workingExperienceBody = {
-    jobTitle, 
-    company,
+  const educationDegreeBody = {
+    university, 
+    major, 
+    degreeType, 
+    degreeClassification, 
     fromMonth, 
     toMonth, 
     additionalInformation,
@@ -40,8 +42,8 @@ module.exports = async function (req, res) {
   };
 
   try {
-    const workingExperience = await WorkingExperience.create(workingExperienceBody).fetch();
-    res.ok(workingExperience);
+    const educationDegree = await EducationDegree.create(educationDegreeBody).fetch();
+    res.ok(educationDegree);
   } catch (err) {
     return res.serverError({
       message: "Something went wrong."

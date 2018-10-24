@@ -22,7 +22,7 @@ module.exports = async function (req, res) {
     }
   } catch (err) {
     return res.serverError({
-      message: "Something went wrong."
+      message: `Something went wrong.`
     });
   }
 
@@ -37,12 +37,12 @@ module.exports = async function (req, res) {
       });
     } else {
       return res.serverError({
-        message: "Something went wrong."
+        message: `Something went wrong`
       });
     }
   } catch (err) {
     return res.serverError({
-      message: "Something went wrong."
+      message: `Something went wrong.`
     });
   }
 };

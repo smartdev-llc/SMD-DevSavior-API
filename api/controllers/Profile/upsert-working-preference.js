@@ -37,9 +37,9 @@ module.exports = async function (req, res) {
     });
   }
 
-  if (!_.isArray(careerObjectives)) {
+  if (!_.isString(careerObjectives)) {
     return res.badRequest({
-      message: "Invalid careerObjectives (should be an ARRAY)."
+      message: "Invalid careerObjectives (should be a STRING)."
     });
   }
 

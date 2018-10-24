@@ -101,6 +101,12 @@ module.exports = async function (req, res) {
       })
     }
 
+    if (!_.isString(name) || !_.isString(address)) {
+      return res.badRequest({
+        message: "Invalid parameters."
+      });
+    }
+
     if (!validatorUtils.isValidPhoneNumber(phoneNumber)) {
       return res.badRequest({
         message: "Invalid phone number."
@@ -131,7 +137,7 @@ module.exports = async function (req, res) {
         const verificationToken = JwtService.issue(decodedInfo, { expiresIn });
 
         await EmailService.sendToUser(userInfo, 'verify-company-email', {
-          verificationLink: `${process.env.WEB_URL}/verify-account?token=${verificationToken}`,
+          verificationLink: `${process.env.WEB_URL}/employer/verify-account?token=${verificationToken}`,
           userInfo
         });
 
