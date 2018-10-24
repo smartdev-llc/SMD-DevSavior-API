@@ -9,7 +9,7 @@ module.exports = async function (req, res) {
 
   if (!email) {
     return res.badRequest({
-      message: "You should provide your email to receive reset password email."
+      message: "You should provide your email to receive reset password link."
     });
   }
 
@@ -47,6 +47,7 @@ module.exports = async function (req, res) {
 
     try {
       userInfo.displayName = role == 'company' ? userInfo.name : `${userInfo.firstName} ${userInfo.lastName}`;
+      resetPasswordLink = role == 'company' ? `${process.env.WEB_URL}/employer/reset-password?token=${resetPasswordToken}` : `${process.env.WEB_URL}/reset-password?token=${resetPasswordToken}`;
       await EmailService.sendToUser(userInfo, 'reset-password-email', {
         resetPasswordLink: `${process.env.WEB_URL}/reset-password?token=${resetPasswordToken}`,
         userInfo

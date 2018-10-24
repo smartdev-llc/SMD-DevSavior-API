@@ -52,8 +52,10 @@ module.exports = async function (req, res) {
     const verificationToken = JwtService.issue(decodedInfo, { expiresIn });
 
     try {
-      await EmailService.sendToUser(userInfo, role === 'company' ? 'verify-company-email' : 'verify-student-email', {
-        verificationLink: `${process.env.WEB_URL}/verify-account?token=${verificationToken}`,
+      const template = role === 'company' ? 'verify-company-email' : 'verify-student-email';
+      const verificationLink = role === 'company' ? `${process.env.WEB_URL}/employer/verify-account?token=${verificationToken}` : `${process.env.WEB_URL}/verify-account?token=${verificationToken}`;
+      await EmailService.sendToUser(userInfo, template, {
+        verificationLink,
         userInfo
       });
 
