@@ -44,8 +44,7 @@ const findAll = async (req, res) => {
       .populate('company');
 
     const jobConverted = _.map(jobs, job => {
-      const numberOfCandidates = _.size(_.get(job, 'students'))
-      job.numberOfCandidates = numberOfCandidates
+      job.numberOfCandidates = _.size(_.get(job, 'students'))
       return _.omit(job, ['students']);;
     })
     return res.ok(jobConverted);
