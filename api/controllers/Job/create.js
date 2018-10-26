@@ -1,5 +1,6 @@
 const { 
-  isValidSalary
+  isValidSalary,
+  isValidJobType
 } = require('../../../utils/validator');
 
 module.exports = async function (req, res) {
@@ -10,9 +11,9 @@ module.exports = async function (req, res) {
       message: "You need login as a company to create a new job."
     });
   }
-  const { skillIds, title, description, categoryId, fromSalary, toSalary, requirements } = req.body;
+  const { skillIds, title, description, categoryId, fromSalary, toSalary, requirements, jobType, benefits } = req.body;
 
-  if (!title || !categoryId || !description || !requirements) {
+  if (!title || !categoryId || !description || !requirements || !jobType) {
     return res.badRequest({
       message: "Missing parameters."
     });
@@ -21,6 +22,12 @@ module.exports = async function (req, res) {
   if (!isValidSalary(fromSalary, toSalary)) {
     return res.badRequest({
       message: "Invalid Salary."
+    });
+  }
+
+  if (!isValidJobType(jobType)) {
+    return res.badRequest({
+      message: "Invalid job type (should be FULL_TIME or PART_TIME or INTERNSHIP."
     });
   }
 
@@ -33,7 +40,9 @@ module.exports = async function (req, res) {
       skills: skillIds,
       requirements,
       fromSalary,
-      toSalary
+      toSalary,
+      jobType,
+      benefits
     }).fetch();
 
     const category = await Category.findOne({ id: categoryId });
@@ -56,7 +65,9 @@ module.exports = async function (req, res) {
         status: job.status,
         requirements: job.requirements,
         fromSalary: job.fromSalary,
-        toSalary: job.toSalary
+        toSalary: job.toSalary,
+        jobType: job.jobType,
+        benefits: job.benefits
       }
     });
 
