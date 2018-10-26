@@ -10,6 +10,8 @@ const { MALE, FEMALE } = constants.GENDER;
 const { FULL_TIME, PART_TIME, INTERSHIP } = constants.JOB_TYPE;
 const { ENGLISH, FRENCH, GERMAN, SPANISH, RUSSIAN, KOREAN, CHINESE, JAPANESE } = constants.LANGUAGES;
 const { NO, BEGINNER, INTERMEDIATE, ADVANCED, NATIVE } = constants.LANGUAGE_LEVELS;
+const { HIGH_SCHOOL, COLLEGE, BACHELOR, MASTER, DOCTORATE, OTHER } = constants.DEGREE_TYPE;
+const { AVERAGE, GOOD, EXCELLENT } = constants.DEGREE_CLASSIFICATION;
 
 const isValidPassword = (password) => {
   return validator.isLength(password, { min: 8, max: undefined })
@@ -60,6 +62,10 @@ const isValidPeriodOfMonthYear = (fromMonth, toMonth) => {
   return fromMoment <= toMoment;
 }
 
+const isValidDegreeType = (degreeType) => _.indexOf([HIGH_SCHOOL, COLLEGE, BACHELOR, MASTER, DOCTORATE, OTHER], degreeType) > -1;
+
+const isValidDegreeClassification = (degreeClassification) => _.indexOf([AVERAGE, GOOD, EXCELLENT], degreeClassification) > -1;
+
 const isImage = (imageName) => {
   if (!_.isString(imageName)) return false;
   const acceptedExts = ['.jpg', '.png', '.jpeg'];
@@ -81,5 +87,7 @@ module.exports = {
   isArrayOfObjects,
   isValidLanguagesObject,
   isValidPeriodOfMonthYear,
+  isValidDegreeType,
+  isValidDegreeClassification,
   isImage
 }

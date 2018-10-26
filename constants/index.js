@@ -72,6 +72,21 @@ module.exports = {
     NATIVE: 'NATIVE'
   },
 
+  DEGREE_TYPE: {
+    HIGH_SCHOOL: 'HIGH_SCHOOL',
+    COLLEGE: 'COLLEGE',
+    BACHELOR: 'BACHELOR',
+    MASTER: 'MASTER',
+    DOCTORATE: 'DOCTORATE',
+    OTHER: 'OTHER'
+  },
+
+  DEGREE_CLASSIFICATION: {
+    AVERAGE: 'AVERAGE',
+    GOOD: 'GOOD',
+    EXCELLENT: 'EXCELLENT'
+  },
+
   REGEX: {
     PHONE: /^[0-9\+]{1,}[0-9\-]{3,15}$/
   },
