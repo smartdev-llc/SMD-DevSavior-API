@@ -4,6 +4,8 @@
  * @description :: A model definition.  Represents a database table/collection/etc.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
+const constants = require('../../constants');
+const { FULL_TIME, PART_TIME, INTERSHIP } = constants.JOB_TYPE;
 
 module.exports = {
 
@@ -16,6 +18,12 @@ module.exports = {
     toSalary: { type: 'number', required: true },
     description: { type: 'json', required: true },
     requirements: { type: 'json', required: true },
+    jobType: {
+      type: 'string',
+      isIn: [FULL_TIME, PART_TIME, INTERSHIP],
+      required: true
+    },
+    benefits: { type: 'json' },
     students: {
       collection: 'student',
       via: 'job',
