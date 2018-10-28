@@ -74,5 +74,8 @@ module.exports.policies = {
   'profile/delete-working-experience': 'isStudent',
 
   // Client
-  'common/contact-admin': true
+  'common/contact-admin': true,
+
+  // HotJob
+  'hotjob/create': true
 };
