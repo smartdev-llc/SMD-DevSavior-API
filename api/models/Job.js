@@ -5,7 +5,7 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 const constants = require('../../constants');
-const { FULL_TIME, PART_TIME, INTERSHIP } = constants.JOB_TYPE;
+const { FULL_TIME, PART_TIME, INTERSHIP, CONTRACT, FREELANCE } = constants.JOB_TYPE;
 
 module.exports = {
 
@@ -20,7 +20,7 @@ module.exports = {
     requirements: { type: 'json', required: true },
     jobType: {
       type: 'string',
-      isIn: [FULL_TIME, PART_TIME, INTERSHIP],
+      isIn: [FULL_TIME, PART_TIME, INTERSHIP, CONTRACT, FREELANCE],
       required: true
     },
     benefits: { type: 'json' },

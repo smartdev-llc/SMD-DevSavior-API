@@ -7,7 +7,7 @@ const { PHONE } = constants.REGEX;
 const { FIRST_TO_THIRD_YEAR, FOURTH_YEAR, FINAL_YEAR, GRADUATED } = constants.EDUCATIONAL_STATUS;
 const { SINGLE, MARRIED } = constants.MARITAL_STATUS;
 const { MALE, FEMALE } = constants.GENDER;
-const { FULL_TIME, PART_TIME, INTERSHIP } = constants.JOB_TYPE;
+const { FULL_TIME, PART_TIME, INTERSHIP, CONTRACT, FREELANCE } = constants.JOB_TYPE;
 const { ENGLISH, FRENCH, GERMAN, SPANISH, RUSSIAN, KOREAN, CHINESE, JAPANESE } = constants.LANGUAGES;
 const { NO, BEGINNER, INTERMEDIATE, ADVANCED, NATIVE } = constants.LANGUAGE_LEVELS;
 
@@ -36,7 +36,7 @@ const isValidEducationalStatus = (educationalStatus) => _.indexOf([FIRST_TO_THIR
 
 const isValidSalary = (fromSalary, toSalary) =>  (_.isNumber(fromSalary)  && _.isNumber(toSalary) && fromSalary >= 0 && toSalary >= fromSalary);
 
-const isValidJobType = (jobType) => _.indexOf([FULL_TIME, PART_TIME, INTERSHIP], jobType) > -1;
+const isValidJobType = (jobType) => _.indexOf([FULL_TIME, PART_TIME, INTERSHIP, CONTRACT, FREELANCE], jobType) > -1;
 
 const isArrayOfStrings = (strArr) => _.isArray(strArr) && _.every(strArr, str => _.isString(str));
 
