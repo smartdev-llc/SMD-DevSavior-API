@@ -61,6 +61,7 @@ module.exports.routes = {
   'get /jobs/search': 'Job.search',
   'get /jobs/:id': 'Job.find-one',
   'put /my-jobs/:id': 'Job.update-my-job',
+  'get /companies/:companyId/jobs': 'Job.find-by-company-id',
 
   'post /photos/upload': 'Photo.upload',
   'get /photos/:photoName': {

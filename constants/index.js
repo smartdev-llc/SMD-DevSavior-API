@@ -50,7 +50,9 @@ module.exports = {
   JOB_TYPE: {
     FULL_TIME: 'FULL_TIME', 
     PART_TIME: 'PART_TIME', 
-    INTERSHIP: 'INTERSHIP'
+    INTERSHIP: 'INTERSHIP',
+    CONTRACT: 'CONTRACT',
+    FREELANCE: 'FREELANCE'
   },
 
   LANGUAGES: {

@@ -1,5 +1,5 @@
 const constants = require('../../constants');
-const { FULL_TIME, PART_TIME, INTERSHIP } = constants.JOB_TYPE;
+const { FULL_TIME, PART_TIME, INTERSHIP, CONTRACT, FREELANCE } = constants.JOB_TYPE;
 
 module.exports = {
 
@@ -28,7 +28,7 @@ module.exports = {
 
     jobType: {
       type: 'string',
-      isIn: [FULL_TIME, PART_TIME, INTERSHIP]
+      isIn: [FULL_TIME, PART_TIME, INTERSHIP, CONTRACT, FREELANCE]
     },
 
     careerObjectives: {

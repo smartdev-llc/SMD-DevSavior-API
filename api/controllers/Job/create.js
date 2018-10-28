@@ -27,7 +27,7 @@ module.exports = async function (req, res) {
 
   if (!isValidJobType(jobType)) {
     return res.badRequest({
-      message: "Invalid job type (should be FULL_TIME or PART_TIME or INTERNSHIP."
+      message: "Invalid job type (should be FULL_TIME or PART_TIME or INTERNSHIP or CONTRACT or FREELANCE."
     });
   }
 

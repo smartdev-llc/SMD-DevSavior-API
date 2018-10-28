@@ -31,6 +31,7 @@ module.exports.policies = {
   'job/search': true,
   'job/find-one': true,
   'job/update-my-job': 'isCompany',
+  'job/find-by-company-id': true,
 
   // Category
   'category/find': true,
