@@ -1,0 +1,39 @@
+extends ../layout/index
+
+block content
+  div#verify-admin-email
+    p
+      | Hi admin,
+    p
+      | You received this email because your email is set as one of admin email. There is a request to create an admin account with following information:
+      li 
+        | - Email: 
+        | !{_data.userInfo.email}
+      li 
+        | - First name: 
+        | !{_data.userInfo.firstName}
+      li 
+        | - Last name: 
+        | !{_data.userInfo.lastName}
+    p
+      | Please review it then click this button to verify:
+    div.block
+      table.button.large.expand
+        tr
+          td
+            table
+              tr
+                td
+                  a.float-center(href= _data.verificationLink, align='center') Confirm this account
+    p.note
+      | If the button doesn't work, copy & paste this link into your browser:
+      br
+      | !{_data.verificationLink}
+      br
+      | (Note: The link will expire after 1 hour)
+    div.block
+      p
+        | Thanks,
+        br
+        strong The JuniorViec Team
+        | .
