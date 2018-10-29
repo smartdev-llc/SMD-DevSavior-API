@@ -1,0 +1,21 @@
+extends ../layout/index
+
+block content
+  div#welcome-admin-email
+    p
+      | Hi 
+      |
+      strong !{`${_data.userInfo.firstName} ${_data.userInfo.lastName}` }
+      | ,
+    p
+      | Welcome to 
+      strong JuniorViec Admin Board
+      | ! You have just verified as JuniorViec admin with this email: 
+      em !{_data.userInfo.email}
+      |. Congratulations!
+    div.block
+      p
+        | Thanks,
+        br
+        strong The JuniorViec Team
+        | .

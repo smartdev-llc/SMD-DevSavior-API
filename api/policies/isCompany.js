@@ -1,7 +1,7 @@
 module.exports = async function (req, res, proceed) {
   const user = _.get(req, 'user');
 
-  if (!user || user.role != 'company') {
+if (!user || user.role !== 'company') {
     return res.unauthorized({
       message: "Permission denied."
     });

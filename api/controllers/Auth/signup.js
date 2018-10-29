@@ -182,7 +182,7 @@ module.exports = async function (req, res) {
 
     try {
       const adminWithCurrentEmail = await Admin.findOne({ email });
-      if (adminWithCurrentEmails) {
+      if (adminWithCurrentEmail) {
         return res.conflict({
           message: "This email already exists."
         });

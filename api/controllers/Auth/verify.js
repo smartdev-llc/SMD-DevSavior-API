@@ -1,9 +1,8 @@
-
-const constants = require('../../../constants');
+const constants = require("../../../constants");
 const { VERIFICATION_TOKEN } = constants.TOKEN_TYPE;
 
-module.exports = async function (req, res) {
-  const token = _.get(req, 'query.token');
+module.exports = async function(req, res) {
+  const token = _.get(req, "query.token");
   if (!token) {
     return res.badRequest({
       message: "Please provide token to verify your account."
@@ -20,12 +19,17 @@ module.exports = async function (req, res) {
     }
   }
 
-  const userId = _.get(decoded, 'id');
-  const email = _.get(decoded, 'email');
-  const role = _.get(decoded, 'role');
-  const type = _.get(decoded, 'token_type');
+  const userId = _.get(decoded, "id");
+  const email = _.get(decoded, "email");
+  const role = _.get(decoded, "role");
+  const type = _.get(decoded, "token_type");
 
-  if (_.isNil(userId) || _.isNil(email) || !role || type !== VERIFICATION_TOKEN) {
+  if (
+    _.isNil(userId) ||
+    _.isNil(email) ||
+    !role ||
+    type !== VERIFICATION_TOKEN
+  ) {
     return res.forbidden({
       message: "Invalid token."
     });
@@ -33,9 +37,9 @@ module.exports = async function (req, res) {
 
   let user, UserModel;
   try {
-    if (role == 'company') {
+    if (role == "company") {
       UserModel = Company;
-    } else if (role == 'admin') {
+    } else if (role == "admin") {
       UserModel = Admin;
     } else {
       UserModel = Student;
@@ -46,12 +50,6 @@ module.exports = async function (req, res) {
     });
   } catch (err) {
     return res.serverError({
-      message: "Something went wrong."
-    });
-  }
-
-  if (!UserModel) {
-    return res.forbidden({
       message: "Something went wrong."
     });
   }
@@ -69,26 +67,22 @@ module.exports = async function (req, res) {
   }
 
   try {
-    const verifiedUsers = await UserModel.update({ id: userId })
-      .set({ emailVerified: true })
-      .fetch();
-    user = _.first(verifiedUsers);
+    await UserModel.update({ id: userId }).set({ emailVerified: true });
+
+    if (role === 'admin') {
+      await EmailService.sendToUser(user, 'welcome-admin-email', {
+        userInfo: user
+      });
+    }
+
+    res.ok({
+      message: "Email is verified successfully."
+    });
   } catch (err) {
     return res.serverError({
       message: "Something went wrong."
     });
   }
-
-  if (!_.get(user, 'emailVerified')) {
-    return res.forbidden({
-      message: "Cannot verify the email. Please try again."
-    });
-  }
-
-  res.ok({
-    message: "Email is verified successfully."
-  });
-
 
   // Login automatically after verifying email
 
@@ -96,7 +90,7 @@ module.exports = async function (req, res) {
   // // Remove sensitive data before login
   // user.password = undefined;
   // req.logIn(user, function (err) {
-  //   if (err) { 
+  //   if (err) {
   //     res.serverError({
   //      message: "Something went wrong."
   //      });
@@ -108,4 +102,4 @@ module.exports = async function (req, res) {
 
   //   res.ok(user);
   // });
-}
+};
