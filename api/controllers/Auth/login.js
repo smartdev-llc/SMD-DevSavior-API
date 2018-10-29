@@ -4,7 +4,6 @@ const { ACCESS_TOKEN } = constants.TOKEN_TYPE;
 let debuglog = require('debug')('jv:login')
 
 module.exports = async function (req, res) {
-  debuglog('req: ', req.body);
   passport.authenticate('local', function (err, user, info) {
     if (err) {
       return res.serverError({

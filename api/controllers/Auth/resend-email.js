@@ -21,6 +21,14 @@ module.exports = async function (req, res) {
         message: "Something went wrong."
       });
     }
+  } else if (role === 'admin') {
+    try {
+      userInfo = await Admin.findOne({ email });
+    } catch (err) {
+      return res.serverError({
+        message: "Something went wrong."
+      });
+    }
   } else {
     try {
       userInfo = await Student.findOne({ email });
@@ -52,9 +60,25 @@ module.exports = async function (req, res) {
     const verificationToken = JwtService.issue(decodedInfo, { expiresIn });
 
     try {
-      const template = role === 'company' ? 'verify-company-email' : 'verify-student-email';
-      const verificationLink = role === 'company' ? `${process.env.WEB_URL}/employer/verify-account?token=${verificationToken}` : `${process.env.WEB_URL}/verify-account?token=${verificationToken}`;
-      await EmailService.sendToUser(userInfo, template, {
+      let template = 'verify-student-email';
+      let verificationLink = `${process.env.WEB_URL}/verify-account?token=${verificationToken}`;
+      let receiverInfo = userInfo;
+      if (role === 'admin') {
+        template = 'verify-admin-email';
+        verificationLink = `${process.env.WEB_URL}/admin/verify-account?token=${verificationToken}`;
+        receiverInfo = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
+          return {
+            email
+          }
+        });
+      }
+
+      if (role === 'company') {
+        template = 'verify-company-email';
+        verificationLink = `${process.env.WEB_URL}/employer/verify-account?token=${verificationToken}`;
+      }
+
+      await EmailService.sendToUser(receiverInfo, template, {
         verificationLink,
         userInfo
       });

@@ -109,6 +109,8 @@ async function handleLocalAuthentication(req, email, password, cb) {
   try {
     if (role === 'company') {
       user = await Company.findOne({ email });
+    } else if (role === 'admin') {
+      user = await Admin.findOne({ email });
     } else {
       user = await Student.findOne({ email })
     }

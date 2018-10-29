@@ -35,6 +35,8 @@ module.exports = async function (req, res) {
   try {
     if (role == 'company') {
       UserModel = Company;
+    } else if (role == 'admin') {
+      UserModel = Admin;
     } else {
       UserModel = Student;
     }
