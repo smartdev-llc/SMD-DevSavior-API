@@ -35,9 +35,11 @@ module.exports.policies = {
 
   // Category
   'category/find': true,
+  'category/create': 'isAdmin',
   
   // Skill
   'skill/find': true,
+  'skill/create': 'isAdmin',
   
   // Photo
   'photo/upload': true,
@@ -77,5 +79,5 @@ module.exports.policies = {
   'common/contact-admin': true,
 
   // HotJob
-  'hotjob/create': true
+  'hotjob/create': 'isAdmin'
 };
