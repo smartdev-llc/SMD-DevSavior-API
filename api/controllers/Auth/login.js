@@ -1,13 +1,20 @@
 const passport = require('passport');
+
+const {
+  INTERNAL_SERVER_ERROR,
+  UNVERIFIED_EMAIL
+} = require('../../../constants/error-code');
+
 const constants = require('../../../constants');
 const { ACCESS_TOKEN } = constants.TOKEN_TYPE;
-let debuglog = require('debug')('jv:login')
 
 module.exports = async function (req, res) {
   passport.authenticate('local', function (err, user, info) {
     if (err) {
       return res.serverError({
-        message: "Something went wrong."
+        message: "Something went wrong.",
+        devMessage: err.message,
+        code: INTERNAL_SERVER_ERROR
       });
     }
 
@@ -17,7 +24,9 @@ module.exports = async function (req, res) {
 
     if (!user.emailVerified) {
       return res.forbidden({
-        message: "Email is not verified."
+        message: "Email is unverified.",
+        devMessage: "Email is unverified",
+        code: UNVERIFIED_EMAIL
       });
     }
 

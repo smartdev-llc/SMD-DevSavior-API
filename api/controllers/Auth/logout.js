@@ -4,6 +4,7 @@ module.exports = async function (req, res) {
     try {
       await addTokenToBlackList(accessToken);
     } catch (err) {
+      // Ignore
     }
   }
 
