@@ -99,5 +99,6 @@ module.exports = {
     ONE_MONTH: 'ONE_MONTH'
   },
 
+  MAXIMUM_ELEMENT_COUNT: 15,
   AUTH_PREFIX: 'auth_token_id:'
 }

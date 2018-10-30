@@ -79,5 +79,6 @@ module.exports.policies = {
   'common/contact-admin': true,
 
   // HotJob
-  'hotjob/create': 'isAdmin'
+  'hotjob/create': 'isAdmin',
+  'hotjob/find': true
 };

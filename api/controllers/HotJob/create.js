@@ -1,6 +1,7 @@
 const { isValidExpiredDay } = require('../../../utils/validator');
 const constants = require('../../../constants')
 const { ONE_WEEK, TWO_WEEKS, ONE_MONTH } = constants.EXPIRED_DAY;
+const { MAXIMUM_ELEMENT_COUNT } = constants;
 const moment = require('moment');
 
 module.exports = async function (req, res) {
@@ -32,6 +33,25 @@ module.exports = async function (req, res) {
     });
   }
 
+
+  // Kiem tra so luong hotjob trong db da dat 15 hay chua
+  try {
+    const jobs = await HotJob.find({
+      expiredDay: { '>': moment.now() }
+    })
+
+    if (_.size(jobs) >= MAXIMUM_ELEMENT_COUNT) {
+      return res.forbidden({
+        message: "Warning!! Hotjobs reach the limit."
+      });
+    }
+  } catch (err) {
+    return res.serverError({
+      message: `Something went wrong.`
+    });
+  }
+
+  // Kiem tra hotjob da duoc tao hay chua
   try {
     const job = await HotJob.findOne({ job: jobId });
 
@@ -50,6 +70,7 @@ module.exports = async function (req, res) {
     });
   }
 
+  // TH hotjob da duoc tao: tang so ngay 
   if (isCreated) {
     try {
       const hotjob = await HotJob.update({ id })
@@ -64,6 +85,7 @@ module.exports = async function (req, res) {
     }
   }
 
+  // TH chua duoc tao: bat dau tao
   try {
     const job = await HotJob.create({
       job: jobId,
