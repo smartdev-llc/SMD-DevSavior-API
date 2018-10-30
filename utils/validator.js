@@ -12,6 +12,7 @@ const { ENGLISH, FRENCH, GERMAN, SPANISH, RUSSIAN, KOREAN, CHINESE, JAPANESE } =
 const { NO, BEGINNER, INTERMEDIATE, ADVANCED, NATIVE } = constants.LANGUAGE_LEVELS;
 const { HIGH_SCHOOL, COLLEGE, BACHELOR, MASTER, DOCTORATE, OTHER } = constants.DEGREE_TYPE;
 const { AVERAGE, GOOD, EXCELLENT } = constants.DEGREE_CLASSIFICATION;
+const { ONE_WEEK, TWO_WEEKS, ONE_MONTH } = constants.EXPIRED_DAY;
 
 const isValidPassword = (password) => {
   return validator.isLength(password, { min: 8, max: undefined })
@@ -73,6 +74,8 @@ const isImage = (imageName) => {
   return _.indexOf(acceptedExts, imageExt) > -1;
 }
 
+const isValidExpiredDay = (expiredDay) => _.indexOf([ONE_WEEK, TWO_WEEKS, ONE_MONTH], expiredDay) > -1;
+
 module.exports = {
   isValidPassword,
   isValidPhoneNumber,
@@ -89,5 +92,6 @@ module.exports = {
   isValidPeriodOfMonthYear,
   isValidDegreeType,
   isValidDegreeClassification,
-  isImage
+  isImage,
+  isValidExpiredDay
 }

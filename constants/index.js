@@ -93,5 +93,11 @@ module.exports = {
     PHONE: /^[0-9\+]{1,}[0-9\-]{3,15}$/
   },
 
+  EXPIRED_DAY: {
+    ONE_WEEK: 'ONE_WEEK',
+    TWO_WEEKS: 'TWO_WEEKS',
+    ONE_MONTH: 'ONE_MONTH'
+  },
+
   AUTH_PREFIX: 'auth_token_id:'
 }

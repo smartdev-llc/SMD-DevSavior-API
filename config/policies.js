@@ -35,9 +35,11 @@ module.exports.policies = {
 
   // Category
   'category/find': true,
+  'category/create': 'isAdmin',
   
   // Skill
   'skill/find': true,
+  'skill/create': 'isAdmin',
   
   // Photo
   'photo/upload': true,
@@ -74,5 +76,8 @@ module.exports.policies = {
   'profile/delete-working-experience': 'isStudent',
 
   // Client
-  'common/contact-admin': true
+  'common/contact-admin': true,
+
+  // HotJob
+  'hotjob/create': 'isAdmin'
 };
