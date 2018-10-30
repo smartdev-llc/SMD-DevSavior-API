@@ -64,6 +64,18 @@ module.exports = async function (req, res) {
     });
   }
 
+  if (!isValidDegreeType(degreeType)) {
+    return res.badRequest({
+      message: "Invalid `degreeType` parameter (should be one of these: HIGH_SCHOOL, COLLEGE, BACHELOR, MASTER, DOCTORATE, OTHER)."
+    });
+  }
+
+  if (!isValidDegreeClassification(degreeClassification)) {
+    return res.badRequest({
+      message: "Invalid `degreeClassification` parameter (should be one of these: AVERAGE, GOOD, EXCELLENT)."
+    });
+  }
+
   const educationDegreeBody = {
     university, 
     major, 
