@@ -1,4 +1,6 @@
 const { 
+  isValidDegreeType,
+  isValidDegreeClassification,
   isValidPeriodOfMonthYear
 } = require('../../../utils/validator');
 
@@ -61,6 +63,18 @@ module.exports = async function (req, res) {
   if (!isValidPeriodOfMonthYear(fromMonth, toMonth)) {
     return res.badRequest({
       message: "Invalid `fromMonth` and `toMonth` parameters (should be in format MM-YYYY and fromMonth <= toMonth).."
+    });
+  }
+
+  if (!isValidDegreeType(degreeType)) {
+    return res.badRequest({
+      message: "Invalid `degreeType` parameter (should be one of these: HIGH_SCHOOL, COLLEGE, BACHELOR, MASTER, DOCTORATE, OTHER)."
+    });
+  }
+
+  if (!isValidDegreeClassification(degreeClassification)) {
+    return res.badRequest({
+      message: "Invalid `degreeClassification` parameter (should be one of these: AVERAGE, GOOD, EXCELLENT)."
     });
   }
 
