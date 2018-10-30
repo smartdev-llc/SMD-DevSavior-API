@@ -59,7 +59,7 @@ module.exports = async function (req, res) {
       return res.ok(_.get(hotjob, '0'))
     } catch (err) {
       return res.serverError({
-        message: `Something went wrong.${err}`
+        message: `Something went wrong.`
       });
     }
   }
