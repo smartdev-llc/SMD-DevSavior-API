@@ -10,6 +10,8 @@ module.exports = async function (req, res) {
 
   if (role === 'company') {
     registerCompany(req, res);
+  } else if (role === 'admin') {
+    registerAdmin(req, res);
   } else {
     registerStudent(req, res);
   }
@@ -138,6 +140,65 @@ module.exports = async function (req, res) {
 
         await EmailService.sendToUser(userInfo, 'verify-company-email', {
           verificationLink: `${process.env.WEB_URL}/employer/verify-account?token=${verificationToken}`,
+          userInfo
+        });
+
+        res.ok(userInfo);
+      }
+    } catch (err) {
+      return res.serverError({
+        message: "Something went wrong."
+      });
+    }
+  }
+
+  async function registerAdmin(req, res) {
+    const { email, password, firstName, lastName } = req.body;
+
+    if (!email || !password || !firstName || !lastName) {
+      return res.badRequest({
+        message: "Missing parameters."
+      });
+    }
+  
+    if (!validator.isEmail(email)) {
+      return res.badRequest({
+        message: "Invalid email."
+      });
+    }
+  
+    if (!validatorUtils.isValidPassword(password)) {
+      return res.badRequest({
+        message: "Password must be at least 8 characters."
+      })
+    }
+
+    const adminReq = {
+      email,
+      password,
+      firstName: firstName ? _.escape(firstName): firstName,
+      lastName: lastName ? _.escape(lastName): lastName
+    }
+
+    try {
+      const adminWithCurrentEmail = await Admin.findOne({ email });
+      if (adminWithCurrentEmail) {
+        return res.conflict({
+          message: "This email already exists."
+        });
+      } else {
+        const userInfo = await Admin.create(adminReq).fetch();
+        const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role: 'admin', token_type: VERIFICATION_TOKEN });
+        const verificationToken = JwtService.issue(decodedInfo, { expiresIn });
+
+        const admins = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
+          return {
+            email
+          }
+        });
+
+        await EmailService.sendToAdmins(admins, 'verify-admin-email', {
+          verificationLink: `${process.env.WEB_URL}/admin/verify-account?token=${verificationToken}`,
           userInfo
         });
 

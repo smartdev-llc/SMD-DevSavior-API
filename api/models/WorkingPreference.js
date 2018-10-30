@@ -36,7 +36,8 @@ module.exports = {
     },
 
     studentProfile: {
-      model: 'profile'
+      model: 'profile',
+      unique: true
     }
     
   }

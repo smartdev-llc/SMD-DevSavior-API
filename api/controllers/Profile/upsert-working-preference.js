@@ -23,7 +23,7 @@ module.exports = async function (req, res) {
     careerObjectives
   } = req.body;
 
-  let expectedSalaryFrom = 0, expectedSalaryTo = 0;
+  let expectedSalaryFrom, expectedSalaryTo;
 
   if (!preferredWorkingLocation || !_.isBoolean(willingToRelocate) || !_.isBoolean(isNegotiableSalary) || !jobType || !careerObjectives) {
     return res.badRequest({
@@ -58,6 +58,9 @@ module.exports = async function (req, res) {
         message: "Invalid salary (should be NUMBER and FROM <= TO)."
       });
     }
+  } else {
+    expectedSalaryFrom = 0;
+    expectedSalaryTo = 0;
   }
 
   const workingPreferenceBody = {
@@ -65,6 +68,7 @@ module.exports = async function (req, res) {
     willingToRelocate,
     expectedSalaryFrom,
     expectedSalaryTo,
+    isNegotiableSalary,
     jobType,
     careerObjectives,
     studentProfile: userProfile.id

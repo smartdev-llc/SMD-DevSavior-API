@@ -46,10 +46,10 @@ module.exports = async function (req, res) {
     const resetPasswordToken = JwtService.issue(decodedInfo, { expiresIn });
 
     try {
-      userInfo.displayName = role == 'company' ? userInfo.name : `${userInfo.firstName} ${userInfo.lastName}`;
-      resetPasswordLink = role == 'company' ? `${process.env.WEB_URL}/employer/reset-password?token=${resetPasswordToken}` : `${process.env.WEB_URL}/reset-password?token=${resetPasswordToken}`;
+      userInfo.displayName = role === 'company' ? userInfo.name : `${userInfo.firstName} ${userInfo.lastName}`;
+      resetPasswordLink = role === 'company' ? `${process.env.WEB_URL}/employer/reset-password?token=${resetPasswordToken}` : `${process.env.WEB_URL}/reset-password?token=${resetPasswordToken}`;
       await EmailService.sendToUser(userInfo, 'reset-password-email', {
-        resetPasswordLink: `${process.env.WEB_URL}/reset-password?token=${resetPasswordToken}`,
+        resetPasswordLink,
         userInfo
       });
 

@@ -110,7 +110,14 @@ async function authenticateUserMiddleware(req, res, proceed) {
 
   let user;
   try {
-    const UserModel = role == 'company' ? Company : Student;
+    let UserModel;
+    if (role == "company") {
+      UserModel = Company;
+    } else if (role == "admin") {
+      UserModel = Admin;
+    } else {
+      UserModel = Student;
+    }
     user = await UserModel.findOne({ id: userId, email });
     user.role = role;
     delete user.password;
