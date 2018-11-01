@@ -3,7 +3,7 @@ const Promise = require('bluebird');
 const indexName = process.env.ES_INDEX_NAME || 'juniorviec';
 const connectionConfig = {
   host: process.env.ES_HOST || '127.0.0.1:9200',
-  log: process.env.ES_LOG_LEVEL || 'trace'
+  // log: process.env.ES_LOG_LEVEL || 'trace'
 }
 
 let es = new elasticsearch.Client(connectionConfig);
@@ -61,8 +61,6 @@ module.exports = {
         }
         if (options.idNames) {
           mustList = mustList.concat(options.idNames.reduce((arr, item) => {
- console.log("item ", item);
-            console.log("params[item.request] ", params[item.request]);
             if (params[item.request]) {
               arr.push({
                 term: {
@@ -74,6 +72,15 @@ module.exports = {
           }, []))
         }
         return mustList;
+      },
+      multiChoices: (options) => {
+        if(!_.isEmpty(_.compact([].concat(params[options.request])))){
+          return {
+            terms: {
+              [options.field]: [].concat(params[options.request])
+            }
+          }
+        }
       },
       textSearch: ({ text, options }) => {
         let shouldArr = [];

@@ -5,7 +5,7 @@ const { FULL_TIME, PART_TIME, INTERSHIP, CONTRACT, FREELANCE } = constants.JOB_T
 module.exports = async function (req, res) {
   try {
     const { qs, size, page } = _.get(req, 'query');
-    const queryBody = _.pick(req.query, ['qs', 'category', 'jobType']);
+    const queryBody = _.pick(req.query, ['qs', 'category', 'jobTypes']);
     let limit = parseInt(size) || 10;
     let skip = (parseInt(page) || 0) * limit;
 
@@ -19,11 +19,7 @@ module.exports = async function (req, res) {
         request: 'category',
         path: 'category',
         field: 'category.id'
-      }],
-      idNames: [{
-        request: 'jobType',
-        field: 'jobType'
-      }],
+      }]
     }));
     query.bool.must.push(buildQuery.textSearch({
       text: qs,
@@ -34,8 +30,12 @@ module.exports = async function (req, res) {
         ]
       }
     }));
-
-    debuglog('query: ', query);
+    query.bool.must.push(buildQuery.multiChoices({
+        request: "jobTypes",
+        field: "jobType"
+    }));
+    query.bool.must = _.compact(query.bool.must);
+    debuglog('query: ', JSON.stringify(query));
     let result = await ElasticsearchService.search({
       type: 'Job',
       body: {
