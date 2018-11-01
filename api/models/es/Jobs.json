@@ -19,6 +19,21 @@
         },
         "name": {
           "type": "text"
+        },
+        "address": {
+          "type": "text"
+        },
+        "city": {
+          "type": "text"
+        },
+        "contactName": {
+          "type": "text"
+        },
+        "logoURL": {
+          "type": "keyword"
+        },
+        "phoneNumber": {
+          "type": "text"
         }
       }
     },
@@ -40,6 +55,21 @@
       "type": "keyword"
     },
     "title": {
+      "type": "text"
+    },
+    "requirements": {
+      "type": "text"
+    },
+    "fromSalary": {
+      "type": "double"
+    },
+    "toSalary": {
+      "type": "double"
+    },
+    "jobType": {
+      "type": "keyword"
+    },
+    "benefits": {
       "type": "text"
     }
   }

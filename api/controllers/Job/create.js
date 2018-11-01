@@ -5,7 +5,8 @@ const {
 
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
-  const companyName = _.get(req, "user.name");
+  const company = _.get(req, "user", {});
+
   if (!companyId) {
     return res.unauthorized({
       message: "You need login as a company to create a new job."
@@ -51,10 +52,7 @@ module.exports = async function (req, res) {
       type: 'Job',
       id: job.id,
       body: {
-        company: {
-          id: companyId,
-          name: companyName
-        },
+        company: company,
         title,
         description,
         skills: _.map(skills, skill => _.pick(skill, ['name', 'id'])),

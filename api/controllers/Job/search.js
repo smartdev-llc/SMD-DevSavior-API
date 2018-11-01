@@ -1,9 +1,11 @@
 const debuglog = require("debug")("jv:job:search");
+const constants = require('../../../constants');
+const { FULL_TIME, PART_TIME, INTERSHIP, CONTRACT, FREELANCE } = constants.JOB_TYPE;
 
 module.exports = async function (req, res) {
   try {
     const { qs, size, page } = _.get(req, 'query');
-    const queryBody = _.pick(req.query, ['qs', 'category']);
+    const queryBody = _.pick(req.query, ['qs', 'category', 'jobType']);
     let limit = parseInt(size) || 10;
     let skip = (parseInt(page) || 0) * limit;
 
@@ -17,6 +19,10 @@ module.exports = async function (req, res) {
         request: 'category',
         path: 'category',
         field: 'category.id'
+      }],
+      idNames: [{
+        request: 'jobType',
+        field: 'jobType'
       }],
     }));
     query.bool.must.push(buildQuery.textSearch({

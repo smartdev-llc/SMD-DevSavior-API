@@ -44,7 +44,7 @@ module.exports = {
         let mustList = [];
         if (options.nestedIdNames) {
           mustList = mustList.concat(options.nestedIdNames.reduce((arr, item) => {
-            if(params[item.request]){
+            if (params[item.request]) {
               arr.push({
                 nested: {
                   path: item.path,
@@ -56,6 +56,20 @@ module.exports = {
                 }
               })
             }
+            return arr;
+          }, []))
+        }
+        if (options.idNames) {
+          mustList = mustList.concat(options.idNames.reduce((arr, item) => {
+ console.log("item ", item);
+            console.log("params[item.request] ", params[item.request]);
+            if (params[item.request]) {
+              arr.push({
+                term: {
+                  [item.field]: params[item.request]
+                }
+              })
+            } 
             return arr;
           }, []))
         }
