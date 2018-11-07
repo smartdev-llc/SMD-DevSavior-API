@@ -111,7 +111,7 @@ async function handleLocalAuthentication(req, email, password, cb) {
     return cb(null, false, {
       message: "Invalid email or password.",
       devMessage: "`email` or `password` is invalid.",
-      code: INVALID_PARAMETERSs
+      code: INVALID_PARAMETERS
     });
   }
 
