@@ -1,5 +1,4 @@
 
-const validator = require('validator');
 const bcrypt = require('bcrypt-nodejs');
 
 const validatorUtils = require('../../../utils/validator');
@@ -10,9 +9,7 @@ const { RESET_PASSWORD_TOKEN } = constants.TOKEN_TYPE;
 const { 
   MISSING_PARAMETERS,
   INVALID_PARAMETERS,
-  INEXISTENT_EMAIL,
-  ALREADY_VERIFIED_EMAIL,
-  INVALID_RESET_PASSWORD_TOKEN,
+  INVALID_TOKEN,
   INTERNAL_SERVER_ERROR
 } = require('../../../constants/error-code');
 
@@ -37,8 +34,8 @@ module.exports = async function (req, res) {
 
   if (!validatorUtils.isValidPassword(password)) {
     return res.badRequest({
-      message: "Password must be at least 8 characters.",
-      devMessage: "`password` must be at least 8 characters.",
+      message: "Invalid password.",
+      devMessage: "Invalid `password`. It must be at least 8 characters.",
       code: INVALID_PARAMETERS
     })
   }
@@ -51,7 +48,7 @@ module.exports = async function (req, res) {
       return res.forbidden({
         message: "Invalid token.",
         devMessage: "Cannot verify reset password token.",
-        code: INVALID_RESET_PASSWORD_TOKEN
+        code: INVALID_TOKEN
       });
     }
   }
@@ -65,7 +62,7 @@ module.exports = async function (req, res) {
     return res.forbidden({
       message: "Invalid token.",
       devMessage: "Some data are missing from reset password token.",
-      code: INVALID_RESET_PASSWORD_TOKEN
+      code: INVALID_TOKEN
     });
   }
 
@@ -89,8 +86,8 @@ module.exports = async function (req, res) {
   if (!user) {
     return res.forbidden({
       message: "Invalid token.",
-      devMessage: "Cannot query user data from reset password token.",
-      code: INVALID_RESET_PASSWORD_TOKEN
+      devMessage: "Cannot get user data from reset password token.",
+      code: INVALID_TOKEN
     });
   }
 

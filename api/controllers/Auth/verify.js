@@ -1,11 +1,20 @@
 const constants = require("../../../constants");
 const { VERIFICATION_TOKEN } = constants.TOKEN_TYPE;
 
+const { 
+  MISSING_PARAMETERS,
+  ALREADY_VERIFIED_EMAIL,
+  INTERNAL_SERVER_ERROR,
+  INVALID_TOKEN
+} = require('../../../constants/error-code');
+
 module.exports = async function(req, res) {
   const token = _.get(req, "query.token");
   if (!token) {
     return res.badRequest({
-      message: "Please provide token to verify your account."
+      message: "Please provide token to verify your account.",
+      devMessage: '`token` is missing.',
+      code: MISSING_PARAMETERS
     });
   }
   let decoded;
@@ -14,7 +23,9 @@ module.exports = async function(req, res) {
   } catch (err) {
     if (err) {
       return res.forbidden({
-        message: "Invalid token."
+        message: "Invalid token.",
+        devMessage: "Cannot verify this verification token.",
+        code: INVALID_TOKEN
       });
     }
   }
@@ -24,14 +35,11 @@ module.exports = async function(req, res) {
   const role = _.get(decoded, "role");
   const type = _.get(decoded, "token_type");
 
-  if (
-    _.isNil(userId) ||
-    _.isNil(email) ||
-    !role ||
-    type !== VERIFICATION_TOKEN
-  ) {
+  if (_.isNil(userId) || _.isNil(email) || !role || type !== VERIFICATION_TOKEN) {
     return res.forbidden({
-      message: "Invalid token."
+      message: "Invalid token.",
+      devMessage: "Some data are missing from verification token.",
+      code: INVALID_TOKEN
     });
   }
 
@@ -50,19 +58,25 @@ module.exports = async function(req, res) {
     });
   } catch (err) {
     return res.serverError({
-      message: "Something went wrong."
+      message: "Something went wrong.",
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 
   if (!user) {
     return res.forbidden({
-      message: "Invalid token."
+      message: "Invalid token.",
+      devMessage: "Cannot get user data from verification token.",
+      code: INVALID_TOKEN
     });
   }
 
   if (user.emailVerified) {
-    return res.ok({
-      message: "Email is already verified."
+    return res.badRequest({
+      message: "This email is already verified.",
+      devMessage: "`email` is already verified",
+      code: ALREADY_VERIFIED_EMAIL
     });
   }
 
@@ -80,7 +94,9 @@ module.exports = async function(req, res) {
     });
   } catch (err) {
     return res.serverError({
-      message: "Something went wrong."
+      message: "Something went wrong.",
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 

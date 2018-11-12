@@ -5,6 +5,13 @@ const constants = require('../../../constants');
 const { VERIFICATION_TOKEN } = constants.TOKEN_TYPE;
 const { VERIFICATION_TOKEN_EXPIRATION: expiresIn } = constants.JWT_OPTIONS;
 
+const { 
+  MISSING_PARAMETERS,
+  INVALID_PARAMETERS,
+  ALREADY_EXISTED_EMAIL,
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   const role = req.param('role') || 'student';
 
@@ -22,19 +29,25 @@ module.exports = async function (req, res) {
 
     if (!email || !password || !firstName || !lastName) {
       return res.badRequest({
-        message: "Missing parameters."
+        message: "Missing parameters.",
+        devMessage: "Some paramters are missing. Please check `email`, `password`, `firstName`, `lastName`.",
+        code: MISSING_PARAMETERS
       });
     }
   
     if (!validator.isEmail(email)) {
       return res.badRequest({
-        message: "Invalid email."
+        message: "Invalid email.",
+        devMessage: "`email` is invalid.",
+        code: INVALID_PARAMETERS
       });
     }
   
     if (!validatorUtils.isValidPassword(password)) {
       return res.badRequest({
-        message: "Password must be at least 8 characters."
+        message: "Invalid password.",
+        devMessage: "Invalid `password`. It must be at least 8 characters.",
+        code: INVALID_PARAMETERS
       })
     }
 
@@ -51,7 +64,9 @@ module.exports = async function (req, res) {
       const studentWithCurrentEmail = await Student.findOne({ email });
       if (studentWithCurrentEmail) {
         return res.conflict({
-          message: "This email already exists."
+          message: "This email already exists.",
+          devMessage: "This email is already in use.",
+          code: ALREADY_EXISTED_EMAIL
         });
       } else {
         const userInfo = await Student.create(studentReq).fetch();
@@ -68,7 +83,9 @@ module.exports = async function (req, res) {
       }
     } catch (err) {
       return res.serverError({
-        message: "Something went wrong."
+        message: "Something went wrong.",
+        devMessage: err.message,
+        code: INTERNAL_SERVER_ERROR
       });
     }
   }
@@ -87,31 +104,41 @@ module.exports = async function (req, res) {
 
     if (!email || !password || !name || !contactName || !phoneNumber || !address) {
       return res.badRequest({
-        message: "Missing parameters."
+        message: "Missing parameters.",
+        devMessage: "Some paramters are missing.",
+        code: MISSING_PARAMETERS
       });
     }
   
     if (!validator.isEmail(email)) {
       return res.badRequest({
-        message: "Invalid email."
+        message: "Invalid email.",
+        devMessage: "`email` is invalid.",
+        code: INVALID_PARAMETERS
       });
     }
   
     if (!validatorUtils.isValidPassword(password)) {
       return res.badRequest({
-        message: "Password must be at least 8 characters."
+        message: "Invalid password.",
+        devMessage: "Invalid `password`. It must be at least 8 characters.",
+        code: INVALID_PARAMETERS
       })
     }
 
     if (!_.isString(name) || !_.isString(address)) {
       return res.badRequest({
-        message: "Invalid parameters."
+        message: "Invalid parameters.",
+        devMessage: "Invalid parameters (`name`, `address` should be string).",
+        code: INVALID_PARAMETERS
       });
     }
 
     if (!validatorUtils.isValidPhoneNumber(phoneNumber)) {
       return res.badRequest({
-        message: "Invalid phone number."
+        message: "Invalid phone number.",
+        devMessage: "Phone number has invalid format.",
+        code: INVALID_PARAMETERS
       });
     }
 
@@ -131,7 +158,9 @@ module.exports = async function (req, res) {
       const companyWithCurrentEmail = await Company.findOne({ email });
       if (companyWithCurrentEmail) {
         return res.conflict({
-          message: "This email already exists."
+          message: "This email already exists.",
+          devMessage: "This email is already in use.",
+          code: ALREADY_EXISTED_EMAIL
         });
       } else {
         const userInfo = await Company.create(companyReq).fetch();
@@ -147,7 +176,9 @@ module.exports = async function (req, res) {
       }
     } catch (err) {
       return res.serverError({
-        message: "Something went wrong."
+        message: "Something went wrong.",
+        devMessage: err.message,
+        code: INTERNAL_SERVER_ERROR
       });
     }
   }
@@ -157,19 +188,25 @@ module.exports = async function (req, res) {
 
     if (!email || !password || !firstName || !lastName) {
       return res.badRequest({
-        message: "Missing parameters."
+        message: "Missing parameters.",
+        devMessage: "Some paramters are missing. Please check `email`, `password`, `firstName`, `lastName`.",
+        code: MISSING_PARAMETERS
       });
     }
   
     if (!validator.isEmail(email)) {
       return res.badRequest({
-        message: "Invalid email."
+        message: "Invalid email.",
+        devMessage: "`email` is invalid.",
+        code: INVALID_PARAMETERS
       });
     }
   
     if (!validatorUtils.isValidPassword(password)) {
       return res.badRequest({
-        message: "Password must be at least 8 characters."
+        message: "Invalid password.",
+        devMessage: "Invalid `password`. It must be at least 8 characters.",
+        code: INVALID_PARAMETERS
       })
     }
 
@@ -184,7 +221,9 @@ module.exports = async function (req, res) {
       const adminWithCurrentEmail = await Admin.findOne({ email });
       if (adminWithCurrentEmail) {
         return res.conflict({
-          message: "This email already exists."
+          message: "This email already exists.",
+          devMessage: "This email is already in use.",
+          code: ALREADY_EXISTED_EMAIL
         });
       } else {
         const userInfo = await Admin.create(adminReq).fetch();
@@ -206,7 +245,9 @@ module.exports = async function (req, res) {
       }
     } catch (err) {
       return res.serverError({
-        message: "Something went wrong."
+        message: "Something went wrong.",
+        devMessage: err.message,
+        code: INTERNAL_SERVER_ERROR
       });
     }
   }

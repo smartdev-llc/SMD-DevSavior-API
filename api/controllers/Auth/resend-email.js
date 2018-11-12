@@ -1,3 +1,6 @@
+
+const validator = require('validator');
+
 const constants = require('../../../constants')
 const { VERIFICATION_TOKEN } = constants.TOKEN_TYPE;
 const { VERIFICATION_TOKEN_EXPIRATION: expiresIn } = constants.JWT_OPTIONS;
@@ -5,12 +8,10 @@ const { VERIFICATION_TOKEN_EXPIRATION: expiresIn } = constants.JWT_OPTIONS;
 const { 
   MISSING_PARAMETERS,
   INVALID_PARAMETERS,
-  INEXISTENT_EMAIL,
+  WRONG_EMAIL,
   ALREADY_VERIFIED_EMAIL,
   INTERNAL_SERVER_ERROR
 } = require('../../../constants/error-code');
-
-const validator = require('validator');
 
 module.exports = async function (req, res) {
   const role = req.param('role') || 'student';
@@ -56,7 +57,7 @@ module.exports = async function (req, res) {
     return res.badRequest({
       message: "This email does not match any account.",
       devMessage: '`email` is inexistent in `student` table',
-      code: INEXISTENT_EMAIL
+      code: WRONG_EMAIL
     });
   }
   
@@ -64,7 +65,7 @@ module.exports = async function (req, res) {
     return res.badRequest({
       message: "This email does not match any account.",
       devMessage: '`email` is inexistent in `student` table',
-      code: INEXISTENT_EMAIL
+      code: WRONG_EMAIL
     });
   } 
 

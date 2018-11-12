@@ -3,6 +3,10 @@ const validatorUtils = require('../../../utils/validator');
 const constants = require('../../../constants');
 const { ACCESS_TOKEN } = constants.TOKEN_TYPE;
 
+const {
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   const provider = req.params.provider;
   if (!validatorUtils.isValidSocialProvider(provider)) {
@@ -14,7 +18,9 @@ module.exports = async function (req, res) {
   passport.authenticate(`${provider}-token`, function (err, user, info) {
     if (err) {
       return res.serverError({
-        message: "Something went wrong."
+        message: "Something went wrong.",
+        devMessage: err.message,
+        code: INTERNAL_SERVER_ERROR
       });
     }
 
