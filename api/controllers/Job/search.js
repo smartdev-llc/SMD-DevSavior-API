@@ -10,6 +10,7 @@ module.exports = async function (req, res) {
     let skip = (parseInt(page) || 0) * limit;
 
     const buildQuery = ElasticsearchService.buildQuery(queryBody);
+    const transformResult = ElasticsearchService.transformResult();
 
     let query = { bool: { must: [] } };
 
@@ -43,7 +44,7 @@ module.exports = async function (req, res) {
         "from": skip,
         "query": query
       }
-    });
+    }).then(transformResult.getHits);
 
     res.ok(_.extend(result, { size: limit, from: skip }));
   } catch (err) {
