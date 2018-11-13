@@ -25,7 +25,6 @@ module.exports = async function (req, res) {
     }]
   }));
 
-<<<<<<< HEAD
   var now = moment.now();
   var daysLater = moment().add(sails.config.custom.jobExpiresSoonDuration || 2, 'day').valueOf();
 
@@ -39,18 +38,11 @@ module.exports = async function (req, res) {
         }
       }
     },
-=======
-  var aggs = {
->>>>>>> c407d26dc60c9fdba612ec612418bf1800eac95f
     expired: {
       filter: {
         range: {
           expiredAt: {
-<<<<<<< HEAD
             lt: now
-=======
-            lt: moment.now()
->>>>>>> c407d26dc60c9fdba612ec612418bf1800eac95f
           }
         }
       }
@@ -59,13 +51,8 @@ module.exports = async function (req, res) {
       filter: {
         range: {
           expiredAt: {
-<<<<<<< HEAD
             gt: now,
             lt: daysLater
-=======
-            gt: moment.now(),
-            lt: moment().add(sails.config.custom.jobExpiresSoonDuration || 2, 'day').valueOf()
->>>>>>> c407d26dc60c9fdba612ec612418bf1800eac95f
           }
         }
       }
