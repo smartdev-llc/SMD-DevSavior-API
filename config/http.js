@@ -8,9 +8,11 @@
  * For more information on configuration, check out:
  * https://sailsjs.com/config/http
  */
+const express = require('express');
 
 const constants = require('../constants');
 const { ACCESS_TOKEN } = constants.TOKEN_TYPE;
+console.log(process.env.NODE_ENV === 'staging');
 
 module.exports.http = {
 
@@ -27,6 +29,7 @@ module.exports.http = {
 
     passportInit: require('passport').initialize(),
     passportSession: require('passport').session(),
+    swaggerAssets: process.env.NODE_ENV === 'prod' ? () => {} : express.static(process.cwd() + "/swagger"),
 
     /***************************************************************************
     *                                                                          *
@@ -35,9 +38,7 @@ module.exports.http = {
     *                                                                          *
     ***************************************************************************/
 
-    authenticateUser: function () {
-      return authenticateUserMiddleware;
-    }(),
+    authenticateUser: (() => authenticateUserMiddleware)(),
 
     /***************************************************************************
     *                                                                          *
@@ -49,6 +50,7 @@ module.exports.http = {
     order: [
       'cookieParser',
       'session',
+      'swaggerAssets',
       'passportInit',
       'passportSession',
       'bodyParser',
