@@ -24,7 +24,7 @@ module.exports = async function (req, res) {
   }
 
   async function registerStudent(req, res) {
-    const { email, password, firstName, lastName, profileImageURL } = req.body;
+    const { email, password, firstName, lastName } = req.body;
     const providers = ['local'];
 
     if (!email || !password || !firstName || !lastName) {
@@ -56,7 +56,6 @@ module.exports = async function (req, res) {
       password,
       firstName: _.escape(firstName),
       lastName: _.escape(lastName),
-      profileImageURL,
       providers
     }
 

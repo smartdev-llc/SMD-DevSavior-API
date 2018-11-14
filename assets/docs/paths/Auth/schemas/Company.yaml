@@ -1,0 +1,18 @@
+type: object
+properties:
+  firstName:
+    type: string
+  lastName:
+    type: string
+  name:
+    type: string
+  address:
+    type: string
+  city:
+    type: string
+  contactName:
+    type: string
+  phoneNumber:
+    type: string
+  website:
+    type: string

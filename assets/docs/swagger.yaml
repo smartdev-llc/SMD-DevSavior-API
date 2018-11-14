@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  description: This is api explorer for JuniorViec (You can only access in development environment). Visit our website at [JuniorViec](https://juniorviec.com) for more information.
+  version: 1.0.0
+  title: JuniorViec API Explorer
+  termsOfService: https://juniorviec.com/terms/
+  contact:
+    name: JuniorViec Team
+    email: contact@juniorviec.com
+servers: 
+- url: https://juniorviec.com/api/v1
+  description: Production API
+- url: http://localhost:1337
+  description: Local API
+tags:
+- name: Auth
+  description: All operations about Authentication
+- name: Common
+  description: All common operations
+- name: Category
+  description: All operations about Category
+- name: Company
+  description: All operations about Company (Employer)
+- name: HotJob
+  description: All operations about Hot Jobs
+- name: Job
+  description: All operations about Jobs
+- name: JobApplication
+  description: All operations about Job Applications
+- name: Photo
+  description: All operations about Photos
+- name: Profile
+  description: All operations about Student Profile
+- name: Skill
+  description: All operations about Skills
+- name: Student
+  description: All operations about Students
+paths:
+  /auth/signup:
+    $ref: 'paths/Auth/signup.yaml'
+components:
+  responses:
+    200:
+        description: OK
+    400:
+      description: Bad request
+    409:
+      description: Conflict
+    500:
+      description: Server error
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    #
+  schemas:
+    Admin:
+      $ref: 'models/Admin.yaml'
+    Category:
+      $ref: 'models/Category.yaml'
+security:
+  - bearerAuth: []
