@@ -28,9 +28,7 @@ module.exports = {
       },
         _.pick(params, ['type', 'body'])
       )
-    ).then(result => {
-      return this.transformResult().getHits(result);
-    })
+    )
   },
 
   buildQuery: (params) => {

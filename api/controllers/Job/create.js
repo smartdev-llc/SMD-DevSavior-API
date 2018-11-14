@@ -2,6 +2,7 @@ const {
   isValidSalary,
   isValidJobType
 } = require('../../../utils/validator');
+const moment = require('moment');
 
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
@@ -13,6 +14,7 @@ module.exports = async function (req, res) {
     });
   }
   const { skillIds, title, description, categoryId, fromSalary, toSalary, requirements, jobType, benefits } = req.body;
+  const expiredAt = moment().add(sails.config.custom.jobDuration || 7, 'days').valueOf();
 
   if (!title || !categoryId || !description || !requirements || !jobType) {
     return res.badRequest({
@@ -43,7 +45,8 @@ module.exports = async function (req, res) {
       fromSalary,
       toSalary,
       jobType,
-      benefits
+      benefits,
+      expiredAt
     }).fetch();
 
     const category = await Category.findOne({ id: categoryId });
@@ -65,7 +68,8 @@ module.exports = async function (req, res) {
         fromSalary: job.fromSalary,
         toSalary: job.toSalary,
         jobType: job.jobType,
-        benefits: job.benefits
+        benefits: job.benefits,
+        expiredAt: job.expiredAt
       }
     });
 
