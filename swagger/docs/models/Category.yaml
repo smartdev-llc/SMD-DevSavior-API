@@ -1,0 +1,15 @@
+type: object
+properties:
+  id:
+    type: integer
+    readOnly: true
+  name:
+    type: string
+  createdAt:
+    type: integer
+    format: int64
+    readOnly: true
+  updatedAt:
+    type: integer
+    format: int64
+    readOnly: true
