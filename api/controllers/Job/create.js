@@ -76,7 +76,9 @@ module.exports = async function (req, res) {
     return res.ok(job);
   } catch (err) {
     return res.serverError({
-      message: "Something went wrong."
+      code: "INTERNAL",
+      message: "Something went wrong.",
+      data: err
     });
   }
 };

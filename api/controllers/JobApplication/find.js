@@ -1,7 +1,11 @@
 const debuglog = require('debug')('jv:candicates');
+const Promise = require('bluebird');
 
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
+  const { size, page } = _.get(req, "query");
+  let limit = parseInt(size) || 10;
+  let skip = (parseInt(page) || 0) * limit;
   debuglog('companyId: ', companyId);
   if (!companyId) {
     return res.unauthorized({
@@ -20,7 +24,9 @@ module.exports = async function (req, res) {
   }
 
   try {
-    const job = await Job.findOne({ id: jobId }).populate('students');
+    const job = await Job.findOne({ id: jobId }).populate('students', {
+      skip, limit,
+    });
 
     if (!job) {
       return res.badRequest({
@@ -28,7 +34,12 @@ module.exports = async function (req, res) {
         message: 'Job is not found'
       });
     }
-    res.ok(job.students);
+    const candicates = await Promise.map(job.students, student => {
+      return Profile.findOne({ owner: student.id }).then(profile => {
+        return _.extend(student, { profile });
+      })
+    });
+    res.ok(candicates);
   } catch (err) {
     debuglog("error:", err)
     return res.serverError({
