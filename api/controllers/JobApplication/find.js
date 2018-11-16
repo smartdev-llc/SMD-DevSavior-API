@@ -34,12 +34,18 @@ module.exports = async function (req, res) {
         message: 'Job is not found'
       });
     }
+    const total = await JobApplication.count({job: jobId});
     const candicates = await Promise.map(job.students, student => {
       return Profile.findOne({ owner: student.id }).then(profile => {
         return _.extend(student, { profile });
       })
     });
-    res.ok(candicates);
+    res.ok({
+      size: limit, 
+      from: skip,
+      total: total,
+      list: candicates
+    });
   } catch (err) {
     debuglog("error:", err)
     return res.serverError({
