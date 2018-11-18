@@ -9,6 +9,7 @@
  * https://sailsjs.com/config/http
  */
 const express = require('express');
+const uuid = require('uuid');
 
 const constants = require('../constants');
 const { ACCESS_TOKEN } = constants.TOKEN_TYPE;
@@ -47,6 +48,12 @@ module.exports.http = {
     *                                                                          *
     ***************************************************************************/
 
+    traceRequest: (req, res, next) => {
+      req.traceId = req.headers['x-trace-request-id'] || uuid.v4();
+      sails.log.debug(req.method, req.url, req.traceId);
+      next();
+    },
+
     order: [
       'cookieParser',
       'session',
@@ -54,6 +61,7 @@ module.exports.http = {
       'passportInit',
       'passportSession',
       'bodyParser',
+      'traceRequest',
       'compress',
       'authenticateUser',
       'poweredBy',

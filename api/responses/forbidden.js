@@ -54,6 +54,7 @@ module.exports = function forbidden (data) {
       return res.send(util.inspect(data));
     }
   }
+  _.isObject(data) && _.set(data, 'traceId', req.traceId);
   return res.json(data);
 
 };
