@@ -1,4 +1,7 @@
-const { COMPANY_PUBLIC_FIELDS } = require('../../../constants');
+const {
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   const userId = _.get(req, "user.id");
   const role = _.get(req, "user.role");
@@ -6,7 +9,7 @@ module.exports = async function (req, res) {
   let limit = parseInt(size) || 10;
   let skip = (parseInt(page) || 0) * limit;
 
-  if (userId && role == 'company') {
+  if (userId && role === 'company') {
     await findByCompanyId(req, res, userId, limit, skip);
   } else {
     await findAll(req, res, limit, skip);
@@ -15,7 +18,7 @@ module.exports = async function (req, res) {
 
 const findByCompanyId = async (req, res, userId, limit, skip) => {
   try {
-    const job = await Job
+    const jobs = await Job
       .find({ company: userId })
       .populate('students', { select: ['id', 'firstName', 'lastName'] })
       .populate('skills', { select: ['id', 'name'] })
@@ -24,17 +27,12 @@ const findByCompanyId = async (req, res, userId, limit, skip) => {
       .limit(limit)
       .skip(skip);
 
-    if (!job) {
-      return res.badRequest({
-        message: 'Job is not found'
-      });
-    }
-
-    return res.ok(job);
+    return res.ok(jobs);
   } catch (err) {
-    console.log(err);
     return res.serverError({
-      message: `Something went wrong .`
+      message: `Something went wrong .`,
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 }
@@ -50,14 +48,16 @@ const findAll = async (req, res, limit, skip) => {
       .limit(limit)
       .skip(skip);
 
-    const jobConverted = _.map(jobs, job => {
+    jobs = _.map(jobs, job => {
       job.numberOfCandidates = _.size(_.get(job, 'students'))
-      return _.omit(job, ['students']);;
+      return _.omit(jobs, ['students']);;
     })
     return res.ok(jobConverted);
   } catch (err) {
     return res.serverError({
-      message: `Something went wrong .`
+      message: `Something went wrong .`,
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 }

@@ -1,0 +1,50 @@
+type: object
+properties:
+  id:
+    type: integer
+    readOnly: true
+  email:
+    type: string
+    format: email
+  password:
+    type: string
+    format: password
+    writeOnly: true
+  name:
+    type: string
+  address:
+    type: string
+  city:
+    type: string
+  contactName:
+    type: string
+  phoneNumber:
+    type: string
+  website:
+    type: string
+  description:
+    type: string
+  logoURL:
+    type: string
+  coverURL:
+    type: string
+  photoURLs:
+    type: string
+  videoURL:
+    type: string
+  status:
+    type: string
+  emailVerified:
+    type: boolean
+  createdAt:
+    type: integer
+    format: int64
+    readOnly: true
+  updatedAt:
+    type: integer
+    format: int64
+    readOnly: true
+required:
+  - email
+  - name
+  - password

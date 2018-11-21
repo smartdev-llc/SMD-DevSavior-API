@@ -28,6 +28,9 @@ module.exports = {
       type: "string",
       required: true
     },
+    displayName: {
+      type: "string"
+    },
     status: {
       type: 'string',
       defaultsTo: ACTIVE
@@ -39,7 +42,6 @@ module.exports = {
   },
 
   customToJSON: function() {
-    this.displayName = `${this.firstName} ${this.lastName}`;
     return _.omit(this, ['password']);
   },
 

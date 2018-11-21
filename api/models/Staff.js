@@ -28,6 +28,9 @@ module.exports = {
       type: 'string',
       required: true
     },
+    displayName: {
+      type: "string"
+    },
     profileImageURL: {
       type: 'string'
     },
@@ -46,7 +49,6 @@ module.exports = {
   },
 
   customToJSON: function() {
-    this.displayName = `${this.firstName} ${this.lastName}`;
     return _.omit(this, ['password']);
   },
 

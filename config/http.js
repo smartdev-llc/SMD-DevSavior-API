@@ -13,7 +13,6 @@ const uuid = require('uuid');
 
 const constants = require('../constants');
 const { ACCESS_TOKEN } = constants.TOKEN_TYPE;
-console.log(process.env.NODE_ENV === 'staging');
 
 module.exports.http = {
 

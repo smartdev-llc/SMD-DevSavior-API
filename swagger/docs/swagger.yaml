@@ -38,6 +38,12 @@ tags:
 paths:
   /auth/signup:
     $ref: 'paths/Auth/signup.yaml'
+  /auth/login:
+    $ref: 'paths/Auth/login.yaml'
+  /auth/verify:
+    $ref: 'paths/Auth/verify.yaml'
+  /students/search:
+    $ref: 'paths/Student/search.yaml'
 components:
   responses:
     200:
@@ -58,5 +64,9 @@ components:
       $ref: 'models/Admin.yaml'
     Category:
       $ref: 'models/Category.yaml'
+    Company:
+      $ref: 'models/Company.yaml'
+    EducationDegree:
+      $ref: 'models/EducationDegree.yaml'
 security:
   - bearerAuth: []

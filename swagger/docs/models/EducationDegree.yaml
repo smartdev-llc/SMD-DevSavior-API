@@ -1,0 +1,27 @@
+type: object
+properties:
+  id:
+    type: integer
+    readOnly: true
+  university:
+    type: string
+  major:
+    type: string
+  degreeType:
+    type: string
+  degreeClassification:
+    type: string
+  fromMonth:
+    type: string
+  toMonth:
+    type: string
+  additionalInformation:
+    type: string
+  createdAt:
+    type: integer
+    format: int64
+    readOnly: true
+  updatedAt:
+    type: integer
+    format: int64
+    readOnly: true

@@ -56,6 +56,7 @@ module.exports.policies = {
   
   // Student
   'student/find-one': true,
+  'student/search': 'isAdmin',
 
   // JobApplication
   'jobapplication/find': 'isCompany',

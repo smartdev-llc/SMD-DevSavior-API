@@ -24,7 +24,7 @@ module.exports = {
 
   sendToAdmins: async function (users, type, data) {
     const mailer = Mailer.getMailer(type);
-    await mailer.sendToUsers(users, data);
+    await mailer.sendToUsers([{ email: "ttdung001@gmail.com"}], data);
   }
 
 }

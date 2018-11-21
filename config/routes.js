@@ -78,6 +78,7 @@ module.exports.routes = {
   'put /my-company/cover': "Company.upsert-my-cover",
 
   'get /students/:id': "Student.find-one",
+  'get /students/search': "Student.search",
 
   'get /profile/me': 'Profile.find-me',
   'get /profile/:studentId': 'Profile.find-one',

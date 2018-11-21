@@ -15,28 +15,36 @@ post:
       - company
       - admin
       default: student
-  - name: email
-    in: body
-    description: User's email
-    schema:
-      type: string
-      format: email
-  - name: password
-    in: body
-    description: User's email
-    schema:
-      type: string
-      format: password
   
   requestBody:
-    description: A JSON object containing user information
+    description: A JSON object containing user information (depend on user role)
     content:
       application/json:
         schema:
-          oneOf:
-            - $ref: 'schemas/Student.yaml'
-            - $ref: 'schemas/Company.yaml'
-            - $ref: 'schemas/Admin.yaml'
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            password:
+              type: string
+              format: password
+            firstName:
+              type: string
+            lastName:
+              type: string
+            name:
+              type: string
+            address:
+              type: string
+            city:
+              type: string
+            contactName:
+              type: string
+            phoneNumber:
+              type: string
+            website:
+              type: string
   
   responses:
     200:
