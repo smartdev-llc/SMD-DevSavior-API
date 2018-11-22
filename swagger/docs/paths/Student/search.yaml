@@ -15,12 +15,14 @@ get:
     in: query
     description: The size of students for each page (for pagination)
     schema:
-      type: string
+      type: integer
+      format: int32
   - name: page
     in: query
     description: The current page (for pagination)
     schema:
-      type: string
+      type: integer
+      format: int32
   
   responses:
     200:

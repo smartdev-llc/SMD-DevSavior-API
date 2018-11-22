@@ -50,7 +50,7 @@ module.exports.routes = {
   'post /auth/signup': 'Auth.signup',
   'post /auth/login': 'Auth.login',
   'post /auth/logout': 'Auth.logout',
-  'get /auth/verify': 'Auth.verify',
+  'post /auth/verify': 'Auth.verify',
   'post /auth/forgot-password': 'Auth.forgot-password',
   'post /auth/reset-password': 'Auth.reset-password',
   'post /auth/:provider': 'Auth.social',

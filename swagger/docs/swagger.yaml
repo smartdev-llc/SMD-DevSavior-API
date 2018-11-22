@@ -1,9 +1,9 @@
 openapi: 3.0.0
 info:
-  description: This is api explorer for JuniorViec (You can only access in development environment). Visit our website at [JuniorViec](https://juniorviec.com) for more information.
+  description: This is api explorer for [JuniorViec](https://juniorviec.com) (You can only access in development environment).
   version: 1.0.0
   title: JuniorViec API Explorer
-  termsOfService: https://juniorviec.com/terms/
+  termsOfService: https://juniorviec.com/privacy-policy
   contact:
     name: JuniorViec Team
     email: contact@juniorviec.com
@@ -38,10 +38,20 @@ tags:
 paths:
   /auth/signup:
     $ref: 'paths/Auth/signup.yaml'
-  /auth/login:
-    $ref: 'paths/Auth/login.yaml'
   /auth/verify:
     $ref: 'paths/Auth/verify.yaml'
+  /auth/resend-email:
+    $ref: 'paths/Auth/resend-email.yaml'
+  /auth/login:
+    $ref: 'paths/Auth/login.yaml'
+  /auth/forgot-password:
+    $ref: 'paths/Auth/forgot-password.yaml'
+  /auth/reset-password:
+    $ref: 'paths/Auth/reset-password.yaml'
+  /auth/{provider}:
+    $ref: 'paths/Auth/social.yaml'
+  /auth/logout:
+    $ref: 'paths/Auth/logout.yaml'
   /students/search:
     $ref: 'paths/Student/search.yaml'
 components:

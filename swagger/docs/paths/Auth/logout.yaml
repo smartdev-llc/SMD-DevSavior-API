@@ -1,0 +1,11 @@
+post:
+  tags: 
+  - Auth
+  summary: Log user out
+  description: API to log a user out
+  security:
+    - bearerAuth: []
+  
+  responses:
+    200:
+      description: OK

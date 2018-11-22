@@ -1,4 +1,4 @@
-get:
+post:
   tags: 
   - Auth
   summary: Verify a new user (student/company/admin)
