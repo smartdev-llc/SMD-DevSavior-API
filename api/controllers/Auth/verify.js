@@ -9,7 +9,7 @@ const {
 } = require('../../../constants/error-code');
 
 module.exports = async function(req, res) {
-  const token = _.get(req, "query.token");
+  const token = req.param('token');
   if (!token) {
     return res.badRequest({
       message: "Please provide token to verify your account.",

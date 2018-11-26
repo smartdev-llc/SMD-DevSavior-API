@@ -14,7 +14,7 @@ const {
 } = require('../../../constants/error-code');
 
 module.exports = async function (req, res) {
-  const token = _.get(req, 'query.token');
+  const token = req.param('token');
   const { password } = req.body;
   if (!token) {
     return res.badRequest({
