@@ -28,7 +28,7 @@ module.exports = async function (req, res) {
     currentAddress
   } = req.body;
 
-  if (!firstName || !lastName || !phoneNumber || !dateOfBirth || !gender || !maritalStatus || !country || !city || !currentAddress) {
+  if (!firstName || !lastName || !phoneNumber || !displayEmail || !dateOfBirth || !gender || !maritalStatus || !country || !city || !currentAddress) {
     return res.badRequest({
       message: "Missing parameters.",
       devMessage: "Some paramters are missing (`firstName` | `lastName` | `phoneNumber` | `displayEmail` | `dateOfBirth` | `gender` | `maritalStatus` | `country` | `city` | `currentAddress`).",
