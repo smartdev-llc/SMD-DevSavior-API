@@ -56,11 +56,11 @@ const isValidLanguagesObject = (langsObj) => {
 
 const isValidPeriodOfMonthYear = (fromMonth, toMonth) => {
   const fromMoment = moment(fromMonth, 'MM-YYYY', true);
-  const toMoment = toMonth == 'NOW' ? moment(moment().format('MM-YYYY'), 'MM-YYYY', true) : moment(fromMonth, 'MM-YYYY', true);
+  const toMoment = toMonth == 'NOW' ? moment(moment().format('MM-YYYY'), 'MM-YYYY', true) : moment(toMonth, 'MM-YYYY', true);
   const isValidFrom = fromMoment.isValid() && fromMoment.isBetween('1970-01');
   const isValidTo = toMoment.isValid() && toMoment.isBetween('1970-01');
   if (!isValidFrom || !isValidTo) return false;
-  return fromMoment <= toMoment;
+  return fromMoment.isSameOrBefore(toMoment);
 }
 
 const isValidDegreeType = (degreeType) => _.indexOf([HIGH_SCHOOL, COLLEGE, BACHELOR, MASTER, DOCTORATE, OTHER], degreeType) > -1;

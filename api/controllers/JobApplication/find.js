@@ -1,4 +1,9 @@
-const debuglog = require('debug')('jv:candicates');
+const {
+  INTERNAL_SERVER_ERROR,
+  MISSING_PARAMETERS,
+  NOT_FOUND,
+  PERMISSION_DENIED
+} = require('../../../constants/error-code');
 const Promise = require('bluebird');
 
 module.exports = async function (req, res) {
@@ -6,52 +11,58 @@ module.exports = async function (req, res) {
   const { size, page } = _.get(req, "query");
   let limit = parseInt(size) || 10;
   let skip = (parseInt(page) || 0) * limit;
-  debuglog('companyId: ', companyId);
-  if (!companyId) {
-    return res.unauthorized({
-      code: "UNAUTHORIZED_COMPANY",
-      message: "You need login as a company to get candicates."
-    });
-  }
+
   const { jobId } = req.params;
-  debuglog('jobId: ', jobId);
 
   if (!jobId) {
     return res.badRequest({
-      code: "BAD_REQUEST",
-      message: "Missing parameters."
+      code: MISSING_PARAMETERS,
+      message: "Missing parameters.",
+      devMessage: "`jobId` is missing"
     });
   }
 
   try {
-    const job = await Job.findOne({ id: jobId }).populate('students', {
-      skip, limit,
-    });
+    const job = await Job.findOne({ id: jobId });
 
     if (!job) {
-      return res.badRequest({
-        code: "JOB_NOT_FOUND",
-        message: 'Job is not found'
+      return res.notFound({
+        code: NOT_FOUND,
+        message: 'Job is not found',
+        devMessage: 'Job is not found'
       });
     }
-    const total = await JobApplication.count({job: jobId});
-    const candicates = await Promise.map(job.students, student => {
-      return Profile.findOne({ owner: student.id }).then(profile => {
-        return _.extend(student, { profile });
+
+    if (job.company !== companyId) {
+      return res.forbidden({
+        message: "You have no permissions to do this action.",
+        devMessage: "You are not the owner of this job.",
+        code: PERMISSION_DENIED
       })
-    });
+    }
+
+    const total = await JobApplication.count({ job: jobId });
+    const jobApplications = await JobApplication.find({ job: jobId });
+    const studentIds = _.reduce(jobApplications, (stds, apl) => _.concat(stds, apl.student), []);
+
+    const students = await Student.find({ id: studentIds })
+      .skip(skip)
+      .limit(limit)
+      .populate('workingPreference')
+      .populate('workingExperiences')
+      .populate('educationDegrees')
+
     res.ok({
-      size: limit, 
-      from: skip,
-      total: total,
-      list: candicates
+      size, 
+      page,
+      total,
+      list: job.students
     });
   } catch (err) {
-    debuglog("error:", err)
     return res.serverError({
-      code: "SERVER_ERROR",
+      code: INTERNAL_SERVER_ERROR,
       message: "Something went wrong.",
-      data: err
+      data: err.message
     });
   }
 }

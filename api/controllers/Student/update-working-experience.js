@@ -2,17 +2,15 @@ const {
   isValidPeriodOfMonthYear
 } = require('../../../utils/validator');
 
+const {
+  INVALID_PARAMETERS,
+  PERMISSION_DENIED,
+  NOT_FOUND,
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   const userId = _.get(req, 'user.id');
-  let userProfile;
-
-  try {
-    userProfile = await Profile.findOne({ owner: userId });
-  } catch (err) {
-    return res.serverError({
-      message: "Something went wrong."
-    });
-  }
 
   const {
     id
@@ -20,7 +18,9 @@ module.exports = async function (req, res) {
 
   if (!id) {
     return res.notFound({
-      message: "Working experience is not found."
+      message: "Working experience is not found.",
+      devMessage: "Working experience is not found.",
+      code: NOT_FOUND
     });
   }
 
@@ -29,19 +29,25 @@ module.exports = async function (req, res) {
     workingExperience = await WorkingExperience.findOne({ id });
   } catch (err) {
     return res.serverError({
-      message: "Something went wrong."
+      message: "Something went wrong.",
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 
   if (!workingExperience) {
     return res.notFound({
-      message: "Education degree is not found."
-    })
+      message: "Working experience is not found.",
+      devMessage: "Working experience is not found.",
+      code: NOT_FOUND
+    });
   }
 
-  if (workingExperience.studentProfile != userProfile.id) {
+  if (workingExperience.student != userId) {
     return res.forbidden({
-      message: "You cannot delete this working experience."
+      message: "You have no permissions to do this action.",
+      devMessage: "You are not the owner of this working experience.",
+      code: PERMISSION_DENIED
     });
   }
 
@@ -54,13 +60,17 @@ module.exports = async function (req, res) {
 
   if (jobTitle == "" || company == "") {
     return res.badRequest({
-      message: "Invalid parameters (`jobTitle`, `company` cannot be EMPTY string)."
+      message: "Invalid paramters.",
+      devMessage: "Invalid parameters (`jobTitle`, `company` cannot be EMPTY string).",
+      code: INVALID_PARAMETERS
     })
   }
 
   if (!isValidPeriodOfMonthYear(fromMonth, toMonth)) {
     return res.badRequest({
-      message: "Invalid `fromMonth` and `toMonth` parameters (should be in format MM-YYYY and fromMonth <= toMonth)."
+      message: "Invalid paramters.",
+      message: "Invalid `fromMonth` and `toMonth` parameters (should be in format MM-YYYY and fromMonth <= toMonth).",
+      code: INVALID_PARAMETERS
     });
   }
 
@@ -77,7 +87,9 @@ module.exports = async function (req, res) {
     res.ok(updatedWEs[0]);
   } catch (err) {
     return res.serverError({
-      message: "Something went wrong."
+      message: "Something went wrong.",
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 }

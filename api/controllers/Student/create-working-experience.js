@@ -2,17 +2,14 @@ const {
   isValidPeriodOfMonthYear
 } = require('../../../utils/validator');
 
+const { 
+  MISSING_PARAMETERS,
+  INVALID_PARAMETERS,
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   const userId = _.get(req, 'user.id');
-  let userProfile;
-
-  try {
-    userProfile = await Profile.findOne({ owner: userId});
-  } catch (err) {
-    return res.serverError({
-      message: "Something went wrong."
-    });
-  }
 
   const {
     jobTitle, company, fromMonth, toMonth, additionalInformation
@@ -20,13 +17,17 @@ module.exports = async function (req, res) {
 
   if (!jobTitle || !company || !fromMonth ||  !toMonth) {
     return res.badRequest({
-      message: "Missing parameters."
+      message: "Missing parameters.",
+      devMessage: "Some paramters are missing (`jobTitle` | `company` | `fromMonth` | `toMonth`).",
+      code: MISSING_PARAMETERS
     });
   }
 
   if (!isValidPeriodOfMonthYear(fromMonth, toMonth)) {
     return res.badRequest({
-      message: "Invalid `fromMonth` and `toMonth` parameters (should be in format MM-YYYY and fromMonth <= toMonth)."
+      message: "Invalid paramters",
+      devMessage: "Invalid `fromMonth` and `toMonth` parameters (should be in format MM-YYYY and fromMonth <= toMonth).",
+      code: INVALID_PARAMETERS
     });
   }
 
@@ -36,7 +37,7 @@ module.exports = async function (req, res) {
     fromMonth, 
     toMonth, 
     additionalInformation,
-    studentProfile: userProfile.id
+    student: userId
   };
 
   try {
@@ -44,7 +45,9 @@ module.exports = async function (req, res) {
     res.ok(workingExperience);
   } catch (err) {
     return res.serverError({
-      message: "Something went wrong."
+      message: "Something went wrong.",
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 }

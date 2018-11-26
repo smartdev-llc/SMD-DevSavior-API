@@ -35,8 +35,8 @@ module.exports = {
       type: 'json'
     },
 
-    studentProfile: {
-      model: 'profile',
+    student: {
+      model: 'student',
       unique: true
     }
     

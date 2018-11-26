@@ -29,14 +29,23 @@ module.exports = async function (req, res) {
   }
 
   try {
+    const total = await Student.count({}).where(where);
+
     const students = await Student.find({})
       .where(where)
-      .populate("profile")
       .limit(limit)
       .skip(skip)
-      .sort('createdAt DESC');
+      .sort('createdAt DESC')
+      .populate('workingPreference')
+      .populate('workingExperiences')
+      .populate('educationDegrees');
 
-    res.ok(students);
+    res.ok({
+      total,
+      list: students,
+      size,
+      page
+    });
   } catch (err) {
     return res.serverError({
       code: INTERNAL_SERVER_ERROR,

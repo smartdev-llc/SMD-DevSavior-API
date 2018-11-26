@@ -57,28 +57,26 @@ module.exports.policies = {
   // Student
   'student/find-one': true,
   'student/search': 'isAdmin',
+  'student/find-me': 'isStudent',
+  'student/find-one': true,
+  'student/upsert-avatar': 'isStudent',
+  'student/upsert-personal-info': 'isStudent',
+  'student/upsert-basic-info': 'isStudent',
+  'student/upsert-working-preference': 'isStudent',
+  'student/upsert-skills': 'isStudent',
+  'student/upsert-languages': 'isStudent',
+  'student/create-education-degree': 'isStudent',
+  'student/update-education-degree': 'isStudent',
+  'student/delete-education-degree': 'isStudent',
+  'student/create-working-experience': 'isStudent',
+  'student/update-working-experience': 'isStudent',
+  'student/delete-working-experience': 'isStudent',
 
   // JobApplication
   'jobapplication/find': 'isCompany',
 
-  // Profile
-  'profile/find-me': 'isStudent',
-  'profile/find-one': true,
-  'profile/upsert-avatar': 'isStudent',
-  'profile/upsert-personal-info': 'isStudent',
-  'profile/upsert-basic-info': 'isStudent',
-  'profile/upsert-working-preference': 'isStudent',
-  'profile/upsert-skills': 'isStudent',
-  'profile/upsert-languages': 'isStudent',
-  'profile/create-education-degree': 'isStudent',
-  'profile/update-education-degree': 'isStudent',
-  'profile/delete-education-degree': 'isStudent',
-  'profile/create-working-experience': 'isStudent',
-  'profile/update-working-experience': 'isStudent',
-  'profile/delete-working-experience': 'isStudent',
-
-  // Client
-  'common/contact-admin': true,
+  // Common
+  'common/contact': true,
 
   // HotJob
   'hotjob/create': 'isAdmin',

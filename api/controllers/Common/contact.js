@@ -1,16 +1,26 @@
 const validator = require('validator');
+const { 
+  MISSING_PARAMETERS,
+  INVALID_PARAMETERS,
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   const { name, email, subject, message } = req.body;
 
-  if (!checkParams(name, email, subject, message)) {
+  if (!name || !email || !message || !subject) {
     return res.badRequest({
-      message: "Missing parameters."
+      message: "Missing parameters.",
+      devMessage: "Some parameters are missing (`name` | `email` | `subject` | `message`).",
+      code: MISSING_PARAMETERS
     });
   }
 
   if (!validator.isEmail(email)) {
     return res.badRequest({
-      message: "Invalid email."
+      message: "Invalid email.",
+      devMessage: "Invalid email.",
+      code: INVALID_PARAMETERS
     });
   }
 
@@ -34,13 +44,9 @@ module.exports = async function (req, res) {
     });
   } catch (err) {
     return res.serverError({
-      message: `Something went wrong.`
+      message: `Something went wrong.`,
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
-}
-
-const checkParams = (name, email, subject, message) => {
-  if (!name || !email || !subject || !message) return false;
-  if (!_.isString(name) || !_.isString(email) || !_.isString(subject) || !_.isString(message)) return false;
-  return _.trim(name).length && _.trim(email).length && _.trim(subject).length && _.trim(message).length;
 }

@@ -30,7 +30,7 @@ module.exports = async function (req, res) {
     if (!email || !password || !firstName || !lastName) {
       return res.badRequest({
         message: "Missing parameters.",
-        devMessage: "Some paramters are missing. Please check `email`, `password`, `firstName`, `lastName`.",
+        devMessage: "Some paramters are missing (`email` | `password` | `firstName` | `lastName`).",
         code: MISSING_PARAMETERS
       });
     }
@@ -53,6 +53,7 @@ module.exports = async function (req, res) {
 
     const studentReq = {
       email,
+      displayEmail: email,
       password,
       firstName: _.escape(firstName),
       lastName: _.escape(lastName),
@@ -70,7 +71,6 @@ module.exports = async function (req, res) {
         });
       } else {
         const userInfo = await Student.create(studentReq).fetch();
-        await Profile.create({ owner: userInfo.id });
         const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role: 'student', token_type: VERIFICATION_TOKEN });
         const verificationToken = JwtService.issue(decodedInfo, { expiresIn });
 

@@ -7,6 +7,9 @@
 const bcrypt = require('bcrypt-nodejs');
 
 const constants = require('../../constants');
+const { FIRST_TO_THIRD_YEAR, FOURTH_YEAR, FINAL_YEAR, GRADUATED } = constants.EDUCATIONAL_STATUS;
+const { SINGLE, MARRIED } = constants.MARITAL_STATUS;
+const { MALE, FEMALE } = constants.GENDER;
 const { ACTIVE } = constants.STATUS;
 
 module.exports = {
@@ -50,20 +53,79 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     },
-    profile: {
-      collection: 'profile',
-      via: 'owner'
+    // FOR PROFILE
+    displayEmail: {
+      type: 'string'
     },
+    phoneNumber: {
+      type: 'string'
+    },
+    gender: {
+      type: 'string',
+      isIn: [MALE, FEMALE]
+    },
+    dateOfBirth: {
+      type: 'string'
+    },
+    maritalStatus: {
+      type: 'string',
+      isIn: [SINGLE, MARRIED]
+    },
+    country: {
+      type: 'string'
+    },
+    city: {
+      type: 'string'
+    },
+    currentAddress: {
+      type: 'string'
+    },
+    jobTitle: {
+      type: 'string'
+    },
+    yearsOfExperience: {
+      type: 'number'
+    },
+    educationalStatus: {
+      type: 'string',
+      isIn: [FIRST_TO_THIRD_YEAR, FOURTH_YEAR, FINAL_YEAR, GRADUATED]
+    },
+    isPrivate: { // will or will not show public information: phone, email
+      type: 'boolean',
+      defaultsTo: true
+    },
+    skills: {
+      type: 'json', // use json type to store string array
+      defaultsTo: []
+    },
+    languages: {
+      type: 'json', // use json type to store object array
+      defaultsTo: []
+    },
+    educationDegrees: {
+      collection: 'educationdegree',
+      via: 'student'
+    },
+    workingPreference: {
+      collection: 'workingpreference',
+      via: 'student'
+    },
+    workingExperiences: {
+      collection: 'workingexperience',
+      via: 'student'
+    },
+    // FOR JOB APPLICATION
     jobs: {
       collection: 'job',
       via: 'student',
       through: 'jobapplication'
     },
-    skills: {
+    // FOR JOB SCRIPTION
+    subscribedSkills: {
       collection: 'skill',
       via: 'student',
       through: 'skillsubscription'
-    }
+    },
   },
 
   customToJSON: function() {

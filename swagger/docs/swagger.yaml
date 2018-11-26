@@ -29,8 +29,6 @@ tags:
   description: All operations about Job Applications
 - name: Photo
   description: All operations about Photos
-- name: Profile
-  description: All operations about Student Profile
 - name: Skill
   description: All operations about Skills
 - name: Student

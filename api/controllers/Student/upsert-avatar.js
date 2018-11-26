@@ -6,6 +6,11 @@ const {
   isImage
 } = require('../../../utils/validator');
 
+const {
+  INVALID_EXTENSION,
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   const userId = _.get(req, 'user.id');
   const uploadFile = req.file('file');
@@ -13,7 +18,9 @@ module.exports = async function (req, res) {
   
   if (!originalFilename || !isImage(originalFilename)) {
     return res.badRequest({
-      message: "Invalid file extension."
+      message: "Invalid file extension.",
+      devMessage: "Wrong image extension.",
+      code: INVALID_EXTENSION
     });
   }
 
@@ -24,13 +31,19 @@ module.exports = async function (req, res) {
     maxBytes
   }, async function (err, uploadedFiles) {
     if (err) {
-      return res.serverError(err);
+      return res.serverError({
+        message: "Something went wrong.",
+        devMessage: err.message,
+        code: INTERNAL_SERVER_ERROR
+      });
     }
 
     // If no files were uploaded, respond with an error.
     if (!_.size(uploadedFiles)) {
-      return res.badRequest({
-        message: 'No file was uploaded.'
+      return res.serverError({
+        message: 'No file was uploaded.',
+        devMessage: "Upload failed.",
+        code: INTERNAL_SERVER_ERROR
       });
     }
 
@@ -49,7 +62,9 @@ module.exports = async function (req, res) {
       });
     } catch (err) {
       return res.serverError({
-        message: "Something went wrong."
+        message: "Something went wrong.",
+        devMessage: err.message,
+        code: INTERNAL_SERVER_ERROR
       })
     }
   })

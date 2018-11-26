@@ -77,25 +77,23 @@ module.exports.routes = {
   'put /my-company/logo': "Company.upsert-my-logo",
   'put /my-company/cover': "Company.upsert-my-cover",
 
-  'get /students/:id': "Student.find-one",
   'get /students/search': "Student.search",
+  'get /students/:studentId': 'Student.find-one',
+  'get /profile/me': 'Student.find-me',
+  'put /profile/me/avatar': 'Student.upsert-avatar',
+  'put /profile/me/personal-info': 'Student.upsert-personal-info',
+  'put /profile/me/basic-info': 'Student.upsert-basic-info',
+  'put /profile/me/working-preference': 'Student.upsert-working-preference',
+  'put /profile/me/skills': 'Student.upsert-skills',
+  'put /profile/me/languages': 'Student.upsert-languages',
+  'post /profile/me/education-degrees': 'Student.create-education-degree',
+  'put /profile/me/education-degrees/:id': 'Student.update-education-degree',
+  'delete /profile/me/education-degrees/:id': 'Student.delete-education-degree',
+  'post /profile/me/working-experiences': 'Student.create-working-experience',
+  'put /profile/me/working-experiences/:id': 'Student.update-working-experience',
+  'delete /profile/me/working-experiences/:id': 'Student.delete-working-experience',
 
-  'get /profile/me': 'Profile.find-me',
-  'get /profile/:studentId': 'Profile.find-one',
-  'put /profile/me/avatar': 'Profile.upsert-avatar',
-  'put /profile/me/personal-info': 'Profile.upsert-personal-info',
-  'put /profile/me/basic-info': 'Profile.upsert-basic-info',
-  'put /profile/me/working-preference': 'Profile.upsert-working-preference',
-  'put /profile/me/skills': 'Profile.upsert-skills',
-  'put /profile/me/languages': 'Profile.upsert-languages',
-  'post /profile/me/education-degrees': 'Profile.create-education-degree',
-  'put /profile/me/education-degrees/:id': 'Profile.update-education-degree',
-  'delete /profile/me/education-degrees/:id': 'Profile.delete-education-degree',
-  'post /profile/me/working-experiences': 'Profile.create-working-experience',
-  'put /profile/me/working-experiences/:id': 'Profile.update-working-experience',
-  'delete /profile/me/working-experiences/:id': 'Profile.delete-working-experience',
-
-  'post /contact': 'Common.contact-admin'
+  'post /contact': 'Common.contact'
   
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

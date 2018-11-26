@@ -4,17 +4,14 @@ const {
   isValidPeriodOfMonthYear
 } = require('../../../utils/validator');
 
+const { 
+  MISSING_PARAMETERS,
+  INVALID_PARAMETERS,
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   const userId = _.get(req, 'user.id');
-  let userProfile;
-
-  try {
-    userProfile = await Profile.findOne({ owner: userId});
-  } catch (err) {
-    return res.serverError({
-      message: "Something went wrong."
-    });
-  }
 
   const {
     university, major, degreeType, degreeClassification, fromMonth, toMonth, additionalInformation
@@ -22,25 +19,33 @@ module.exports = async function (req, res) {
 
   if (!university || !major || !degreeType || !degreeClassification || !fromMonth ||  !toMonth) {
     return res.badRequest({
-      message: "Missing parameters."
+      message: "Missing parameters.",
+      devMessage: "Some paramters are missing (`university` | `major` | `degreeType` | `degreeClassification` | `fromMonth` | `toMonth`).",
+      code: MISSING_PARAMETERS
     });
   }
 
   if (!isValidDegreeType(degreeType)) {
     return res.badRequest({
-      message: "Invalid `degreeType` parameter (should be one of these: HIGH_SCHOOL, COLLEGE, BACHELOR, MASTER, DOCTORATE, OTHER)."
+      message: "Invalid parameter.",
+      devMessage: "Invalid `degreeType` parameter (should be one of these: HIGH_SCHOOL, COLLEGE, BACHELOR, MASTER, DOCTORATE, OTHER).",
+      code: INVALID_PARAMETERS
     });
   }
 
   if (!isValidDegreeClassification(degreeClassification)) {
     return res.badRequest({
-      message: "Invalid `degreeClassification` parameter (should be one of these: AVERAGE, GOOD, EXCELLENT)."
+      message: "Invalid parameter.",
+      devMessage: "Invalid `degreeClassification` parameter (should be one of these: AVERAGE, GOOD, EXCELLENT).",
+      code: INVALID_PARAMETERS
     });
   }
 
   if (!isValidPeriodOfMonthYear(fromMonth, toMonth)) {
     return res.badRequest({
-      message: "Invalid `fromMonth` and `toMonth` parameters (should be in format MM-YYYY and fromMonth <= toMonth)."
+      message: "Invalid parameter.",
+      devMessage: "Invalid `fromMonth` and `toMonth` parameters (should be in format MM-YYYY and fromMonth <= toMonth).",
+      code: INVALID_PARAMETERS
     });
   }
 
@@ -52,7 +57,7 @@ module.exports = async function (req, res) {
     fromMonth, 
     toMonth, 
     additionalInformation,
-    studentProfile: userProfile.id
+    student: userId
   };
 
   try {
@@ -60,7 +65,9 @@ module.exports = async function (req, res) {
     res.ok(educationDegree);
   } catch (err) {
     return res.serverError({
-      message: "Something went wrong."
+      message: "Something went wrong.",
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 }

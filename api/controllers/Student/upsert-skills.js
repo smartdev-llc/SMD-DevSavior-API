@@ -2,6 +2,11 @@ const {
   isArrayOfStrings
 } = require('../../../utils/validator');
 
+const {
+  INTERNAL_SERVER_ERROR,
+  INVALID_PARAMETERS
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   const userId = _.get(req, 'user.id');
 
@@ -11,7 +16,9 @@ module.exports = async function (req, res) {
 
   if (!isArrayOfStrings(skills)) {
     return res.badRequest({
-      message: "Invalid `skills` parameter (should be an ARRAY of STRING)."
+      message: "Invalid paramters.",
+      devMessage: "Invalid `skills` parameter (should be an ARRAY of STRING).",
+      code: INVALID_PARAMETERS
     });
   }
 
@@ -20,12 +27,14 @@ module.exports = async function (req, res) {
   };
 
   try {
-    const updatedProfiles = await Profile.update({ owner: userId }).set(profileBody).fetch();
+    const updatedProfiles = await Student.update({ id: userId }).set(profileBody).fetch();
     const userProfile = updatedProfiles[0];
     res.ok(userProfile);
   } catch(err) {
     return res.serverError({
-      message: "Something went wrong."
+      message: "Something went wrong.",
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 }
