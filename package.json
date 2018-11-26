@@ -40,7 +40,9 @@
     "@sailshq/eslint": "^4.19.3"
   },
   "scripts": {
+    "prestart": "npm install",
     "start": "node app.js",
+    "deploy": "./deploy.sh",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "eslint . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
     "custom-tests": "echo \"(No other custom tests yet.)\" && echo"
