@@ -4,7 +4,6 @@ const {
   NOT_FOUND,
   PERMISSION_DENIED
 } = require('../../../constants/error-code');
-const Promise = require('bluebird');
 
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
@@ -50,13 +49,13 @@ module.exports = async function (req, res) {
       .limit(limit)
       .populate('workingPreference')
       .populate('workingExperiences')
-      .populate('educationDegrees')
+      .populate('educationDegrees');
 
     res.ok({
       size, 
       page,
       total,
-      list: job.students
+      list: students
     });
   } catch (err) {
     return res.serverError({
