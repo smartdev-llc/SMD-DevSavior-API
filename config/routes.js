@@ -60,6 +60,7 @@ module.exports.routes = {
   'get /jobs/:jobId/applications': 'JobApplication.find',
   'get /jobs/search': 'Job.search',
   'get /jobs/count': 'Job.count',
+  'get /jobs/list-by-time': 'Job.list-by-time',
   'get /jobs/:id': 'Job.find-one',
   'put /my-jobs/:id': 'Job.update-my-job',
   'get /companies/:companyId/jobs': 'Job.find-by-company-id',

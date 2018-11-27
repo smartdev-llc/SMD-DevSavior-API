@@ -12,8 +12,12 @@ module.exports = async function (req, res) {
   }
 
   const queryBody = _.extend(req.query, { companyId });
+  let { size, page } = queryBody;
+  let limit = parseInt(size) || 10;
+  let skip = (parseInt(page) || 0) * limit;
 
   const buildQuery = ElasticsearchService.buildQuery(queryBody);
+  const transformResult = ElasticsearchService.transformResult();
 
   let query = { bool: { must: [] } };
 
@@ -28,51 +32,52 @@ module.exports = async function (req, res) {
   let now = moment.now();
   let daysLater = moment().add(sails.config.custom.jobExpiresSoonDuration || 2, 'day').valueOf();
 
-  let aggs = {
-    active: {
-      filter: {
+  switch (queryBody.type) {
+    case "all": break;
+    case "active":
+      query.bool.must.push({
         range: {
           expiredAt: {
             gt: daysLater
           }
         }
-      }
-    },
-    expired: {
-      filter: {
+      });
+      break;
+    case "expired":
+      query.bool.must.push({
         range: {
           expiredAt: {
             lt: now
           }
         }
-      }
-    },
-    expiresSoon: {
-      filter: {
+      });
+      break;
+    case "expiresSoon":
+      query.bool.must.push({
         range: {
           expiredAt: {
             gt: now,
             lt: daysLater
           }
         }
-      }
-    }
+      });
+      break;
+    default: break;
   }
 
   debuglog('query: ', JSON.stringify(query));
-  debuglog('aggs: ', JSON.stringify(aggs));
 
   try {
-    let queryResult = await ElasticsearchService.search({
+    let result = await ElasticsearchService.search({
       type: 'Job',
       body: {
-        "size": 0,
-        "query": query,
-        "aggs": aggs
+        "size": limit,
+        "from": skip,
+        "query": query
       }
-    });
+    }).then(transformResult.getHits);
 
-    return res.ok(_.mapValues(queryResult.aggregations, "doc_count"));
+    res.ok(_.extend({ from: skip, size: limit }, result));
   } catch (err) {
     return res.serverError({
       code: "INTERNAL",
