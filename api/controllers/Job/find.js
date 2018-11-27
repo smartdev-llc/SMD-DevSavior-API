@@ -39,7 +39,7 @@ const findByCompanyId = async (req, res, userId, limit, skip) => {
 
 const findAll = async (req, res, limit, skip) => {
   try {
-    const jobs = await Job
+    let jobs = await Job
       .find({})
       .populate('students', { select: ['id', 'firstName', 'lastName'] })
       .populate('skills', { select: ['id', 'name'] })
@@ -52,7 +52,7 @@ const findAll = async (req, res, limit, skip) => {
       job.numberOfCandidates = _.size(_.get(job, 'students'))
       return _.omit(jobs, ['students']);;
     })
-    return res.ok(jobConverted);
+    return res.ok(jobs);
   } catch (err) {
     return res.serverError({
       message: `Something went wrong .`,
