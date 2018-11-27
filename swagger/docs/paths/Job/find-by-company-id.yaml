@@ -1,0 +1,20 @@
+get:
+  tags: 
+  - Job
+  summary: Get list of company jobs by companyId
+  description: Get list of company jobs by companyId
+  security: []
+  parameters: 
+  - name: companyId
+    in: path
+    description: The company id
+    schema:
+      type: string
+  
+  responses:
+    200:
+      description: OK
+    404:
+      description: Not found
+    500:
+      description: Server error
