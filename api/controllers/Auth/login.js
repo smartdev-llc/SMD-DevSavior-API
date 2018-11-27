@@ -77,10 +77,8 @@ module.exports = async function (req, res) {
 
   user.role = role;
 
-  user.password = undefined;
-  const decodedInfo = _.assign({}, _.pick(user, ['id', 'email', 'role']), { token_type: ACCESS_TOKEN })
+  const decodedInfo = _.assign({}, _.pick(user, ['id', 'email', 'role', 'password']), { token_type: ACCESS_TOKEN });
   const token = JwtService.issue(decodedInfo);
-  user = JSON.parse(JSON.stringify(user));
   user.token = token;
 
   res.ok(user);

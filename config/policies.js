@@ -22,6 +22,7 @@ module.exports.policies = {
 
   // Auth
   'auth/*': true,
+  'auth/change-password': 'isAuthenticated',
   'auth/logout': 'isAuthenticated',
 
   // Job

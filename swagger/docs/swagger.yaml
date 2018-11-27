@@ -46,6 +46,8 @@ paths:
     $ref: 'paths/Auth/forgot-password.yaml'
   /auth/reset-password:
     $ref: 'paths/Auth/reset-password.yaml'
+  /auth/change-password:
+    $ref: 'paths/Auth/change-password.yaml'
   /auth/{provider}:
     $ref: 'paths/Auth/social.yaml'
   /auth/logout:

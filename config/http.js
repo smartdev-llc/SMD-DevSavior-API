@@ -106,6 +106,7 @@ async function authenticateUserMiddleware(req, res, proceed) {
   const userId = _.get(decoded, 'id');
   const email = _.get(decoded, 'email');
   const role = _.get(decoded, 'role');
+  const password = _.get(decoded, 'password');
   const type = _.get(decoded, 'token_type');
   const jwtid = _.get(decoded, 'jwtid');
 
@@ -120,14 +121,19 @@ async function authenticateUserMiddleware(req, res, proceed) {
   let user;
   try {
     let UserModel;
-    if (role == "company") {
+    if (role === "company") {
       UserModel = Company;
-    } else if (role == "admin") {
+    } else if (role === "admin") {
       UserModel = Admin;
     } else {
       UserModel = Student;
     }
     user = await UserModel.findOne({ id: userId, email });
+
+    if (role === 'student' && user.password && password !== user.password) {
+      return proceed();
+    }
+
     user.role = role;
     delete user.password;
   } catch (err) {
