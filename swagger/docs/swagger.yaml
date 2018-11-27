@@ -52,6 +52,10 @@ paths:
     $ref: 'paths/Auth/logout.yaml'
   /students/search:
     $ref: 'paths/Student/search.yaml'
+  /categories:
+     $ref: 'paths/Category/find.yaml'
+  /companies/{companyId}/jobs:
+     $ref: 'paths/Job/find-by-company-id.yaml'
 components:
   responses:
     200:

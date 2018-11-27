@@ -50,7 +50,7 @@ const findAll = async (req, res, limit, skip) => {
 
     jobs = _.map(jobs, job => {
       job.numberOfCandidates = _.size(_.get(job, 'students'))
-      return _.omit(jobs, ['students']);;
+      return _.omit(job, ['students']);;
     })
     return res.ok(jobs);
   } catch (err) {

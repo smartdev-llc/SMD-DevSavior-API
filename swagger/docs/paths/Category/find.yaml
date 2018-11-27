@@ -1,0 +1,10 @@
+get:
+  tags: 
+  - Category
+  summary: Get list of categories
+  description: API to get list of categories
+  responses:
+    200:
+      description: OK
+    500:
+      description: Server error
