@@ -14,7 +14,7 @@ API docs
 
 - Sample of request
 ~~~
-http://localhost:1337/jobs/list-by-time?size=5&page=0?type=active
+http://localhost:1337/jobs/list-by-time?size=5&page=0&type=active
 ~~~
 
 - Response data

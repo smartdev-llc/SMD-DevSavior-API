@@ -20,6 +20,15 @@ module.exports = {
       )
     )
   },
+  update: async function (options) {
+    return await esClient.update(
+      _.extend({
+        index: indexName
+      },
+        _.pick(options, ['type', 'id', 'body'])
+      )
+    )
+  },
 
   search: async function (params) {
     return await esClient.search(

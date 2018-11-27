@@ -31,6 +31,7 @@ module.exports.policies = {
   'job/list-by-time': 'isCompany',
   'job/apply': 'isStudent',
   'job/search': true,
+  'job/update': 'isCompany',
   'job/find-one': true,
   'job/update-my-job': 'isCompany',
   'job/find-by-company-id': true,
