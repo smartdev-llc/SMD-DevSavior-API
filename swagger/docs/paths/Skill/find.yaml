@@ -1,0 +1,10 @@
+get:
+  tags: 
+  - Skill
+  summary: Get list of skills
+  description: API to get list of skills
+  responses:
+    200:
+      description: OK
+    500:
+      description: Server error

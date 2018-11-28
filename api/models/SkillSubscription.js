@@ -13,15 +13,6 @@ module.exports = {
     },
     skill: {
       model: 'skill'
-    },
-    // Student subcribes to receive email or not
-    isSubscribing: {
-      type: 'boolean',
-      defaultsTo: false
-    },
-    // How good at this skill is student?
-    strengh: {
-      type: 'number'
     }
   },
 

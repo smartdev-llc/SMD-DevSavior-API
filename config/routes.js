@@ -96,7 +96,12 @@ module.exports.routes = {
   'put /profile/me/working-experiences/:id': 'Student.update-working-experience',
   'delete /profile/me/working-experiences/:id': 'Student.delete-working-experience',
 
-  'post /contact': 'Common.contact'
+  'post /contact': 'Common.contact',
+
+  'post /skills/:skillId/subscribe': 'Skill.subscribe',
+  'post /skills/:skillId/unsubscribe': 'Skill.unsubscribe',
+
+  'get /skill-subscriptions': 'SkillSubscription.find'
   
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

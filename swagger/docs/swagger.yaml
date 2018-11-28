@@ -31,6 +31,8 @@ tags:
   description: All operations about Photos
 - name: Skill
   description: All operations about Skills
+- name: SkillSubscription
+  description: All operations about SkillSubscriptions
 - name: Student
   description: All operations about Students
 paths:
@@ -54,6 +56,14 @@ paths:
     $ref: 'paths/Auth/logout.yaml'
   /students/search:
     $ref: 'paths/Student/search.yaml'
+  /skills:
+     $ref: 'paths/Skill/find.yaml'
+  /skills/{skillId}/subscribe:
+    $ref: 'paths/Skill/subscribe.yaml'
+  /skills/{skillId}/unsubscribe:
+    $ref: 'paths/Skill/unsubscribe.yaml'
+  /skill-subscriptions:
+    $ref: 'paths/SkillSubscription/find.yaml'
   /categories:
      $ref: 'paths/Category/find.yaml'
   /companies/{companyId}/jobs:

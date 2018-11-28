@@ -1,0 +1,12 @@
+get:
+  tags: 
+  - SkillSubscription
+  summary: Get list of skill subscriptions
+  description: API to get list of skill subscriptions
+  security:
+    - bearerAuth: []
+  responses:
+    200:
+      description: OK
+    500:
+      description: Server error

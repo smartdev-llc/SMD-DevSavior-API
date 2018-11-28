@@ -44,6 +44,11 @@ module.exports.policies = {
   // Skill
   'skill/find': true,
   'skill/create': 'isAdmin',
+  'skill/subscribe': 'isStudent',
+  'skill/unsubscribe': 'isStudent',
+
+  // SkillSubscription
+  'skillsubscription/find': 'isStudent',
   
   // Photo
   'photo/upload': true,
