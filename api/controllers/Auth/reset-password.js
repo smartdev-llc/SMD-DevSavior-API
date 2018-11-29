@@ -47,7 +47,7 @@ module.exports = async function (req, res) {
     if (err) {
       return res.forbidden({
         message: "Invalid token.",
-        devMessage: "Cannot verify reset password token.",
+        devMessage: "Cannot verify the reset password token.",
         code: INVALID_TOKEN
       });
     }

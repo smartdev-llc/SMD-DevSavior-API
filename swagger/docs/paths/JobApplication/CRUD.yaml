@@ -1,16 +1,20 @@
 post:
   tags: 
-  - Skill
-  summary: Subscribe a skill
-  description: API for student to subscribe a skill
+  - JobApplication
+  summary: Apply a job
+  description: > 
+    API for student to apply a job.
+    You should login as student to do this action.
   security:
-    - bearerAuth: []
+    - studentAuth: []
   parameters: 
-  - name: skillId
+  - name: jobId
     in: path
-    description: The skill id
+    description: The job id
     schema:
-      type: number
+      type: integer
+      format: int32
+      example: 1
   
   responses:
     200:

@@ -1,7 +1,7 @@
 const {
   INVALID_PARAMETERS,
+  FORBIDDEN_ACTION,
   MISSING_PARAMETERS,
-  ALREADY_SUBSCRIBE,
   INTERNAL_SERVER_ERROR
 } = require('../../../constants/error-code');
 
@@ -36,23 +36,21 @@ module.exports = async function (req, res) {
     });
   }
 
-  const reqBody = { student: userId, skill: skillId };
-
   try {
-    const existesSubscription = await SkillSubscription.findOne(reqBody);
+    const existedSubscription = await SkillSubscription.findOne({ student: userId, skill: skillId });
 
-    if (existesSubscription) {
-      return res.conflict({
-        message: "You already subscribed this skill.",
-        devMessage: "You already subscribed this skill.",
-        code: ALREADY_SUBSCRIBE
-      })
-    } else {
-      await SkillSubscription.create(reqBody);
+    if (existedSubscription) {
+      await Student.removeFromCollection(userId, 'subscribedSkills').members([skillId]);
       const currentUser = await Student.findOne({ id: userId }).populate('subscribedSkills');
       res.ok({
-        message: "Subscribed " + skill.name + ".",
+        message: "Unsubscribed " + skill.name + ".",
         data: _.pick(currentUser, 'subscribedSkills')
+      })
+    } else {
+      res.forbidden({
+        message: "You haven't subscribed this skill yet.",
+        devMessage: "You haven't subscribed this skill yet.",
+        code: FORBIDDEN_ACTION
       })
     }
   } catch (err) {

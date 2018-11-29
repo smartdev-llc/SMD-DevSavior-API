@@ -2,7 +2,7 @@ post:
   tags: 
   - Auth
   summary: Login social
-  description: API to login social (facebook, google)
+  description: API to login social (facebook, google).
   security: []
   parameters: 
   - name: provider
@@ -13,6 +13,7 @@ post:
       enum: 
       - facebook
       - google
+      example: facebook
   - name: access_token
     in: query
     description: The social access token (after social authentication in front-end side)

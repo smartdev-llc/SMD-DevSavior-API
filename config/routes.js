@@ -57,7 +57,7 @@ module.exports.routes = {
   'post /auth/:provider': 'Auth.social',
   'post /auth/resend-email': 'Auth.resend-email',
 
-  'post /jobs/:jobId/applications': 'Job.apply',
+  'post /jobs/:jobId/applications': 'JobApplication.create',
   'get /jobs/:jobId/applications': 'JobApplication.find',
   'get /jobs/search': 'Job.search',
   'get /jobs/count': 'Job.count',
@@ -98,8 +98,8 @@ module.exports.routes = {
 
   'post /contact': 'Common.contact',
 
-  'post /skills/:skillId/subscribe': 'Skill.subscribe',
-  'post /skills/:skillId/unsubscribe': 'Skill.unsubscribe',
+  'post /skills/:skillId/subscriptions': 'SkillSubscription.create',
+  'delete /skills/:skillId/subscriptions': 'SkillSubscription.delete',
 
   'get /skill-subscriptions': 'SkillSubscription.find'
   

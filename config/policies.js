@@ -30,7 +30,6 @@ module.exports.policies = {
   'job/create': 'isCompany',
   'job/count': 'isCompany',
   'job/list-by-time': 'isCompany',
-  'job/apply': 'isStudent',
   'job/search': true,
   'job/update': 'isCompany',
   'job/find-one': true,
@@ -44,10 +43,10 @@ module.exports.policies = {
   // Skill
   'skill/find': true,
   'skill/create': 'isAdmin',
-  'skill/subscribe': 'isStudent',
-  'skill/unsubscribe': 'isStudent',
 
   // SkillSubscription
+  'skillsubscription/create': 'isStudent',
+  'skillsubscription/delete': 'isStudent',
   'skillsubscription/find': 'isStudent',
   
   // Photo
@@ -82,6 +81,7 @@ module.exports.policies = {
 
   // JobApplication
   'jobapplication/find': 'isCompany',
+  'jobapplication/create': 'isStudent',
 
   // Common
   'common/contact': true,

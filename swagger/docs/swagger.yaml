@@ -58,16 +58,18 @@ paths:
     $ref: 'paths/Student/search.yaml'
   /skills:
      $ref: 'paths/Skill/find.yaml'
-  /skills/{skillId}/subscribe:
-    $ref: 'paths/Skill/subscribe.yaml'
-  /skills/{skillId}/unsubscribe:
-    $ref: 'paths/Skill/unsubscribe.yaml'
+  /skills/{skillId}/subscriptions:
+    $ref: 'paths/SkillSubscription/CRUD.yaml'
   /skill-subscriptions:
     $ref: 'paths/SkillSubscription/find.yaml'
   /categories:
-     $ref: 'paths/Category/find.yaml'
+    $ref: 'paths/Category/find.yaml'
+  /jobs:
+    $ref: 'paths/Job/CRUD.yaml'
+  /jobs/{jobId}/applications:
+    $ref: 'paths/JobApplication/CRUD.yaml'
   /companies/{companyId}/jobs:
-     $ref: 'paths/Job/find-by-company-id.yaml'
+    $ref: 'paths/Job/find-by-company-id.yaml'
 components:
   responses:
     200:
@@ -79,10 +81,22 @@ components:
     500:
       description: Server error
   securitySchemes:
-    bearerAuth:            # arbitrary name for the security scheme
+    studentAuth:
       type: http
       scheme: bearer
-      bearerFormat: JWT    #
+      bearerFormat: JWT
+    companyAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    adminAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     Admin:
       $ref: 'models/Admin.yaml'

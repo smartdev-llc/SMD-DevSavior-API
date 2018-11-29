@@ -1,28 +1,33 @@
 get:
   tags: 
   - Student
-  summary: Get list of users (Admin role)
-  description: API to get list of users (Only for admin role)
+  summary: Search users
+  description: >
+    API for admin to search users.
+    You should login as admin to do this action.
   security:
-    - bearerAuth: []
+    - adminAuth: []
   parameters: 
   - name: qs
     in: query
     description: The search text
     schema:
       type: string
+      example: Nguyen
   - name: size
     in: query
     description: The size of students for each page (for pagination)
     schema:
       type: integer
       format: int32
+      example: 10
   - name: page
     in: query
     description: The current page (for pagination)
     schema:
       type: integer
       format: int32
+      example: 1
   
   responses:
     200:

@@ -1,0 +1,64 @@
+post:
+  tags: 
+  - SkillSubscription
+  summary: Subscribe a skill
+  description: > 
+    API for student to subscribe a skill.
+    You should login as student to do this action.
+  security:
+    - studentAuth: []
+  parameters: 
+  - name: skillId
+    in: path
+    description: The skill id
+    schema:
+      type: integer
+      format: int32
+      example: 1
+  
+  responses:
+    200:
+      description: OK
+    400:
+      description: Bad request
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
+    404: 
+      description: Not found
+    409:
+      description: Conflict
+    500:
+      description: Server error
+delete:
+  tags: 
+  - SkillSubscription
+  summary: Unsubscribe a skill
+  description: > 
+    API for student to unsubscribe a skill.
+    You should login as student to do this action.
+  security:
+    - bearerAuth: []
+  parameters: 
+  - name: skillId
+    in: path
+    description: The skill id
+    schema:
+      type: integer
+      format: int32
+      example: 1
+  
+  responses:
+    200:
+      description: OK
+    400:
+      description: Bad request
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
+    404: 
+      description: Not found
+    500:
+      description: Server error

@@ -105,7 +105,7 @@ module.exports = async function (req, res) {
     if (!email || !password || !name || !contactName || !phoneNumber || !address) {
       return res.badRequest({
         message: "Missing parameters.",
-        devMessage: "Some paramters are missing.",
+        devMessage: "Some paramters are missing (`email` | `password` | `name` | `contactName` | `phoneNumber` | `address`).",
         code: MISSING_PARAMETERS
       });
     }
@@ -191,7 +191,7 @@ module.exports = async function (req, res) {
     if (!email || !password || !firstName || !lastName) {
       return res.badRequest({
         message: "Missing parameters.",
-        devMessage: "Some paramters are missing. Please check `email`, `password`, `firstName`, `lastName`.",
+        devMessage: "Some paramters are missing (`email`, `password`, `firstName`, `lastName`).",
         code: MISSING_PARAMETERS
       });
     }

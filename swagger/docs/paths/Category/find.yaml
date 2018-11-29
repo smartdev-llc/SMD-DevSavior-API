@@ -2,7 +2,8 @@ get:
   tags: 
   - Category
   summary: Get list of categories
-  description: API to get list of categories
+  description: API to get list of categories.
+  security: []
   responses:
     200:
       description: OK

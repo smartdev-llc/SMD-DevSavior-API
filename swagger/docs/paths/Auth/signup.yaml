@@ -2,7 +2,7 @@ post:
   tags: 
   - Auth
   summary: Register a new user (student/company/admin)
-  description: API to register a new user
+  description: API to register a new user.
   security: []
   parameters: 
   - name: role
@@ -45,6 +45,11 @@ post:
               type: string
             website:
               type: string
+          example:
+            email: test01@gmail.com
+            password: "12345678"
+            firstName: Test
+            lastName: User
   
   responses:
     200:

@@ -1,0 +1,64 @@
+post:
+  tags: 
+  - Job
+  summary: Create a job
+  description: > 
+    API for company to create a job.
+    You should login as company to do this action.
+  security:
+    - companyAuth: []
+  requestBody:
+    description: A JSON object containing job information
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+            description:
+              type: string
+            skillIds:
+              type: array
+              items:
+                type: integer
+                format: int32
+            categoryId:
+              type: integer
+              format: int32
+            fromSalary:
+              type: integer
+              format: int64
+            toSalary:
+              type: integer
+              format: int64
+            requirements:
+              type: string
+            jobType:
+              type: string
+            benefits:
+              type: string
+          example:
+            title: Java Developer
+            description: Chung toi dang can tuyen 1 Junior Java Developer
+            skillIds: [1,3]
+            categoryId: 1
+            fromSalary: 400
+            toSalary: 600
+            requirements: Nam cuoi hoac vua moi tot nghiep
+            jobType: FULL_TIME
+            benefits: Nhu cac cong ty khac
+  
+  responses:
+    200:
+      description: OK
+    400:
+      description: Bad request
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
+    404: 
+      description: Not found
+    500:
+      description: Server error

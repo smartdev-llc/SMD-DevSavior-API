@@ -2,7 +2,7 @@ post:
   tags: 
   - Auth
   summary: Resend email
-  description: API to resend verification email
+  description: API to resend verification email.
   security: []
   parameters: 
   - name: role
@@ -26,6 +26,7 @@ post:
             email:
               type: string
               format: email
+              example: test01@gmail.com
   
   responses:
     200:

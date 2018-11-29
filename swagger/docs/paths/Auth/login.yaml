@@ -2,7 +2,7 @@ post:
   tags: 
   - Auth
   summary: Login as student/company/admin
-  description: API to login
+  description: API for student/company/admin to login.
   security: []
   parameters: 
   - name: role
@@ -28,6 +28,9 @@ post:
             password:
               type: string
               format: password
+          example:
+            email: test01@gmail.com
+            password: "12345678"
   
   responses:
     200:

@@ -2,7 +2,7 @@ post:
   tags: 
   - Auth
   summary: Verify a new user (student/company/admin)
-  description: API to verify a new user
+  description: API for student/company/admin to verify accont.
   security: []
   parameters: 
   - name: token

@@ -1,7 +1,7 @@
 const {
   INVALID_PARAMETERS,
-  FORBIDDEN_ACTION,
   MISSING_PARAMETERS,
+  ALREADY_SUBSCRIBED,
   INTERNAL_SERVER_ERROR
 } = require('../../../constants/error-code');
 
@@ -12,7 +12,7 @@ module.exports = async function (req, res) {
   if (!skillId || skillId === 'undefined') {
     return res.badRequest({
       message: "Skill is missing.",
-      devMessage: "`Skillid` is empty.",
+      devMessage: "`Skillid` is missing.",
       code: MISSING_PARAMETERS
     });
   }
@@ -36,23 +36,21 @@ module.exports = async function (req, res) {
     });
   }
 
-  const reqBody = { student: userId, skill: skillId };
-
   try {
-    const existedSubscription = await SkillSubscription.findOne(reqBody);
+    const existesSubscription = await SkillSubscription.findOne({ student: userId, skill: skillId });
 
-    if (existedSubscription) {
-      await SkillSubscription.destroy(reqBody);
-      const currentUser = await Student.findOne({ id: userId }).populate('subscribedSkills');
-      res.ok({
-        message: "Unsubscribed " + skill.name + ".",
-        data: _.pick(currentUser, 'subscribedSkills')
+    if (existesSubscription) {
+      return res.conflict({
+        message: "You have already subscribed this skill.",
+        devMessage: "You have already subscribed this skill.",
+        code: ALREADY_SUBSCRIBED
       })
     } else {
-      res.forbidden({
-        message: "You haven't subscribed this skill yet.",
-        devMessage: "You haven't subscribed this skill yet.",
-        code: FORBIDDEN_ACTION
+      await Student.addToCollection(userId, 'subscribedSkills').members([skillId]);
+      const currentUser = await Student.findOne({ id: userId }).populate('subscribedSkills');
+      res.ok({
+        message: "Subscribed " + skill.name + ".",
+        data: _.pick(currentUser, 'subscribedSkills')
       })
     }
   } catch (err) {

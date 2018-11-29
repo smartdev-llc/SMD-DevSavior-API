@@ -2,9 +2,11 @@ get:
   tags: 
   - SkillSubscription
   summary: Get list of skill subscriptions
-  description: API to get list of skill subscriptions
+  description: > 
+    API to get list of skill subscriptions.
+    You should login as student to do this action.
   security:
-    - bearerAuth: []
+    - studentAuth: []
   responses:
     200:
       description: OK

@@ -1,36 +1,44 @@
+const moment = require('moment');
+
 const { 
   isValidSalary,
   isValidJobType
 } = require('../../../utils/validator');
-const moment = require('moment');
+
+const {
+  INVALID_PARAMETERS,
+  MISSING_PARAMETERS,
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
 
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
-  const company = _.get(req, "user", {});
+  const company = _.get(req, "user");
 
-  if (!companyId) {
-    return res.unauthorized({
-      message: "You need login as a company to create a new job."
-    });
-  }
   const { skillIds, title, description, categoryId, fromSalary, toSalary, requirements, jobType, benefits } = req.body;
   const expiredAt = moment().add(sails.config.custom.jobDuration || 7, 'days').valueOf();
 
   if (!title || !categoryId || !description || !requirements || !jobType) {
     return res.badRequest({
-      message: "Missing parameters."
+      message: "Missing parameters.",
+      devMessage: "Some parameters are missing (`title` | `categoryId` | `description` | `requirements` | `jobType`).",
+      code: MISSING_PARAMETERS
     });
   }
 
   if (!isValidSalary(fromSalary, toSalary)) {
     return res.badRequest({
-      message: "Invalid Salary."
+      message: "Invalid Salary.",
+      devMessage: "Invalid `fromSalary` and `toSalary` (they should be NUMBERIC, `fromSalary` <= `toSalary`).",
+      code: INVALID_PARAMETERS
     });
   }
 
   if (!isValidJobType(jobType)) {
     return res.badRequest({
-      message: "Invalid job type (should be FULL_TIME or PART_TIME or INTERNSHIP or CONTRACT or FREELANCE."
+      message: "Invalid job type",
+      devMessage: "Invalid job type (should be FULL_TIME or PART_TIME or INTERNSHIP or CONTRACT or FREELANCE.",
+      code: INVALID_PARAMETERS
     });
   }
 
@@ -73,12 +81,14 @@ module.exports = async function (req, res) {
       }
     });
 
+    job.skills = skills;
+    job.category = category;
     return res.ok(job);
   } catch (err) {
     return res.serverError({
-      code: "INTERNAL",
       message: "Something went wrong.",
-      data: err
-    });
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
+    })
   }
 };
