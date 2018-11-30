@@ -3,19 +3,11 @@ extends ../layout/index
 block content
   div#welcome-social-email
     p
-      | Hi 
-      |
-      strong !{`${_data.userInfo.firstName} ${_data.userInfo.lastName}` }
-      | ,
+      | Hi <strong>!{_data.userInfo.displayName}</strong>,
     p
-      | Welcome to 
-      strong JuniorViec
-      | ! You have just signed up via !{_data.provider} with this email: 
-      em !{_data.userInfo.email}
-      |. This email will be used to receive our recommendation jobs.
+      | Welcome to <strong>JuniorViec</strong> ! You have just signed up via <strong>!{_data.provider}</strong> with this email: <em>!{_data.userInfo.email}</em>. This email will be used to receive our recommendation jobs.
     div.block
       p
-        | Thanks,
+        | Thanks and Best regards,
         br
         strong The JuniorViec Team
-        | .

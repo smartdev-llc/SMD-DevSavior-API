@@ -1,3 +1,52 @@
-.note {
-  font-size: small;
+.email-body {
+  .note {
+    font-size: small;
+    display: block;
+    width: 100%;
+  }
+  
+  .copy-link {
+    padding: auto;
+    color: #b0b0b0 !important;
+    font-size: smaller;
+  }
+
+  .block {
+    margin-top: 20px;
+  }
+  
+  table.button {
+    &.expand, &.expanded {
+      width: 300px;
+    }
+    width: auto;
+    margin: 0 0 16px 0;
+    &.expand table td {
+      text-align: center;
+    }
+    &.large table a {
+      font-size: 18px;
+    }
+    table td a {
+      font-family: "HelveticaNeueLight", "HelveticaNeue-Light", "Helvetica Neue Light", "HelveticaNeue", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+      font-weight: 300;
+      color: #ffffff;
+      text-decoration: none;
+      display: inline-block;
+      padding: 15px;
+    }
+  }
+  
+  a {
+    &:visited {
+      color: #12cd6a;
+    }
+    color: #12cd6a;
+    text-decoration: none;
+  }
+  
+  table.button table td {
+    border-radius: 5px;
+    background-image: linear-gradient(265deg, #12cd6a, #12ce6a);
+  }
 }

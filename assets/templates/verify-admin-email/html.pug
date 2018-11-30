@@ -3,18 +3,16 @@ extends ../layout/index
 block content
   div#verify-admin-email
     p
-      | Hi admin,
+      | Hi <strong>admin</strong>,
     p
       | You received this email because your email is set as one of admin email. There is a request to create an admin account with following information:
-      li 
-        | Email: 
-        | !{_data.userInfo.email}
-      li 
-        | First name: 
-        | !{_data.userInfo.firstName}
-      li 
-        | Last name: 
-        | !{_data.userInfo.lastName}
+      ul
+        li 
+          | Email:   <strong>!{_data.userInfo.email}</strong>
+        li 
+          | First name:   <strong>!{_data.userInfo.firstName}</strong>
+        li 
+          | Last name:   <strong>!{_data.userInfo.lastName}</strong>
     p
       | Please review it then click this button to verify:
     div.block
@@ -28,12 +26,13 @@ block content
     p.note
       | If the button doesn't work, copy & paste this link into your browser:
       br
-      | !{_data.verificationLink}
       br
-      | (Note: The link will expire after 1 hour)
+      a.copy-link(href=_data.verificationLink) !{_data.verificationLink}
+      br
+      br
+      | Note: <em>The link will expire in 1 hour.</em>
     div.block
       p
-        | Thanks,
+        | Thanks and Best regards,
         br
         strong The JuniorViec Team
-        | .

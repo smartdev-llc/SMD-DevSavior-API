@@ -3,30 +3,59 @@ html(xmlns='http://www.w3.org/1999/xhtml')
   head
     meta(name='viewport', content='width=device-width')
     meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(name='x-apple-disable-message-reformatting')
     link(rel="stylesheet", href="/css/app.css", data-inline)
   body(bgcolor='#FFFFFF')
-    table.head-wrap
-      tr(height='10px')
+    table.email-wrapper(align='center', border="0", cellpadding="0", cellspacing="0", width='100%')
       tr
-        td.contain-logo(align='left')
-          div.logo
-            img(src= _data.LOGO_URL)
-    table.body-wrap
-      tr
-        td.container
-          .content
-            table.body-email
-              tr
-                td
-                  block content
-    table.footer-wrap
-      tr
-        td
-        td.container
-          .content-footer
-            table.footer-email
-              tr
-                td(align='left')
-                  p.sent-by
-                    | Sent with ♥ from JuniorViec
-        td
+        td(align='center', valign='top', width='100%')
+          table.email-frame(border="0", cellpadding="0", cellspacing="0")
+            tr
+              td
+                table.head-wrap
+                  tr
+                    td.logo-wrapper
+                      a.logo(href='https://juniorviec.com')
+                        img(src= _data.LOGO_URL)
+            tr
+              td(align='center', bgcolor='#ffffff', valign='top', width='100%')
+                table.body-wrap(cellpadding="0", cellspacing="0", width='88%')
+                  tr
+                    td.container
+                      .content
+                        table.email-body(cellpadding="0", cellspacing="0", width='100%')
+                          tr
+                            td
+                              block content
+            tr
+              td(align='center', valign='top', width='100%')
+                table.footer-wrap(align='center', cellpadding="0", cellspacing="0", width='100%')
+                  tr
+                    td(height='10')
+                  tr
+                    td.footer-content(valign='top', align='center')
+                      a.footer-link(href='https://juniorviec.com/about-us') About us
+                      |
+                      | |
+                      |
+                      a.footer-link(href='https://juniorviec.com/privacy-policy') Privacy Policy
+                      |
+                      | |
+                      |
+                      a.footer-link(href='https://juniorviec.com/contact-us') Contact with us
+                      br
+                      | Copyright © JuniorViec JSC
+                      br
+                      | 05 Tan Lap 1, Thach Thang Ward, Hai Chau District, Da Nang City
+                  tr
+                    td(height='20')
+                  tr
+                    td(align='left')
+                      p.sent-by
+                        | Sent with 
+                        |
+                        span.love ♥ 
+                        |
+                        | from
+                        |
+                        a.name(href='https://juniorviec.com') JuniorViec

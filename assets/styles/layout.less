@@ -21,6 +21,24 @@ body {
   -webkit-text-size-adjust: none;
   width: 100% !important;
   height: 100%;
+  padding: 0;
+
+  /* This is for fixing the text overflow on Apple Mailbox */
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 /* -------------------------------------
@@ -28,7 +46,7 @@ body {
 ------------------------------------- */
 
 a {
-  color: #2BA6CB;
+  color: #12cd6a;
 }
 
 .btn {
@@ -48,26 +66,64 @@ a {
 ------------------------------------- */
 
 table {
-  &.head-wrap, &.body-wrap {
+  &.email-wrapper {
     width: 100%;
-    td.contain-logo {
-      padding-left: 15px;
-      display: block;
-      max-width: 700px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    max-width: 880px;
+
+    .email-frame {
       margin: 0 auto;
-      clear: both;
+      max-width: 800px;
+      border: 5px solid #f9f9f9;
+      border-top: 0;
+    }
+  }
+
+  &.head-wrap {
+    .logo-wrapper {
+      margin: 0;
+      padding: 20px 0;
+
       .logo {
-        width: 170px;
+        width: 180px;
+        outline: none;
+        margin: auto;
+        float: left;
         padding: 6px 0;
       }
     }
   }
-  &.footer-wrap {
-    width: 100%;
+
+  &.body-wrap {
     clear: both !important;
-    .container .content .footer-email {
+  }
+
+  &.footer-wrap {
+    clear: both !important;
+
+    .footer-content {
+      color: #999;
+      font-size: 11px;
+      a.footer-link {
+        color: #12cd6a;
+        text-decoration: none;
+      }
+    }
+
+    .sent-by {
       padding-top: 0;
       padding-bottom: 0;
+
+      span.love {
+        color: #ff007d;
+        font-size: larger;
+      }
+
+      a.name {
+        color: #12cd6a;
+        text-decoration: none;
+      }
     }
   }
 }
@@ -189,7 +245,7 @@ ul li {
   display: block;
   table {
     width: 100%;
-    &.body-email {
+    &.email-body {
       border-bottom: 1px solid #f2f2f2;
       padding-top: 20px;
       padding-bottom: 20px;

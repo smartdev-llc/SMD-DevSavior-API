@@ -3,14 +3,9 @@ extends ../layout/index
 block content
   div#reset-password-email
     p
-      | Hi 
-      |
-      strong !{_data.userInfo.displayName}
-      | ,
+      | Hi <strong>!{_data.userInfo.displayName}</strong>,
     p
-      | You have requested to reset your password on 
-      strong JuniorViec
-      | ! Please click this button and follow the instructions to reset your password:
+      | You have requested to reset your password for your <strong>JuniorViec</strong> account ! Please click this button and follow the instructions to reset your password:
     div.block
       table.button.large.expand
         tr
@@ -22,15 +17,16 @@ block content
     p.note
       | If the button doesn't work, copy & paste this link into your browser:
       br
-      | !{_data.resetPasswordLink}
       br
-      | (Note: The link will expire after 1 hour)
+      a.copy-link(href=_data.resetPasswordLink) !{_data.resetPasswordLink}
+      br
+      br
+      | Note: <em>The link will expire in 1 hour.</em>
     div.block
       p.note
         | If you didn't make this request, you can ignore this email.
     div.block
       p
-        | Thanks,
+        | Thanks and Best regards,
         br
         strong The JuniorViec Team
-        | .

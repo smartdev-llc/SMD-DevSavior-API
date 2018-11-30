@@ -3,14 +3,9 @@ extends ../layout/index
 block content
   div#verify-student-email
     p
-      | Hi 
-      |
-      strong !{`${_data.userInfo.firstName} ${_data.userInfo.lastName}` }
-      | ,
+      | Hi <strong>!{_data.userInfo.displayName}</strong>,
     p
-      | Welcome to 
-      strong JuniorViec
-      | ! Thank you for signing up, please verify your email by clicking the following button:
+      | Welcome to <strong>JuniorViec</strong> ! Thank you for signing up, please verify your email by clicking the following button:
     div.block
       table.button.large.expand
         tr
@@ -22,12 +17,13 @@ block content
     p.note
       | If the button doesn't work, copy & paste this link into your browser:
       br
-      | !{_data.verificationLink}
       br
-      | (Note: The link will expire after 1 hour)
+      a.copy-link(href=_data.verificationLink) !{_data.verificationLink}
+      br
+      br
+      | Note: <em>The link will expire in 1 hour.</em>
     div.block
       p
-        | Thanks,
+        | Thanks and Best regards,
         br
         strong The JuniorViec Team
-        | .

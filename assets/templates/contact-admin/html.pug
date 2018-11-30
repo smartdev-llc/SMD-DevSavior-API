@@ -3,21 +3,13 @@ extends ../layout/index
 block content
   div#contact-admin
     p
-      | Hi admin, There is a message from our customer. Detail:
+      | Hi <strong>admin</strong>, There is a contact message from our customer. Detail information:
       br
     p
-      | From:
-      |
-      strong !{`${_data.name}`}
+      | From:   <strong>!{`${_data.name}`}</strong>
     p
-      | Email:
-      |
-      strong !{`${_data.email}`}
+      | Email:   <strong>!{`${_data.email}`}</strong>
     p
-      | About:
-      |
-      strong !{`${_data.subject}`}
+      | About:   <strong>!{`${_data.subject}`}</strong>
     p
-      | Content:
-      |
-      strong !{`${_data.message}`}
+      | Content:   <strong>!{`${_data.message}`}</strong>
