@@ -17,11 +17,7 @@ module.exports = async function (req, res) {
 
   passport.authenticate(`${provider}-token`, function (err, user, info) {
     if (err) {
-      return res.serverError({
-        message: "Something went wrong.",
-        devMessage: err.message,
-        code: INTERNAL_SERVER_ERROR
-      });
+      return res.serverError(err);
     }
 
     if (!user) {
