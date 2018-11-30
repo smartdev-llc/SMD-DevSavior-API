@@ -2,14 +2,17 @@ extends ../layout/index
 
 block content
   div#contact-admin
+    p.greeting
+      | Hi <strong>admin</strong>, 
     p
-      | Hi <strong>admin</strong>, There is a contact message from our customer. Detail information:
+      | There is a contact message from our customer. Detail:
       br
-    p
-      | From:   <strong>!{`${_data.name}`}</strong>
-    p
-      | Email:   <strong>!{`${_data.email}`}</strong>
-    p
-      | About:   <strong>!{`${_data.subject}`}</strong>
-    p
-      | Content:   <strong>!{`${_data.message}`}</strong>
+      ul
+        li
+          | From:   <strong>!{`${_data.name}`}</strong>
+        li
+          | Email:   <strong>!{`${_data.email}`}</strong>
+        li
+          | About:   <strong>!{`${_data.subject}`}</strong>
+        li
+          | Content:   <strong>!{`${_data.message}`}</strong>
