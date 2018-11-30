@@ -203,7 +203,6 @@ async function handleFacebookAuthentication(
 
     try {
       user = await Student.create(userProfile).fetch();
-      await Profile.create({ owner: user.id });
     } catch (err) {
       return cb({
         message: "Something went wrong.",
@@ -303,7 +302,6 @@ async function handleGoogleAuthentication(
 
     try {
       user = await Student.create(userProfile).fetch();
-      await Profile.create({ owner: user.id });
     } catch (err) {
       return cb({
         message: "Something went wrong.",
