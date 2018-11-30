@@ -136,12 +136,14 @@ async function handleFacebookAuthentication(
     });
   }
 
+  const firstName = providerData.first_name || "User";
+  const lastName = `${providerData.last_name || ""} ${providerData.middle_name || ""}`.trim() || "JuniorViec";
+
   const userProfile = {
-    firstName: providerData.first_name,
-    lastName: `${providerData.last_name || ""} ${providerData.middle_name ||
-      ""}`.trim(),
+    firstName,
+    lastName,
+    displayName: `${lastName} ${firstName}`,
     email: providerData.email,
-    gender: transformGender(providerData.gender),
     profileImageURL: providerData.id
       ? `https://graph.facebook.com/${profile.id}/picture?type=large`
       : undefined,
@@ -236,11 +238,14 @@ async function handleGoogleAuthentication(
     });
   }
 
+  const firstName = _.get(providerData, "family_name") || "User";
+  const lastName = _.get(providerData, "given_name") || "JuniorViec";
+
   const userProfile = {
-    firstName: _.get(providerData, "family_name"),
-    lastName: _.get(providerData, "given_name"),
+    firstName,
+    lastName,
+    displayName: `${lastName} ${firstName}`,
     email: _.get(providerData, "email", _.get(providerData, "emails.0.value")),
-    gender: transformGender(providerData.gender),
     profileImageURL: _.get(providerData, "picture"),
     emailVerified: true
   };
@@ -314,18 +319,4 @@ async function handleGoogleAuthentication(
 
   user.role = "student";
   cb(null, user);
-}
-
-function transformGender(givenGender) {
-  givenGender = _.toUpper(givenGender);
-  switch (givenGender) {
-    case "MALE":
-      return "MALE";
-    case "FEMALE":
-      return "FEMALE";
-    case "OTHER":
-      return "OTHER";
-    default:
-      return "UNKNOWN";
-  }
 }
