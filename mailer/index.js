@@ -16,7 +16,6 @@ module.exports = mailerFactory();
 function mailerFactory() {
 
   const mailConfig = getMailConfig();
-  let subject;
 
   function Mailer(templateDir) {
     // transporter
@@ -47,16 +46,12 @@ function mailerFactory() {
   };
 
   Mailer.prototype.getMailOptions = function(sendOptions, templateResults) {
-    const truncatedSubject = _.truncate(`${templateResults.subject} ${subject}`, {
-      'length': 100,
-      'separator': ' '
-    });
     const mailOptions = {
       from: sendOptions.from || defaultFromEmail,
       sender: sendOptions.sender,
       to: sendOptions.to,
 
-      subject: sendOptions.subject || truncatedSubject,
+      subject: sendOptions.subject || templateResults.subject,
       text: sendOptions.text || templateResults.text,
       html: sendOptions.html || templateResults.html
     };
@@ -75,7 +70,6 @@ function mailerFactory() {
   Mailer.prototype.send = function(sendOptions, contentData) {
 
     contentData = contentData || {};
-    subject = `${_.get(contentData, 'name', '')} - ${_.get(contentData, 'email', '')}`;
     const self = this;
 
     return self.template
