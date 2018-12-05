@@ -1,3 +1,8 @@
+const {
+  MISSING_PARAMETERS,
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   const companyId = _.get(req, "params.companyId");
   const { size, page } = _.get(req, 'query');
@@ -6,7 +11,9 @@ module.exports = async function (req, res) {
 
   if (!companyId) {
     return res.badRequest({
-      message: "Missing parameter."
+      message: "Missing parameter.",
+      devMessage: "`companyId` is missing.",
+      code: MISSING_PARAMETERS
     });
   }
 
@@ -19,16 +26,12 @@ module.exports = async function (req, res) {
     .limit(limit)
     .skip(skip);
 
-    if (!_.size(job)) {
-      return res.notFound({
-        message: "Job not found."
-      });
-    }
-
     return res.ok(job);
   } catch (err) {
     return res.serverError({
-      message: `Something went wrong.`
+      message: `Something went wrong.`,
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 

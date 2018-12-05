@@ -35,6 +35,10 @@ tags:
   description: All operations about SkillSubscriptions
 - name: Student
   description: All operations about Students
+- name: Photo
+  description: All operations about Photos
+- name: Common
+  description: All operations about Common
 paths:
   /auth/signup:
     $ref: 'paths/Auth/signup.yaml'
@@ -70,6 +74,14 @@ paths:
     $ref: 'paths/JobApplication/CRUD.yaml'
   /companies/{companyId}/jobs:
     $ref: 'paths/Job/find-by-company-id.yaml'
+  /photos/upload:
+    $ref: 'paths/Photo/upload.yaml'
+  /photos/{photoName}:
+    $ref: 'paths/Photo/CRUD.yaml'
+  /hotjobs:
+    $ref: 'paths/HotJob/CRUD.yaml'
+  /contact:
+    $ref: 'paths/Common/contact.yaml'
 components:
   responses:
     200:

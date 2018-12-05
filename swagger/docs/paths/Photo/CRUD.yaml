@@ -1,0 +1,44 @@
+get:
+  tags: 
+  - Photo
+  summary: Get photo from url path.
+  description: Get photo.
+  security: []
+  parameters:
+    - name: photoName
+      in: path
+      required: true
+      description: The name of photo you want to get.
+      schema:
+        type: string
+      example: 28880ac0-b542-4724-873c-5a1fa5c40164.png
+  responses:
+    '200':
+      description: The photo uploaded
+      content:
+        image/*:
+          schema:
+            type: string
+            format: binary
+    404:
+      description: Not found
+
+delete:
+  tags: 
+  - Photo
+  summary: Delete photo from url path.
+  description: Delete photo.
+  security: []
+  parameters:
+    - name: photoName
+      in: path
+      required: true
+      description: The name of photo you want to delete.
+      schema:
+        type: string
+      example: 28880ac0-b542-4724-873c-5a1fa5c40164.png
+  responses:
+    '200':
+      description: The photo deleted.
+    400:
+      description: Bad request

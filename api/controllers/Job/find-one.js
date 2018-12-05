@@ -1,5 +1,3 @@
-const { COMPANY_PUBLIC_FIELDS } = require('../../../constants');
-
 module.exports = async function (req, res) {
   const userId = _.get(req, "user.id");
   const role = _.get(req, "user.role");
