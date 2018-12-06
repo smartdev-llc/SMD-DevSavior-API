@@ -7,9 +7,9 @@ const {
 
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
-  const { size, page } = _.get(req, "query");
-  let limit = parseInt(size) || 10;
-  let skip = (parseInt(page) || 0) * limit;
+  const { size = 10, page = 0 } = _.get(req, "query");
+  let limit = parseInt(size);
+  let skip = parseInt(page) * limit;
 
   const { jobId } = req.params;
 
@@ -41,21 +41,21 @@ module.exports = async function (req, res) {
     }
 
     const total = await JobApplication.count({ job: jobId });
-    const jobApplications = await JobApplication.find({ job: jobId });
-    const studentIds = _.reduce(jobApplications, (stds, apl) => _.concat(stds, apl.student), []);
-
-    const students = await Student.find({ id: studentIds })
+    let jobApplications = await JobApplication.find({ job: jobId })
       .skip(skip)
       .limit(limit)
-      .populate('workingPreference')
-      .populate('workingExperiences')
+      .sort("createdAt desc");
+
+    let students = await Student.find({ id: _.map(jobApplications, "student") })
       .populate('educationDegrees');
 
+    let stdMappings = _.keyBy(students, "id");
+
     res.ok({
-      size, 
-      page,
       total,
-      list: students
+      size: parseInt(size),
+      page: parseInt(page),
+      list: _.map(jobApplications, item => _.extend(stdMappings[item.student], { appliedTime: item.createdAt }))
     });
   } catch (err) {
     return res.serverError({

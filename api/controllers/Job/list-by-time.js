@@ -1,6 +1,8 @@
 const moment = require("moment");
 const debuglog = require("debug")("jv:job:count");
-
+const { 
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
 
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
@@ -80,7 +82,7 @@ module.exports = async function (req, res) {
     res.ok(_.extend({ from: skip, size: limit }, result));
   } catch (err) {
     return res.serverError({
-      code: "INTERNAL",
+      code: INTERNAL_SERVER_ERROR,
       message: "Something went wrong.",
       data: err
     });
