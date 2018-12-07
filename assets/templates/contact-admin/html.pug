@@ -3,9 +3,9 @@ extends ../layout/index
 block content
   div#contact-admin
     p.greeting
-      | Hi <strong>admin</strong>, 
+      | Hi <strong>JuniorViec admin</strong>, 
     p
-      | There is a contact message from our customer. Detail:
+      | There is a new contact message from our user. Detail:
       br
       ul
         li
@@ -15,4 +15,11 @@ block content
         li
           | About: <em>!{`${_data.subject}`}</em>
         li
-          | Content: <em>!{`${_data.message}`}</em>
+          | Message: <em>!{`${_data.message}`}</em>
+    p
+      | Please click on the email to reply now!
+    div.block
+      p
+        | Thanks and Best regards,
+        br
+        strong The JuniorViec Team

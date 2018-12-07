@@ -11,11 +11,6 @@ img {
   max-width: 100%;
 }
 
-.collapse {
-  margin: 0;
-  padding: 0;
-}
-
 body {
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: none;
@@ -60,86 +55,6 @@ a {
   cursor: pointer;
   display: inline-block;
 }
-
-/* -------------------------------------
-		HEADER
-------------------------------------- */
-
-table {
-  &.email-wrapper {
-    width: 100%;
-    margin: 0 auto;
-    background-color: #f9f9f9;
-    max-width: 880px;
-
-    .email-frame {
-      width: 100%;
-      margin: 0 auto;
-      max-width: 800px;
-      border: 5px solid #f9f9f9;
-      border-top: 0;
-    }
-  }
-
-  &.head-wrap {
-    .logo-wrapper {
-      margin: 0;
-      padding: 20px 0;
-
-      .logo {
-        width: 180px;
-        outline: none;
-        margin: auto;
-        float: left;
-        padding: 6px 0;
-      }
-    }
-  }
-
-  &.body-wrap {
-    clear: both !important;
-  }
-
-  &.footer-wrap {
-    clear: both !important;
-
-    .footer-content {
-      color: #999;
-      font-size: 11px;
-      a.footer-link {
-        color: #12cd6a;
-        text-decoration: none;
-      }
-    }
-
-    .sent-by {
-      padding-top: 0;
-      padding-bottom: 0;
-
-      span.love {
-        color: #ff007d;
-        font-size: larger;
-      }
-
-      a.name {
-        color: #12cd6a;
-        text-decoration: none;
-      }
-    }
-  }
-}
-
-/* -------------------------------------
-		BODY
-------------------------------------- */
-
-/* -------------------------------------
-		FOOTER
-------------------------------------- */
-
-/* -------------------------------------
-		TYPOGRAPHY
-------------------------------------- */
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1.1;
@@ -215,14 +130,70 @@ ul li {
   list-style-position: inside;
 }
 
-/* -------------------------------------
-		SIDEBAR
-------------------------------------- */
+table {
+  &.email-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    max-width: 880px;
+    min-height: 100%;
 
-/* ---------------------------------------------------
-		RESPONSIVENESS
-		Nuke it from orbit. It's the only way to be sure.
------------------------------------------------------- */
+    .email-frame {
+      width: 100%;
+      margin: 0 auto;
+      max-width: 800px;
+      border: 5px solid #f9f9f9;
+      border-top: 0;
+    }
+  }
+
+  &.head-wrap {
+    .logo-wrapper {
+      margin: 0;
+      padding: 20px 0;
+
+      .logo {
+        width: 180px;
+        outline: none;
+        margin: auto;
+        float: left;
+        padding: 6px 0;
+      }
+    }
+  }
+
+  &.body-wrap {
+    clear: both !important;
+  }
+
+  &.footer-wrap {
+    clear: both !important;
+
+    .footer-content {
+      color: #999;
+      font-size: 11px;
+      a.footer-link {
+        color: #12cd6a;
+        text-decoration: none;
+      }
+    }
+
+    .sent-by {
+      padding-top: 0;
+      padding-bottom: 0;
+
+      span.love {
+        color: #ff007d;
+        font-size: larger;
+      }
+
+      a.name {
+        color: #12cd6a;
+        text-decoration: none;
+      }
+    }
+  }
+}
 
 /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
 
@@ -247,9 +218,10 @@ ul li {
   table {
     width: 100%;
     &.email-body {
+      border-top: 1px solid #f2f2f2;
       border-bottom: 1px solid #f2f2f2;
-      padding-top: 20px;
-      padding-bottom: 20px;
+      padding-top: 30px;
+      padding-bottom: 30px;
     }
   }
 }
@@ -261,6 +233,11 @@ ul li {
 .clear {
   display: block;
   clear: both;
+}
+
+.collapse {
+  margin: 0;
+  padding: 0;
 }
 
 .social-icon {
