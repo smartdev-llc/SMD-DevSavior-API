@@ -40,7 +40,7 @@ function mailerFactory() {
 
   Mailer.prototype.getContentData = function(contentData) {
     contentData.WEB_URL = process.env.WEB_URL;
-    contentData.LOGO_URL = 'http://juniorviec.com/assets/images/logo2.png';
+    contentData.LOGO_URL = 'https://juniorviec.com/assets/images/logo2.png';
 
     return _.assign({}, contentData, { _data: contentData });
   };
