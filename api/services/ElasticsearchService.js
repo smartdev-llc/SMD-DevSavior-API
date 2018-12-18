@@ -121,7 +121,7 @@ module.exports = {
       getHits: (result) => {
         return {
           total: result.hits.total,
-          list: result.hits.hits.map(hit => _.extend(hit._source, { _id: hit._id }))
+          list: result.hits.hits.map(hit => _.extend(hit._source, { id: hit._id, _id: hit._id }))
         };
       }
     }
