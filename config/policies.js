@@ -31,6 +31,7 @@ module.exports.policies = {
   'job/count': 'isCompany',
   'job/list-by-time': 'isCompany',
   'job/search': true,
+  'job/recommend': true,
   'job/update': 'isCompany',
   'job/find-one': true,
   'job/update-my-job': 'isCompany',

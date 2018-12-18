@@ -56,7 +56,6 @@ module.exports = async function (req, res) {
       benefits,
       expiredAt
     }).fetch();
-
     const category = await Category.findOne({ id: categoryId });
     const skills = await Skill.find({ id: skillIds });
     ElasticsearchService.create({
