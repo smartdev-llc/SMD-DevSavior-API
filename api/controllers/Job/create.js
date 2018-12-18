@@ -77,7 +77,12 @@ module.exports = async function (req, res) {
         toSalary: job.toSalary,
         jobType: job.jobType,
         benefits: job.benefits,
-        expiredAt: job.expiredAt
+        expiredAt: job.expiredAt,
+        createdAt: job.createdAt,
+        updatedAt: job.updatedAt,
+        _juniorviec_: {
+          createdTime: new Date().toDateString()
+        }
       }
     });
 

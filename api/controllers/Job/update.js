@@ -33,7 +33,11 @@ module.exports = async function (req, res) {
       type: 'Job',
       id: job.id,
       body: {
-        doc: updateParams
+        doc: _.extend(updateParams, {
+          _juniorviec_: {
+            updatedTime: new Date().toDateString()
+          }
+        })
       }
     });
 

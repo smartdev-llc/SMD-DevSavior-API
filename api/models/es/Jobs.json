@@ -75,6 +75,17 @@
     "expiredAt": {
       "type": "date",
       "format": "strict_date_optional_time||epoch_millis"
+    },
+    "createdAt": {
+      "type": "date",
+      "format": "strict_date_optional_time||epoch_millis"
+    },
+    "updatedAt": {
+      "type": "date",
+      "format": "strict_date_optional_time||epoch_millis"
+    },
+    "_juniorviec_": {
+      "type": "object"
     }
   }
 }
