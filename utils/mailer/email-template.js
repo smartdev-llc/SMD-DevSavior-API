@@ -1,7 +1,7 @@
 
 const path = require('path');
 
-const TEMPLATE_BASE_DIR = path.resolve(__dirname, '../assets/templates');
+const TEMPLATE_BASE_DIR = path.resolve(__dirname, 'template-src');
 
 const EmailTemplate = require('email-templates');
 

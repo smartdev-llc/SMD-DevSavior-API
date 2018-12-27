@@ -1,4 +1,4 @@
-const Mailer = require('../../mailer');
+const Mailer = require('../../utils/mailer');
 
 module.exports = {
 

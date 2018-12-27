@@ -87,7 +87,7 @@ function mailerFactory() {
     const sendOptions = {
       to: user.email
     };
-    const data = _.assign({}, contentData, { admin: user })
+    const data = _.assign({}, contentData)
     return self.send(sendOptions, data);
   };
   
