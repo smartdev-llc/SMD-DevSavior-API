@@ -1,11 +1,11 @@
-const { 
-  INTERNAL_SERVER_ERROR
-} = require('../../../constants/error-code');
+const {
+  INTERNAL_SERVER_ERROR, NOT_FOUND
+} = require("../../../constants/error-code");
 
 module.exports = async function (req, res) {
   try {
-    const { size, page } = _.get(req, 'query');
-    const { jobId } = _.get(req, 'params');
+    const { size, page } = _.get(req, "query");
+    const { jobId } = _.get(req, "params");
     let limit = parseInt(size) || 10;
     let skip = (parseInt(page) || 0) * limit;
 
@@ -15,12 +15,19 @@ module.exports = async function (req, res) {
     try {
       job = await Job
         .findOne({ id: jobId })
-        .populate('skills', { select: ['id', 'name'] })
+        .populate("skills", { select: ["id", "name"] });
     } catch (err) {
       return res.serverError({
         message: `Something went wrong.`,
         devMessage: err.message,
         code: INTERNAL_SERVER_ERROR
+      });
+    }
+
+    if(!job){
+      return res.notFound({
+        message: "Job not found",
+        code: NOT_FOUND
       });
     }
 
@@ -34,8 +41,8 @@ module.exports = async function (req, res) {
             }
           }
         }
-      }
-    })
+      };
+    });
 
     let query = {
       "bool": {
@@ -49,7 +56,7 @@ module.exports = async function (req, res) {
     };
 
     let result = await ElasticsearchService.search({
-      type: 'Job',
+      type: "Job",
       body: {
         "size": limit,
         "from": skip,
