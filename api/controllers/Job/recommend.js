@@ -22,23 +22,26 @@ module.exports = async function (req, res) {
 
     const should = _.map(job.skills, value => {
       return {
-        "multi_match" : {
-          "query":  value.name, 
-          "fields": ["skills.name" ] 
+        "nested": {
+          "path": "skills",
+          "query": {
+            "match": {
+              "skills.name": value.name
+            }
+          }
         }
       }
     })
 
     let query = {
       "bool": {
-        "must_not" : {
-          "match" : {
-            "_id" : jobId
+        "must_not": {
+          "match": {
+            "_id": jobId
           }
         },
         should,
       }
-
     };
 
     let result = await ElasticsearchService.search({
