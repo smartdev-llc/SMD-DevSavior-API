@@ -57,6 +57,7 @@ module.exports.policies = {
   
   // Company
   'company/find': true,
+  'company/search': 'isAdmin',
   'company/find-one': true,
   'company/update-my-info': 'isCompany',
   'company/upsert-my-logo': 'isCompany',

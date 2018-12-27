@@ -82,6 +82,10 @@ paths:
     $ref: 'paths/HotJob/CRUD.yaml'
   /contact:
     $ref: 'paths/Common/contact.yaml'
+  /companies:
+    $ref: 'paths/Company/find.yaml'
+  /companies/search:
+    $ref: 'paths/Company/search.yaml'
 components:
   responses:
     200:
