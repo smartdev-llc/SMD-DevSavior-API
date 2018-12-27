@@ -1,3 +1,7 @@
+const { 
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   try {
     const { size, page } = _.get(req, 'query');
