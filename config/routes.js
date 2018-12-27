@@ -76,6 +76,7 @@ module.exports.routes = {
   },
   'delete /photos/:photoName': 'Photo.delete',
 
+  'get /companies/search': "Company.search",
   'get /companies/:id': "Company.find-one",
   'put /my-company/info': "Company.update-my-info",
   'put /my-company/logo': "Company.upsert-my-logo",

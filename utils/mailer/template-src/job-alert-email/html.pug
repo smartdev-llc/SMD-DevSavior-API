@@ -1,0 +1,20 @@
+extends ../layout/index
+
+block content
+  div#job-alert-email
+    p
+      | Hi <strong>!{_data.userInfo.displayName}</strong>,
+    p
+      | Here is a list of new job that matches your subcribed skills: <strong>!{_data.skill.name}</strong>
+    div.block
+      table.button.large.expand
+        tr
+          td
+            table
+              tr
+                td
+                  a.float-center(href= _data.jobLink, align='center') Apply This Job
+    p
+      | Thanks and Best regards,
+      br
+      strong The JuniorViec Team
