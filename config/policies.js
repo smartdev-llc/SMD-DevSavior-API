@@ -86,7 +86,7 @@ module.exports.policies = {
   'jobapplication/create': 'isStudent',
 
   // Common
-  'common/contact': true,
+  'common/*': true,
 
   // HotJob
   'hotjob/create': 'isAdmin',

@@ -99,6 +99,7 @@ module.exports.routes = {
   'delete /profile/me/working-experiences/:id': 'Student.delete-working-experience',
 
   'post /contact': 'Common.contact',
+  'get /test': 'Common.test',
 
   'post /skills/:skillId/subscriptions': 'SkillSubscription.create',
   'delete /skills/:skillId/subscriptions': 'SkillSubscription.delete',

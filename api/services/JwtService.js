@@ -7,7 +7,7 @@ const constants = require('../../constants');
 const { ACCESS_TOKEN_EXPIRATION: expiresIn, ALGORITHM: algorithm, DECODED_KEYS } = constants.JWT_OPTIONS;
 
 // Init Redis, use options { showFriendlyErrorStack: true } in development mode if see more error details
-const redisClient = new Redis(`${process.env.REDIS_URL}/${process.env.REDIS_DB}`);
+const redisClient = new Redis(`${process.env.REDIS_URL}/${process.env.REDIS_DB_FOR_AUTH}`);
 
 module.exports = {
 
