@@ -1,10 +1,10 @@
-const elasticsearch = require('elasticsearch');
-const Promise = require('bluebird');
-const indexName = process.env.ES_INDEX_NAME || 'juniorviec';
+const elasticsearch = require("elasticsearch");
+const Promise = require("bluebird");
+const indexName = process.env.ES_INDEX_NAME || "juniorviec";
 const connectionConfig = {
-  host: process.env.ES_HOST || '127.0.0.1:9200',
+  host: process.env.ES_HOST || "127.0.0.1:9200",
   // log: process.env.ES_LOG_LEVEL || 'trace'
-}
+};
 
 let es = new elasticsearch.Client(connectionConfig);
 const esClient = Promise.promisifyAll(es, { context: es });
@@ -16,18 +16,18 @@ module.exports = {
       _.extend({
         index: indexName
       },
-        _.pick(options, ['type', 'id', 'body'])
+        _.pick(options, ["type", "id", "body"])
       )
-    )
+    );
   },
   update: async function (options) {
     return await esClient.update(
       _.extend({
         index: indexName
       },
-        _.pick(options, ['type', 'id', 'body'])
+        _.pick(options, ["type", "id", "body"])
       )
-    )
+    );
   },
 
   search: async function (params) {
@@ -35,9 +35,9 @@ module.exports = {
       _.extend({
         index: indexName
       },
-        _.pick(params, ['type', 'body'])
+        _.pick(params, ["type", "body"])
       )
-    )
+    );
   },
 
   buildQuery: (params) => {
@@ -61,10 +61,10 @@ module.exports = {
                     }
                   }
                 }
-              })
+              });
             }
             return arr;
-          }, []))
+          }, []));
         }
         if (options.idNames) {
           mustList = mustList.concat(options.idNames.reduce((arr, item) => {
@@ -73,47 +73,62 @@ module.exports = {
                 term: {
                   [item.field]: params[item.request]
                 }
-              })
-            } 
+              });
+            }
             return arr;
-          }, []))
+          }, []));
         }
         return mustList;
       },
       multiChoices: (options) => {
-        if(!_.isEmpty(_.compact([].concat(params[options.request])))){
+        let valueArr = _.compact([].concat(params[options.request]));
+        if (!_.isEmpty(valueArr)) {
+          if (options.type === "nested") {
+            return {
+              nested: {
+                path: options.path,
+                query: {
+                  terms: {
+                    [options.field]: valueArr
+                  }
+                }
+              }
+            };
+          }
           return {
             terms: {
-              [options.field]: [].concat(params[options.request])
+              [options.field]: valueArr
             }
-          }
+          };
         }
       },
       textSearch: ({ text, options }) => {
-        let shouldArr = [];
-        shouldArr = shouldArr.concat((options.keys || []).map(key => ({
-          wildcard: {
-            [key]: `*${_.toLower(text)}*`
-          }
-        })));
-        shouldArr = shouldArr.concat((options.nestedKeys || []).map(key => ({
-          nested: {
-            path: key.split('.').shift(),
-            query: {
-              wildcard: {
-                [key]: `*${_.toLower(text)}*`
+        let tokens = [].concat(text);
+        let shouldArr = tokens.reduce((aggsArr, token) => {
+          aggsArr = aggsArr.concat((options.keys || []).map(key => ({
+            wildcard: {
+              [key]: `*${_.toLower(token)}*`
+            }
+          })));
+          return aggsArr.concat((options.nestedKeys || []).map(key => ({
+            nested: {
+              path: key.split(".").shift(),
+              query: {
+                wildcard: {
+                  [key]: `*${_.toLower(token)}*`
+                }
               }
             }
-          }
-        })));
+          })));
+        }, []);
 
         return {
           bool: {
             should: shouldArr
           }
-        }
+        };
       }
-    }
+    };
   },
 
   transformResult: (options) => {
@@ -124,6 +139,6 @@ module.exports = {
           list: result.hits.hits.map(hit => _.extend(hit._source, { id: hit._id, _id: hit._id }))
         };
       }
-    }
+    };
   }
-}
+};

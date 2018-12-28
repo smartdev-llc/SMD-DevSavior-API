@@ -1,11 +1,9 @@
 const debuglog = require("debug")("jv:job:search");
-const constants = require('../../../constants');
-const { FULL_TIME, PART_TIME, INTERSHIP, CONTRACT, FREELANCE } = constants.JOB_TYPE;
 
 module.exports = async function (req, res) {
   try {
-    const { qs, size, page } = _.get(req, 'query');
-    let queryBody = _.pick(req.query, ['qs', 'category', 'jobTypes']);
+    const { qs, size, page } = _.get(req, "query");
+    let queryBody = _.pick(req.query, ["qs", "category", "jobTypes", "skills"]);
     let limit = parseInt(size) || 10;
     let skip = (parseInt(page) || 0) * limit;
 
@@ -18,16 +16,16 @@ module.exports = async function (req, res) {
     let query = { bool: { must: [] } };
     query.bool.must.push(buildQuery.activeJob());
     let nestedIdNames = [{
-      request: 'category',
-      path: 'category',
-      field: 'category.id'
+      request: "category",
+      path: "category",
+      field: "category.id"
     }];
     if (companyId) {
       nestedIdNames.push({
-        request: 'company',
-        path: 'company',
-        field: 'company.id'
-      })
+        request: "company",
+        path: "company",
+        field: "company.id"
+      });
     }
 
     query.bool.must = query.bool.must.concat(buildQuery.identifiers({
@@ -47,10 +45,16 @@ module.exports = async function (req, res) {
       request: "jobTypes",
       field: "jobType"
     }));
+    query.bool.must.push(buildQuery.multiChoices({
+      type: "nested",
+      request: "skills",
+      field: "skills.id",
+      path: "skills"
+    }));
     query.bool.must = _.compact(query.bool.must);
-    debuglog('query: ', JSON.stringify(query));
+    debuglog("query: ", JSON.stringify(query));
     let result = await ElasticsearchService.search({
-      type: 'Job',
+      type: "Job",
       body: {
         "size": limit,
         "from": skip,
@@ -62,4 +66,4 @@ module.exports = async function (req, res) {
   } catch (err) {
     res.serverError(err);
   }
-}
+};
