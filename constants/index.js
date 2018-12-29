@@ -38,7 +38,9 @@ module.exports = {
 
   STATUS: {
     ACTIVE: 'ACTIVE',
-    INACTIVE: 'INACTIVE'
+    INACTIVE: 'INACTIVE',
+    PENDING: 'PENDING',
+    REJECTED: 'REJECTED'
   },
 
   WORKING_LOCATION: {

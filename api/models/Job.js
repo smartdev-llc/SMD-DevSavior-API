@@ -12,7 +12,7 @@ module.exports = {
   attributes: {
     company: { model: 'company' },
     category: { model: 'category' },
-    status: { type: 'string', defaultsTo: 'ACTIVE' },
+    status: { type: 'string', defaultsTo: constants.STATUS.PENDING },
     title: { type: 'string', required: true },
     fromSalary: { type: 'number', required: true },
     toSalary: { type: 'number', required: true },
