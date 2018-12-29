@@ -186,8 +186,6 @@ module.exports = async function (req, res) {
   async function registerAdmin(req, res) {
     const { email, password, firstName, lastName } = req.body;
 
-    console.log(email, password, firstName, lastName);
-
     if (!email || !password || !firstName || !lastName) {
       return res.badRequest({
         message: "Missing parameters.",

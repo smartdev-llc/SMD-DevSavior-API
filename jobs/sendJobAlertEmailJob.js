@@ -1,8 +1,6 @@
 const { SEND_JOB_ALERT_EMAIL } = require('../constants/jobTypes');
 
 module.exports = function (queue) {
-
-  console.log("included");
   const sendJobAlertEmailFunc = (job, done) => {
     const { email } = _.get(job, 'data', {});
     const user = {
