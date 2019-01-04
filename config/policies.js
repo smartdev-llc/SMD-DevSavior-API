@@ -80,7 +80,7 @@ module.exports.policies = {
   'student/create-working-experience': 'isStudent',
   'student/update-working-experience': 'isStudent',
   'student/delete-working-experience': 'isStudent',
-  'student.find-applicant': 'isCompany'
+  'student.find-applicant': 'isCompany',
 
   // JobApplication
   'jobapplication/find': 'isCompany',
