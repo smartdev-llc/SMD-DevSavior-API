@@ -65,10 +65,9 @@ module.exports.policies = {
   'company/upsert-my-cover': 'isCompany',
   
   // Student
-  'student/find-one': true,
   'student/search': 'isAdmin',
   'student/find-me': 'isStudent',
-  'student/find-one': true,
+  'student/find-one': 'isAdmin',
   'student/upsert-avatar': 'isStudent',
   'student/upsert-personal-info': 'isStudent',
   'student/upsert-basic-info': 'isStudent',
@@ -81,6 +80,7 @@ module.exports.policies = {
   'student/create-working-experience': 'isStudent',
   'student/update-working-experience': 'isStudent',
   'student/delete-working-experience': 'isStudent',
+  'student.find-applicant': 'isCompany'
 
   // JobApplication
   'jobapplication/find': 'isCompany',
