@@ -1,0 +1,17 @@
+extends ../layout/index
+
+block content
+  div
+    p
+      | Hi <strong>admin</strong>,
+    p
+      | There is a new job [!{_data.job.title}] from !{_data.company.name}. 
+    p 
+      | Please click on this link to review it:
+    div.block
+      a.job-link(href=_data.jobLink) !{_data.jobLink}
+    div.block
+      p
+        | Thanks and Best regards,
+        br
+        strong The JuniorViec Team

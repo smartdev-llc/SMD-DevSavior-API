@@ -87,6 +87,20 @@ module.exports = async function (req, res) {
 
     job.skills = skills;
     job.category = category;
+  
+    const contentData = {
+      job,
+      company,
+      jobLink: `${process.env.BO_URL}/jobs/${job.id}`
+    }
+    const admins = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
+      return {
+        email
+      }
+    });
+  
+    await EmailService.sendToAdmins(admins, 'approve-job', contentData);
+    
     return res.ok(job);
   } catch (err) {
     return res.serverError({
