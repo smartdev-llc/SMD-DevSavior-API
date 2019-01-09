@@ -5,10 +5,10 @@ block content
     p
       | Hi <strong>admin</strong>,
     p
-      | There is a new job [!{_data.job.title}] from !{_data.company.name}. 
+      | There is a new job posted by <i>!{_data.company.name}</i></strong> : <strong>!{_data.job.title}</strong>. 
     p 
-      | Please click on this link to review it:
-    div.block
+      | Please click on the following link to review it:
+    div.block.job-link-wrapper
       a.job-link(href=_data.jobLink) !{_data.jobLink}
     div.block
       p
