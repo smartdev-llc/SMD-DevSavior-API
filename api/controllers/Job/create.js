@@ -1,5 +1,3 @@
-const moment = require('moment');
-
 const { 
   isValidSalary,
   isValidJobType
@@ -16,7 +14,6 @@ module.exports = async function (req, res) {
   const company = _.get(req, "user");
 
   const { skillIds, title, description, categoryId, fromSalary, toSalary, requirements, jobType, benefits } = req.body;
-  const expiredAt = moment().add(sails.config.custom.jobDuration || 7, 'days').valueOf();
 
   if (!title || !categoryId || !description || !requirements || !jobType) {
     return res.badRequest({
@@ -54,7 +51,6 @@ module.exports = async function (req, res) {
       toSalary,
       jobType,
       benefits,
-      expiredAt
     }).fetch();
     const category = await Category.findOne({ id: categoryId });
     const skills = await Skill.find({ id: skillIds });
@@ -76,7 +72,6 @@ module.exports = async function (req, res) {
         toSalary: job.toSalary,
         jobType: job.jobType,
         benefits: job.benefits,
-        expiredAt: job.expiredAt,
         createdAt: job.createdAt,
         updatedAt: job.updatedAt,
         _juniorviec_: {

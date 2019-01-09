@@ -1,3 +1,6 @@
+
+const moment = require('moment');
+
 const {
   INTERNAL_SERVER_ERROR,
   NOT_FOUND,
@@ -9,6 +12,7 @@ const { REJECTED, ACTIVE } = constants.STATUS
 module.exports = async function (req, res) {
   const { jobId } = _.get(req, "params");
   const { status } = req.body;
+  const expiredAt = moment().add(sails.config.custom.jobDuration || 7, 'days').valueOf();
 
   if (!isValidStatus(status)) {
     return res.serverError({
@@ -37,14 +41,15 @@ module.exports = async function (req, res) {
 
   try {
     await Job.update({ id: jobId })
-      .set({ status });
+      .set({ status, expiredAt });
 
     await ElasticsearchService.update({
       type: 'Job',
       id: jobId,
       body: {
         doc: {
-          status
+          status,
+          expiredAt
         }
       }
     });
