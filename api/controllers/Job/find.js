@@ -7,16 +7,12 @@ const constants = require('../../../constants');
 const { PENDING, REJECTED, ACTIVE, INACTIVE } = constants.STATUS
 
 module.exports = async function (req, res) {
-  const { size, page, status } = _.get(req, 'query');
+  let { size, page, status } = _.get(req, 'query');
   let limit = parseInt(size) || 10;
   let skip = (parseInt(page) || 0) * limit;
 
   if (status && !isValidStatus(status)) {
-    return res.badRequest({
-      message: `Invalid status.`,
-      devMessage: `Invalid status (should be PENDING | REJECTED | ACTIVE | INACTIVE)`,
-      code: INVALID_PARAMETERS
-    })
+    status = undefined;
   }
 
   try {
