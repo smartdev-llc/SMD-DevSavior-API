@@ -1,12 +1,13 @@
 const {
-  INTERNAL_SERVER_ERROR,
-  INVALID_PARAMETERS
+  INTERNAL_SERVER_ERROR
 } = require('../../../constants/error-code');
 
 const constants = require('../../../constants');
 const { PENDING, REJECTED, ACTIVE, INACTIVE } = constants.STATUS
 
 module.exports = async function (req, res) {
+  const userId = _.get(req, 'user.id');
+  const role = _.get(req, 'user.role');
   let { size, page, status } = _.get(req, 'query');
   let limit = parseInt(size) || 10;
   let skip = (parseInt(page) || 0) * limit;
@@ -15,10 +16,20 @@ module.exports = async function (req, res) {
     status = undefined;
   }
 
+  if (role !== 'admin' || role !== 'company') {
+    status = ACTIVE;
+  }
+
+  let where = {
+    status
+  }
+
+  if (role === 'company') {
+    where.company = userId;
+  }
+
+
   try {
-    const where = {
-      status
-    }
 
     const total = await Job.count({}).where(where);
 

@@ -1,3 +1,36 @@
+get:
+  tags: 
+  - Job
+  summary: Get list of jobs.
+  description: Get list of jobs.
+  security: []
+  parameters:
+  - name: size
+    in: query
+    description: The number of items to return.
+    schema:
+      type: integer
+      format: int32
+    example: 10
+  - name: page
+    in: query
+    description: The page you want to begin.
+    schema:
+      type: integer
+      format: int32
+    example: 1
+  - name: status
+    in: query
+    description: The status to filter job.
+    schema:
+      type: string
+    example: ACTIVE
+  responses:
+    200:
+      description: OK
+    500:
+      description: Server error
+
 post:
   tags: 
   - Job

@@ -26,7 +26,7 @@ module.exports.policies = {
   'auth/logout': 'isAuthenticated',
 
   // Job
-  'job/find': 'isAdmin',
+  'job/find': true,
   'job/create': 'isCompany',
   'job/count': 'isCompany',
   'job/list-by-time': 'isCompany',
