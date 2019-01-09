@@ -106,7 +106,9 @@ module.exports.routes = {
   'post /skills/:skillId/subscriptions': 'SkillSubscription.create',
   'delete /skills/:skillId/subscriptions': 'SkillSubscription.delete',
 
-  'get /skill-subscriptions': 'SkillSubscription.find'
+  'get /skill-subscriptions': 'SkillSubscription.find',
+  'put /hotjobs/:id/approve': 'HotJob.approve',
+
   
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

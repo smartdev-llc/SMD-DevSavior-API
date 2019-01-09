@@ -1,111 +1,65 @@
-const { isValidExpiredDay } = require('../../../utils/validator');
-const constants = require('../../../constants')
-const { ONE_WEEK, TWO_WEEKS, ONE_MONTH } = constants.EXPIRED_DAY;
-const { MAXIMUM_ELEMENT_COUNT } = constants;
-const moment = require('moment');
+/*
+ - only 1 hotjob and 1 pending hotjob for each company
+ - default duration is 1 day
+ - default status is PENDING
+ - need Back-office's operator to approve
+ - at a moment, there are 15 hot jobs only
+*/
+
+const constants = require("../../../constants");
+const { PENDING } = constants.HOT_JOB_STATUS;
+const moment = require("moment");
+const debuglog = require("debug")("jv:hotjob:create");
 
 module.exports = async function (req, res) {
-  const { expiredDay, jobId } = req.body;
-  let isCreated, initialExpiredDay, id;
-  if (!expiredDay || !jobId) {
-    return res.badRequest({
-      message: "Missing parameters."
-    });
-  }
-
-  if (!isValidExpiredDay(expiredDay)) {
-    return res.badRequest({
-      message: "Invalid expiredDay type (should be ONE_WEEK or TWO_WEEKS or ONE_MONTH."
-    });
-  }
-
   try {
-    const job = await Job.findOne({ id: jobId });
-    
+    const { jobId } = req.body;
+    debuglog("- jobId ", jobId);
+    const companyId = _.get(req, "user.id");
+    if(!jobId){
+      return res.status(400).json({
+        message: "Job is required.",
+        code: "VALIDATION_ERROR"
+      });
+    }
+    let exists = await HotJob.findOne({
+      company: companyId,
+      status: PENDING,
+      expiredAt: { ">": moment.now() }
+    });
+    debuglog("- exists ", exists);
+    if (exists) {
+      return res.status(400).json({
+        message: "Your company has 1 pending hot job already.",
+        code: "HOT_JOB_EXISTS"
+      });
+    } 
+
+    let job = await Job.findOne({
+      id: jobId,
+      company: companyId,
+      status: constants.STATUS.ACTIVE
+    });
+    debuglog("- job ", job);
     if (!job) {
       return res.notFound({
-        message: "Job not found."
+        message: "Job not found or has not approved yet.",
+        code: "NOT_FOUND"
       });
     }
-  } catch (err) {
-    return res.serverError({
-      message: "Something went wrong."
-    });
-  }
 
-
-  // Kiem tra so luong hotjob trong db da dat 15 hay chua
-  try {
-    const jobs = await HotJob.find({
-      expiredDay: { '>': moment.now() }
-    })
-
-    if (_.size(jobs) >= MAXIMUM_ELEMENT_COUNT) {
-      return res.forbidden({
-        message: "Warning!! Hotjobs reach the limit."
-      });
-    }
-  } catch (err) {
-    return res.serverError({
-      message: `Something went wrong.`
-    });
-  }
-
-  // Kiem tra hotjob da duoc tao hay chua
-  try {
-    const job = await HotJob.findOne({ job: jobId });
-
-    if (job) {
-      isCreated = true;
-      initialExpiredDay = _.parseInt(_.get(job, 'expiredDay'));
-      id = _.get(job, 'id');
-    } else {
-      isCreated = false;
-      initialExpiredDay = null;
-    }
-
-  } catch (err) {
-    return res.serverError({
-      message: "Something went wrong."
-    });
-  }
-
-  // TH hotjob da duoc tao: tang so ngay 
-  if (isCreated) {
-    try {
-      const hotjob = await HotJob.update({ id })
-      .set({ expiredDay: transformExpiredDay(initialExpiredDay, expiredDay) })
-      .fetch();
-
-      return res.ok(_.get(hotjob, '0'))
-    } catch (err) {
-      return res.serverError({
-        message: `Something went wrong.`
-      });
-    }
-  }
-
-  // TH chua duoc tao: bat dau tao
-  try {
-    const job = await HotJob.create({
+    let hotJob = await HotJob.create({
       job: jobId,
-      expiredDay: transformExpiredDay(initialExpiredDay, expiredDay),
-    }).fetch();
-    return res.ok(job);
-  } catch (err) {
+      company: companyId
+    });
+
+    res.ok(hotJob);
+  } catch (error) {
     return res.serverError({
-      message: "Something went wrong."
+      message: "Something went wrong.",
+      code: "INTERNAL_SERVER_ERROR",
+      error: error.stack
     });
   }
 };
 
-const transformExpiredDay = (initialExpiredDay, type) => {
-  if (!initialExpiredDay) {
-    initialExpiredDay = moment.now()
-  }
-  switch (type) {
-    case ONE_WEEK: return moment(initialExpiredDay).add(1, 'w').valueOf();
-    case TWO_WEEKS: return moment(initialExpiredDay).add(2, 'w').valueOf();
-    case ONE_MONTH: return moment(initialExpiredDay).add(1, 'M').valueOf();
-  }
-}

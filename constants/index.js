@@ -102,5 +102,12 @@ module.exports = {
   },
 
   MAXIMUM_ELEMENT_COUNT: 15,
-  AUTH_PREFIX: 'auth_token_id:'
-}
+  AUTH_PREFIX: 'auth_token_id:',
+  HOT_JOB_STATUS: {
+    NONE: "NONE",
+    PENDING: "PENDING",
+    APPROVED: "APPROVED",
+    REJECTED: "REJECTED",
+    EXPIRED: "EXPIRED"
+  }
+};
