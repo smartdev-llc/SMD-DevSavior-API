@@ -99,7 +99,7 @@ module.exports = async function (req, res) {
       }
     });
   
-    await EmailService.sendToAdmins(admins, 'approve-job', contentData);
+    await EmailService.sendToAdmins(admins, 'approve-job-email', contentData);
     
     return res.ok(job);
   } catch (err) {
