@@ -7,8 +7,12 @@ module.exports = async function (req, res) {
     let limit = parseInt(size) || 10;
     let skip = (parseInt(page) || 0) * limit;
 
-    const companyId = _.get(req, "user.id");
-    queryBody.company = companyId;
+    const userId = _.get(req, "user.id");
+    const role = _.get(req, 'user.role');
+
+    if (role === 'company') {
+      queryBody.company = userId;
+    }
 
     const buildQuery = ElasticsearchService.buildQuery(queryBody);
     const transformResult = ElasticsearchService.transformResult();
@@ -20,7 +24,7 @@ module.exports = async function (req, res) {
       path: "category",
       field: "category.id"
     }];
-    if (companyId) {
+    if (userId && role === 'company') {
       nestedIdNames.push({
         request: "company",
         path: "company",
