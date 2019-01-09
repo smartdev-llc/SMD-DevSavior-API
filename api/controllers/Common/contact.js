@@ -38,7 +38,7 @@ module.exports = async function (req, res) {
   });
 
   try {
-    await EmailService.sendToAdmins(admins, 'contact-admin', contactData);
+    await EmailService.sendToAdmins(admins, 'contact-admin-email', contactData);
     return res.ok({
       message: "Your request successfully."
     });

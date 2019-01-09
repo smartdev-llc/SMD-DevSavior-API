@@ -82,6 +82,9 @@ module.exports = async function (req, res) {
 
     job.skills = skills;
     job.category = category;
+    
+    sendEmailToAdmin(job, 'approve-job-email', company);
+
     return res.ok(job);
   } catch (err) {
     return res.serverError({
@@ -90,4 +93,18 @@ module.exports = async function (req, res) {
       code: INTERNAL_SERVER_ERROR
     })
   }
+};
+
+sendEmailToAdmin = (job, emailTemplate, company) => {
+  const contentData = {
+    job,
+    company,
+    jobLink: `${process.env.BO_URL}/jobs/${job.id}`
+  }
+  const admins = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
+    return {
+      email
+    }
+  });
+  EmailService.sendToAdmins(admins, emailTemplate, contentData);
 };
