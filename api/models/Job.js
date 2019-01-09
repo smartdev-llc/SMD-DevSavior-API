@@ -18,7 +18,7 @@ module.exports = {
     toSalary: { type: 'number', required: true },
     description: { type: 'json', required: true },
     requirements: { type: 'json', required: true },
-    expiredAt: { type: 'number', required: true },
+    expiredAt: { type: 'number' },
     jobType: {
       type: 'string',
       isIn: [FULL_TIME, PART_TIME, INTERNSHIP, CONTRACT, FREELANCE],
