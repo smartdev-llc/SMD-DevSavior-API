@@ -14,6 +14,7 @@ module.exports = async function (req, res) {
   const { size, page } = _.get(req, 'query');
   let limit = parseInt(size) || 10;
   let skip = (parseInt(page) || 0) * limit;
+  const sort = 'approvedAt';
 
   if (!companyId) {
     return res.badRequest({
@@ -36,7 +37,7 @@ module.exports = async function (req, res) {
     .populate('skills', { select: ['id', 'name'] })
     .populate('category')
     .populate('company')
-    .sort('createdAt DESC')
+    .sort(sort)
     .limit(limit)
     .skip(skip);
 

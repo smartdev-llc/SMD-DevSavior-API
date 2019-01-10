@@ -8,9 +8,10 @@ const { PENDING, REJECTED, ACTIVE, INACTIVE } = constants.STATUS
 module.exports = async function (req, res) {
   const userId = _.get(req, 'user.id');
   const role = _.get(req, 'user.role');
-  let { size, page, status } = _.get(req, 'query');
+  let { size, page, status, companyId } = _.get(req, 'query');
   let limit = parseInt(size) || 10;
   let skip = (parseInt(page) || 0) * limit;
+  let sort = 'createdAt DESC';
 
   if (status && !isValidStatus(status)) {
     status = undefined;
@@ -18,10 +19,20 @@ module.exports = async function (req, res) {
 
   if (role !== 'admin' || role !== 'company') {
     status = ACTIVE;
+    sort = 'approvedAt DESC';
   }
 
   let where = {
     status
+  }
+
+  if (companyId) {
+    try {
+      let foundCompany = await Company.findOne({ id: companyId });
+      foundCompany && (where.company = companyId);
+    } catch (err) {
+      // Company not found, ignore filter by company id
+    }
   }
 
   if (role === 'company') {
@@ -39,7 +50,7 @@ module.exports = async function (req, res) {
     .populate('skills', { select: ['id', 'name'] })
     .populate('category')
     .populate('company')
-    .sort('createdAt DESC')
+    .sort(sort)
     .limit(limit)
     .skip(skip);
 

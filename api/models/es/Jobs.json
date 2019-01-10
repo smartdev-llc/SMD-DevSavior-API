@@ -72,6 +72,10 @@
     "benefits": {
       "type": "text"
     },
+    "approvedAt": {
+      "type": "date",
+      "format": "strict_date_optional_time||epoch_millis"
+    },
     "expiredAt": {
       "type": "date",
       "format": "strict_date_optional_time||epoch_millis"

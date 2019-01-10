@@ -1,8 +1,8 @@
 post:
   tags: 
   - Job
-  summary: Admin can review this job.
-  description: Admin can review this job.
+  summary: Admin can set status for a job.
+  description: Admin can set status for a job.
   security:
     - adminAuth: []
   parameters: 
@@ -15,13 +15,13 @@ post:
       format: int32
       example: 1
   requestBody:
-    description: A JSON object containing status
+    description: A JSON object containing status value
     content:
       application/json:
         schema:
           type: object
           properties:
-            status:
+            value:
               type: string
               example: "ACTIVE"
   responses:
