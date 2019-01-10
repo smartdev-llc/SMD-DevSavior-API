@@ -86,8 +86,8 @@ paths:
     $ref: 'paths/Company/find.yaml'
   /companies/search:
     $ref: 'paths/Company/search.yaml'
-  /jobs/{jobId}/approvals:
-    $ref: 'paths/Job/approve.yaml'
+  /jobs/{jobId}/status:
+    $ref: 'paths/Job/set-status.yaml'
 components:
   responses:
     200:

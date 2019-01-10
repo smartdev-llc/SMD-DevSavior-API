@@ -19,6 +19,7 @@ module.exports = {
     description: { type: 'json', required: true },
     requirements: { type: 'json', required: true },
     expiredAt: { type: 'number' },
+    approvedAt: { type: 'number' },
     jobType: {
       type: 'string',
       isIn: [FULL_TIME, PART_TIME, INTERNSHIP, CONTRACT, FREELANCE],

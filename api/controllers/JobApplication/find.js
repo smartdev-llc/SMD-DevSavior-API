@@ -53,8 +53,8 @@ module.exports = async function (req, res) {
 
     res.ok({
       total,
-      size: parseInt(size),
-      page: parseInt(page),
+      size: limit,
+      from: skip,
       list: _.map(jobApplications, item => _.extend(stdMappings[item.student], { appliedTime: item.createdAt }))
     });
   } catch (err) {

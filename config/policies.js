@@ -36,7 +36,7 @@ module.exports.policies = {
   'job/find-one': true,
   'job/update-my-job': 'isCompany',
   'job/find-by-company-id': true,
-  'job/approve': 'isAdmin',
+  'job/set-status': 'isAdmin',
 
   // Category
   'category/find': true,
@@ -80,7 +80,7 @@ module.exports.policies = {
   'student/create-working-experience': 'isStudent',
   'student/update-working-experience': 'isStudent',
   'student/delete-working-experience': 'isStudent',
-  'student.find-applicant': 'isCompany',
+  'student/find-applicant': 'isCompany',
 
   // JobApplication
   'jobapplication/find': 'isCompany',

@@ -25,6 +25,13 @@ get:
     schema:
       type: string
     example: ACTIVE
+  - name: companyId
+    in: query
+    description: The company id to filter job.
+    schema:
+      type: integer
+      format: int32
+    example: 15
   responses:
     200:
       description: OK
