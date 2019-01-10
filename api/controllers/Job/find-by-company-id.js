@@ -37,6 +37,7 @@ module.exports = async function (req, res) {
     .populate('skills', { select: ['id', 'name'] })
     .populate('category')
     .populate('company')
+    .populate('students')
     .sort(sort)
     .limit(limit)
     .skip(skip);

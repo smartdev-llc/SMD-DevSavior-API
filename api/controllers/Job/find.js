@@ -17,7 +17,7 @@ module.exports = async function (req, res) {
     status = undefined;
   }
 
-  if (role !== 'admin' || role !== 'company') {
+  if (role !== 'admin' && role !== 'company') {
     status = ACTIVE;
     sort = 'approvedAt DESC';
   }
@@ -39,7 +39,6 @@ module.exports = async function (req, res) {
     where.company = userId;
   }
 
-
   try {
 
     const total = await Job.count({}).where(where);
@@ -50,6 +49,7 @@ module.exports = async function (req, res) {
     .populate('skills', { select: ['id', 'name'] })
     .populate('category')
     .populate('company')
+    .populate('students')
     .sort(sort)
     .limit(limit)
     .skip(skip);

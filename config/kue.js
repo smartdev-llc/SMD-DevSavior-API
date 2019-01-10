@@ -14,8 +14,6 @@ queue.on( 'error', function( err ) {
   console.log( 'Oops... ', err );
 });
 
-console.log(path.resolve(__dirname, '../jobs'));
-
 var jobProcesses = require('include-all')({
   dirname     :  path.resolve(__dirname, '../jobs'),
   filter      :  /(.+)\.js$/,
