@@ -46,9 +46,8 @@ module.exports = async function (req, res) {
     return res.ok({
       total,
       list: jobs,
-      size,
-      page,
-      status
+      size: limit,
+      from: skip
     });
   } catch (err) {
     return res.serverError({

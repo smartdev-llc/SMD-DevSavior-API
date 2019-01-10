@@ -40,8 +40,8 @@ module.exports = async function (req, res) {
     res.ok({
       total,
       list: companies,
-      size,
-      page
+      size: limit,
+      from: skip
     });
   } catch (err) {
     return res.serverError({
