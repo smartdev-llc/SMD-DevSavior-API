@@ -1,6 +1,6 @@
 const moment = require("moment");
 const debuglog = require("debug")("jv:job:count");
-
+const { STATUS } = require("./../../../constants");
 
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
@@ -19,52 +19,30 @@ module.exports = async function (req, res) {
 
   query.bool.must = query.bool.must.concat(buildQuery.identifiers({
     nestedIdNames: [{
-      request: 'companyId',
-      path: 'company',
-      field: 'company.id'
+      request: "companyId",
+      path: "company",
+      field: "company.id"
     }]
   }));
 
-  let now = moment.now();
-  let daysLater = moment().add(sails.config.custom.jobExpiresSoonDuration || 2, 'day').valueOf();
+  let aggs = {};
 
-  let aggs = {
-    active: {
+  _.values(STATUS).forEach(status => {
+    aggs[status] = {
       filter: {
-        range: {
-          expiredAt: {
-            gt: daysLater
-          }
+        term: {
+          status: status
         }
       }
-    },
-    expired: {
-      filter: {
-        range: {
-          expiredAt: {
-            lt: now
-          }
-        }
-      }
-    },
-    expiresSoon: {
-      filter: {
-        range: {
-          expiredAt: {
-            gt: now,
-            lt: daysLater
-          }
-        }
-      }
-    }
-  }
+    };
+  });
 
-  debuglog('query: ', JSON.stringify(query));
-  debuglog('aggs: ', JSON.stringify(aggs));
+  debuglog("query: ", JSON.stringify(query));
+  debuglog("aggs: ", JSON.stringify(aggs));
 
   try {
     let queryResult = await ElasticsearchService.search({
-      type: 'Job',
+      type: "Job",
       body: {
         "size": 0,
         "query": query,
