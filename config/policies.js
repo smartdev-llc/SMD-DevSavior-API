@@ -92,5 +92,7 @@ module.exports.policies = {
   // HotJob
   'hotjob/create': 'isCompany',
   'hotjob/approve': 'isAdmin',
-  'hotjob/find': true
+  'hotjob/find': true,
+  'hotjob/find-all': 'isAdmin',
+  
 };
