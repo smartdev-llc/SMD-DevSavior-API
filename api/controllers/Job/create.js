@@ -52,8 +52,10 @@ module.exports = async function (req, res) {
       jobType,
       benefits,
     }).fetch();
+
     const category = await Category.findOne({ id: categoryId });
     const skills = await Skill.find({ id: skillIds });
+    
     ElasticsearchService.create({
       type: 'Job',
       id: job.id,
