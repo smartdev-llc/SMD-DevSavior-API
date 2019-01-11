@@ -13,7 +13,7 @@ module.exports = async function (req, res) {
   let skip = (parseInt(page) || 0) * limit;
   let sort = 'createdAt DESC';
 
-  if (status && !isValidStatus(status)) {
+  if (!isValidStatus(status)) {
     status = undefined;
   }
 
@@ -26,16 +26,16 @@ module.exports = async function (req, res) {
     status
   }
 
-  if (companyId) {
-    try {
-      let foundCompany = await Company.findOne({ id: companyId });
-      foundCompany && (where.company = companyId);
-    } catch (err) {
-      // Company not found, ignore filter by company id
+  if (role !== 'company') {
+    if (companyId) {
+      try {
+        let foundCompany = await Company.findOne({ id: companyId });
+        foundCompany && (where.company = companyId);
+      } catch (err) {
+        // Company not found, ignore filter by company id
+      }
     }
-  }
-
-  if (role === 'company') {
+  } else {
     where.company = userId;
   }
 
@@ -69,4 +69,4 @@ module.exports = async function (req, res) {
   }
 }
 
-isValidStatus = (stt) => _.indexOf([PENDING, REJECTED, ACTIVE, INACTIVE], stt) > -1;
+const isValidStatus = (stt) => _.indexOf([PENDING, REJECTED, ACTIVE, INACTIVE], stt) > -1;

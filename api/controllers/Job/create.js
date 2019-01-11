@@ -83,7 +83,7 @@ module.exports = async function (req, res) {
     job.skills = skills;
     job.category = category;
     
-    sendEmailToAdmin(job, 'approve-job-email', company);
+    sendEmailToAdmin(job, company);
 
     return res.ok(job);
   } catch (err) {
@@ -95,7 +95,7 @@ module.exports = async function (req, res) {
   }
 };
 
-sendEmailToAdmin = (job, emailTemplate, company) => {
+const sendEmailToAdmin = (job, company) => {
   const contentData = {
     job,
     company,
@@ -106,5 +106,5 @@ sendEmailToAdmin = (job, emailTemplate, company) => {
       email
     }
   });
-  EmailService.sendToAdmins(admins, emailTemplate, contentData);
+  EmailService.sendToAdmins(admins, 'approve-job-email', contentData);
 };

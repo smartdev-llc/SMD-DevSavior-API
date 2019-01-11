@@ -84,11 +84,11 @@ module.exports = async function (req, res) {
   }
 }
 
-isValidStatus = (status) => {
+const isValidStatus = (status) => {
   return _.indexOf([ACTIVE, INACTIVE, REJECTED], status) > -1;
 }
 
-isValidAction = (newStatus, currentStatus) => {
+const isValidAction = (newStatus, currentStatus) => {
   switch (newStatus) {
     // approve a job
     case ACTIVE: return (currentStatus === PENDING || currentStatus === REJECTED || currentStatus === INACTIVE);
@@ -101,7 +101,7 @@ isValidAction = (newStatus, currentStatus) => {
   }
 }
 
-getErrorMessage = status => {
+const getErrorMessage = status => {
   const message = "Cannot execute action";
   switch (status) {
     case ACTIVE: return `${message}. Only set ACTIVE for PENDING/REJECTED/INACTIVE job.`;
