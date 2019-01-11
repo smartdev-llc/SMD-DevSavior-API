@@ -26,6 +26,68 @@
     padding-bottom: 20px;
   }
 
+  .job-table {
+
+    border-top: 1px solid #e5e5e5;
+
+    .logo-col {
+      padding: 20px 0 17px;
+      border-bottom: 1px solid #e5e5e5;
+
+      .job-logo-url {
+        outline: none;
+      }
+
+      img {
+        border: 0;
+        padding-right: 20px;
+        margin: auto;
+      }
+    }
+
+    .detail-col {
+      padding: 20px 0 17px;
+      border-bottom: 1px solid #e5e5e5;
+
+      .job-detail {
+        padding-left: 10px;
+        .job-detail-url {
+          color: #12cd6a;
+          text-decoration: none;
+          font-size: 18px;
+          line-height: 20px;
+          font-weight: 700;
+          outline: none;
+          font-family: Arial,sans-serif;
+        }
+
+        .job-company-name {
+          margin: 5px 0 0 0;
+          padding: 3px 0 0;
+          line-height: 18px;
+          color: #777777;
+          font-weight: 700;
+          font-size: 13.5px;
+          font-family: Arial,sans-serif;
+        }
+
+        .job-skills {
+          margin: 5px 0 2px 0;
+          padding: 0;
+          color: #999999;
+          font-size: 13.5px;
+          font-family: Arial,sans-serif;
+          line-height: 18px;
+          .skill-name {
+            text-decoration:none;
+            display: inline-block;
+            margin-right: 20px !important;
+          }
+        }
+      }
+    }
+  }
+
   table.button {
     &.expand, &.expanded {
       width: 300px;
@@ -45,6 +107,9 @@
       text-decoration: none;
       display: inline-block;
       padding: 15px;
+    }
+    &.center {
+      margin: 0 auto;
     }
   }
   

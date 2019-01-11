@@ -9,18 +9,30 @@ module.exports = function (queue) {
     };
 
     const data = {
-      skill: {
-        id: 1,
-        name: "Nodejs"
-      },
+      subscribedSkills: 'NodeJS, HTML, CSS',
       jobs: [{
         id: 1,
-        title: "Job A"
+        title: "Job A",
+        link: 'https://juniorviec.com/jobs/9',
+        company: {
+          name: "Smartdev"
+        },
+        skills: [
+          { name: "Nodejs"}, { name: "HTML"}, { name: "CSS"}
+        ],
+        salary: 'Up to 2000$'
       }, {
         id: 2,
-        title: "Job B"
+        title: "We need Junior Dev",
+        link: 'https://juniorviec.com/jobs/2',
+        company: {
+          name: "Neolab"
+        },
+        skills: [
+          { name: "Java"}, { name: ".NET"}
+        ],
+        salary: "400$-1000$"
       }],
-      jobLink: "https://juniorviec.com/jobs/1",
       userInfo: user
     }
 
