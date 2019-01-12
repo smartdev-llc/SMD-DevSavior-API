@@ -27,8 +27,15 @@ API docs
 - URN: /hotjobs/:id/approve
 - Method: *PUT*
 - Request params
+
+| Attribute | Type    | Mandatory | Description         |
+| --------- |:-------:|:---------:|---------------------|
+| id        | string  | Yes       |ID of request hot job|
+
 - Error code:
     - INTERNAL_SERVER_ERROR
+    - LIMITED_HOTJOB
+    - NOT_FOUND
 
 ## 3. List hot job on BackOffice
 
