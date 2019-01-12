@@ -10,7 +10,7 @@ const moment = require('moment');
 module.exports = {
 
   attributes: {
-    job: { model: 'job', unique: true },
+    job: { model: 'job' },
     company: { model: 'company', required: true },
     status: {
       type: 'string',
