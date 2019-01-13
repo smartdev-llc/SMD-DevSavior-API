@@ -108,6 +108,9 @@ module.exports.routes = {
 
   'get /skill-subscriptions': 'SkillSubscription.find',
   'put /hotjobs/:id/approve': 'HotJob.approve',
+  'put /hotjobs/:id/reject': 'HotJob.reject',
+  'put /hotjobs/:id/activate': 'HotJob.activate',
+  'put /hotjobs/:id/deactivate': 'HotJob.deactivate',
   'get /bo/hotjobs': 'HotJob.find-all',
 
   

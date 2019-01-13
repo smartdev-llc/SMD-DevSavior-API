@@ -29,6 +29,18 @@ module.exports = {
       type: 'number',
       defaultsTo: +new Date()
     },
+    rejectedAt: {
+      type: 'number',
+      defaultsTo: +new Date()
+    },
+    activatedAt: {
+      type: 'number',
+      defaultsTo: +new Date()
+    },
+    deactivatedAt: {
+      type: 'number',
+      defaultsTo: +new Date()
+    },
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗

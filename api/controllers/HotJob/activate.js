@@ -7,7 +7,7 @@
 */
 
 const constants = require("../../../constants");
-const { PENDING, ACTIVE } = constants.HOT_JOB_STATUS;
+const { INACTIVE, ACTIVE } = constants.HOT_JOB_STATUS;
 const moment = require("moment");
 const debuglog = require("debug")("jv:hotjob:approve");
 
@@ -26,12 +26,10 @@ module.exports = async function (req, res) {
     }
     let hotJob = await HotJob.updateOne({
       id: id,
-      status: PENDING
+      status: INACTIVE
     }).set({
       status: ACTIVE,
-      expiredAt: moment().add(1, "day").valueOf(),
-      expiredDay: moment().add(1, "day").valueOf(),
-      approvedAt: +new Date()
+      activatedAt: +new Date()
     });
 
     debuglog("- hotJob ", hotJob);

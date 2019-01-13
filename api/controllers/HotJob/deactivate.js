@@ -7,31 +7,19 @@
 */
 
 const constants = require("../../../constants");
-const { PENDING, ACTIVE } = constants.HOT_JOB_STATUS;
+const { INACTIVE, ACTIVE } = constants.HOT_JOB_STATUS;
 const moment = require("moment");
 const debuglog = require("debug")("jv:hotjob:approve");
 
 module.exports = async function (req, res) {
   try {
     const { id } = req.params;
-    let count = await HotJob.count({
-      status: ACTIVE,
-      expiredAt: { ">": moment.now() }
-    });
-    if (count >= 15) {
-      return res.notFound({
-        message: "At a moment, there are 15 hot jobs only",
-        code: "LIMITED_HOTJOB"
-      });
-    }
     let hotJob = await HotJob.updateOne({
       id: id,
-      status: PENDING
+      status: ACTIVE
     }).set({
-      status: ACTIVE,
-      expiredAt: moment().add(1, "day").valueOf(),
-      expiredDay: moment().add(1, "day").valueOf(),
-      approvedAt: +new Date()
+      status: INACTIVE,
+      deactivatedAt: +new Date()
     });
 
     debuglog("- hotJob ", hotJob);
