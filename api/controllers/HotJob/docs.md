@@ -37,7 +37,50 @@ API docs
     - LIMITED_HOTJOB
     - NOT_FOUND
 
-## 3. List hot job on BackOffice
+## 3. Reject hot job
+
+- URN: /hotjobs/:id/approve
+- Method: *PUT*
+- Request params
+
+| Attribute | Type    | Mandatory | Description         |
+| --------- |:-------:|:---------:|---------------------|
+| id        | string  | Yes       |ID of request hot job|
+
+- Error code:
+    - INTERNAL_SERVER_ERROR
+    - NOT_FOUND
+
+## 4. Deactivate an active hot job
+
+- URN: /hotjobs/:id/deactivate
+- Method: *PUT*
+- Request params
+
+| Attribute | Type    | Mandatory | Description         |
+| --------- |:-------:|:---------:|---------------------|
+| id        | string  | Yes       |ID of an active hot job|
+
+- Error code:
+    - INTERNAL_SERVER_ERROR
+    - NOT_FOUND
+
+## 5. Activate an inactive hot job
+
+- URN: /hotjobs/:id/activate
+- Method: *PUT*
+- Request params
+
+| Attribute | Type    | Mandatory | Description         |
+| --------- |:-------:|:---------:|---------------------|
+| id        | string  | Yes       |ID of an inactive hot job|
+
+- Error code:
+    - INTERNAL_SERVER_ERROR
+    - LIMITED_HOTJOB
+    - NOT_FOUND
+
+## 6. List hot job on BackOffice
 
 - URN: /bo/hotjobs
 - Method: *GET*

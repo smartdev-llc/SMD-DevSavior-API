@@ -11,6 +11,7 @@ module.exports = async function (req, res) {
     const jobs = await HotJob
       .find({})
       .populate("job")
+      .populate("company")
       .skip(skip)
       .limit(limit)
       .sort(sort);
