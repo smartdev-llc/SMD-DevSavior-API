@@ -51,7 +51,7 @@ module.exports = async function (req, res) {
     let hotJob = await HotJob.create({
       job: jobId,
       company: companyId
-    });
+    }).fetch();
 
     res.ok(hotJob);
   } catch (error) {
