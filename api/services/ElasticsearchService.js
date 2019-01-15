@@ -105,17 +105,29 @@ module.exports = {
       textSearch: ({ text, options }) => {
         let tokens = [].concat(text);
         let shouldArr = tokens.reduce((aggsArr, token) => {
-          aggsArr = aggsArr.concat((options.keys || []).map(key => ({
+          aggsArr = aggsArr.concat((options.keys || []).reduce((ls, key) => ls.concat([{
             wildcard: {
               [key]: `*${_.toLower(token)}*`
             }
-          })));
+          }, {
+            match: {
+              [key]: `*${_.toLower(token)}*`
+            }
+          }]), []));
           return aggsArr.concat((options.nestedKeys || []).map(key => ({
             nested: {
               path: key.split(".").shift(),
               query: {
-                wildcard: {
-                  [key]: `*${_.toLower(token)}*`
+                bool: {
+                  should: [{
+                    wildcard: {
+                      [key]: `*${_.toLower(token)}*`
+                    }
+                  }, {
+                    match: {
+                      [key]: `*${_.toLower(token)}*`
+                    }
+                  }]
                 }
               }
             }
