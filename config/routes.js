@@ -111,6 +111,7 @@ module.exports.routes = {
   'put /hotjobs/:id/reject': 'HotJob.reject',
   'put /hotjobs/:id/activate': 'HotJob.activate',
   'put /hotjobs/:id/deactivate': 'HotJob.deactivate',
+  'get /hotjobs/:id': 'HotJob.get',
   'get /bo/hotjobs': 'HotJob.find-all',
 
   

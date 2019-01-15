@@ -90,6 +90,7 @@ module.exports.policies = {
   'common/*': true,
 
   // HotJob
+  'hotjob/get': 'isCompany',
   'hotjob/create': 'isCompany',
   'hotjob/approve': 'isAdmin',
   'hotjob/reject': 'isAdmin',
