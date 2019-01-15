@@ -1,7 +1,7 @@
 const moment = require("moment");
 const constants = require("../../../constants");
 const { MAXIMUM_ELEMENT_COUNT } = constants;
-const {APPROVED, PENDING} = constants.HOT_JOB_STATUS;
+const {ACTIVE, PENDING} = constants.HOT_JOB_STATUS;
 module.exports = async function (req, res) {
   try {
     const userId = _.get(req, "user.id");
@@ -13,12 +13,12 @@ module.exports = async function (req, res) {
       query.or = [{
         status: PENDING
       },{
-        status: APPROVED,
+        status: ACTIVE,
         expiredAt: { ">=": moment.now() }
       }];
     } else {
       query. expiredAt = { ">=": moment.now() };
-      query.status = APPROVED;
+      query.status = ACTIVE;
     }
     const jobs = await HotJob.find()
       .where(query)
