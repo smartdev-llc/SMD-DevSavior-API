@@ -101,12 +101,12 @@ const sendEmailToAdmin = (job, company) => {
   const contentData = {
     job,
     company,
-    jobLink: `${process.env.BO_URL}/jobs/${job.id}`
-  }
+    jobLink: `${process.env.BO_URL}/dashboard/job/${job.id}`
+  };
   const admins = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
     return {
       email
-    }
+    };
   });
   EmailService.sendToAdmins(admins, 'approve-job-email', contentData);
 };
