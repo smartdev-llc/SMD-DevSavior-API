@@ -24,7 +24,24 @@ module.exports = async function (req, res) {
         code: "LIMITED_HOTJOB"
       });
     }
-    let hotJob = await HotJob.updateOne({
+    let hotJob = await HotJob.findOne({ id });
+    if(!hotJob){
+      return res.notFound({
+        message: "Request hot job not found",
+        code: "NOT_FOUND"
+      });
+    }
+    let findByCompany = await HotJob.findOne({
+      company: hotJob.company,
+      status: ACTIVE
+    });
+    if(findByCompany){
+      return res.badRequest({
+        message: "This company has a hotjob already",
+        code: "HOT_JOB_EXISTS",
+      });
+    }
+    hotJob = await HotJob.updateOne({
       id: id,
       status: PENDING
     }).set({

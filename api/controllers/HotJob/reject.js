@@ -8,12 +8,17 @@
 
 const constants = require("../../../constants");
 const { PENDING, REJECTED } = constants.HOT_JOB_STATUS;
-const moment = require("moment");
 const debuglog = require("debug")("jv:hotjob:approve");
 
 module.exports = async function (req, res) {
   try {
-    const { id } = req.params;
+    const id = req.query.id;
+    if (!id) {
+      return res.badRequest({
+        message: "Hotjob id is required",
+        code: "BAD_REQUEST"
+      });
+    }
     let hotJob = await HotJob.updateOne({
       id: id,
       status: PENDING
