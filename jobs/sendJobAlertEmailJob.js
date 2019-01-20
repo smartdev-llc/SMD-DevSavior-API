@@ -80,13 +80,13 @@ module.exports = async function (queue) {
 
       console.log('data: ', data);
 
-      EmailService.sendToUser(user, 'job-alert-email', data)
-      .then(() => {
-        done();
-      })
-      .catch(err => {
-        done(err);
-      })
+      EmailService.sendToUser(student, 'job-alert-email', data)
+        .then(() => {
+          done();
+        })
+        .catch(err => {
+          done(err);
+        })
     } catch (err) {
       console.log(err);
       return done(err);
