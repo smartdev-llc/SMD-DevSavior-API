@@ -9,6 +9,8 @@ const {
 const constants = require('../../../constants');
 const { ACTIVE } = constants.STATUS;
 
+const moment = require('moment');
+
 module.exports = async function (req, res) {
   const companyId = _.get(req, "params.companyId");
   const { size, page } = _.get(req, 'query');
@@ -26,7 +28,11 @@ module.exports = async function (req, res) {
 
   try {
     const where = {
-      company: companyId, status: ACTIVE
+      company: companyId, 
+      status: ACTIVE,
+      expiredAt: {
+        gt: moment.now()
+      }
     }
 
     const total = await Job.count({}).where(where);

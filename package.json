@@ -31,6 +31,7 @@
     "passport-local": "^1.0.0",
     "pug": "^2.0.3",
     "sails": "^1.0.2",
+    "sails-hook-cron": "^3.0.0",
     "sails-hook-grunt": "^3.0.2",
     "sails-hook-orm": "^2.0.0-16",
     "sails-hook-sockets": "^1.4.0",

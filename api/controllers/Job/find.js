@@ -3,7 +3,8 @@ const {
 } = require('../../../constants/error-code');
 
 const constants = require('../../../constants');
-const { PENDING, REJECTED, ACTIVE, INACTIVE } = constants.STATUS
+const { PENDING, REJECTED, ACTIVE, INACTIVE } = constants.STATUS;
+const moment = require('moment');
 
 module.exports = async function (req, res) {
   const userId = _.get(req, 'user.id');
@@ -12,6 +13,7 @@ module.exports = async function (req, res) {
   let limit = parseInt(size) || 10;
   let skip = (parseInt(page) || 0) * limit;
   let sort = 'createdAt DESC';
+  let expiredAt;
 
   if (!isValidStatus(status)) {
     status = undefined;
@@ -20,10 +22,14 @@ module.exports = async function (req, res) {
   if (role !== 'admin' && role !== 'company') {
     status = ACTIVE;
     sort = 'approvedAt DESC';
+    expiredAt = {
+      gt: moment.now()
+    }
   }
 
   let where = {
-    status
+    status,
+    expiredAt
   }
 
   if (role !== 'company') {
