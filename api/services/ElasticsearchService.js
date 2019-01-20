@@ -5,6 +5,7 @@ const connectionConfig = {
   host: process.env.ES_HOST || "127.0.0.1:9200",
   // log: process.env.ES_LOG_LEVEL || 'trace'
 };
+const moment = require('moment');
 
 let es = new elasticsearch.Client(connectionConfig);
 const esClient = Promise.promisifyAll(es, { context: es });
@@ -45,6 +46,13 @@ module.exports = {
       activeJob: () => ({
         "term": {
           "status": "ACTIVE"
+        }
+      }),
+      notExpiredJob: () =>({
+        range: {
+          expiredAt: {
+            gt: moment.now()
+          }
         }
       }),
       identifiers: (options) => {

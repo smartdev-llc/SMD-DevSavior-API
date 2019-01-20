@@ -19,6 +19,7 @@ module.exports = async function (req, res) {
 
     let query = { bool: { must: [] } };
     query.bool.must.push(buildQuery.activeJob());
+    query.bool.must.push(buildQuery.notExpiredJob());
     let nestedIdNames = [{
       request: "category",
       path: "category",

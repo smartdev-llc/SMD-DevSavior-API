@@ -1,15 +1,23 @@
 const {
-  INTERNAL_SERVER_ERROR, NOT_FOUND
+  INTERNAL_SERVER_ERROR,
+  NOT_FOUND
 } = require("../../../constants/error-code");
 
 const constants = require('../../../constants');
-const { ACTIVE } = constants.STATUS;
+const {
+  ACTIVE
+} = constants.STATUS;
 
 const moment = require('moment');
 module.exports = async function (req, res) {
   try {
-    const { size, page } = _.get(req, "query");
-    const { jobId } = _.get(req, "params");
+    const {
+      size,
+      page
+    } = _.get(req, "query");
+    const {
+      jobId
+    } = _.get(req, "params");
     let limit = parseInt(size) || 10;
     let skip = (parseInt(page) || 0) * limit;
 
@@ -18,8 +26,12 @@ module.exports = async function (req, res) {
     let job;
     try {
       job = await Job
-        .findOne({ id: jobId })
-        .populate("skills", { select: ["id", "name"] });
+        .findOne({
+          id: jobId
+        })
+        .populate("skills", {
+          select: ["id", "name"]
+        });
     } catch (err) {
       return res.serverError({
         message: `Something went wrong.`,
@@ -28,7 +40,7 @@ module.exports = async function (req, res) {
       });
     }
 
-    if(!job){
+    if (!job) {
       return res.notFound({
         message: "Job not found",
         code: NOT_FOUND
@@ -76,13 +88,18 @@ module.exports = async function (req, res) {
         "size": limit,
         "from": skip,
         "query": query,
-        "sort": [
-          { "updatedAt": { "order": "desc" } },
-        ]
+        "sort": [{
+          "updatedAt": {
+            "order": "desc"
+          }
+        }, ]
       }
     }).then(transformResult.getHits);
 
-    return res.ok(_.extend(result, { size: limit, from: skip }));
+    return res.ok(_.extend(result, {
+      size: limit,
+      from: skip
+    }));
   } catch (err) {
     res.serverError({
       message: `Something went wrong.`,
