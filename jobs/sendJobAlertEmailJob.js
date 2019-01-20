@@ -9,8 +9,6 @@ module.exports = async function (queue) {
   async function sendJobAlertEmailFunc(job, done) {
     const { studentId } = _.get(job, 'data', {});
 
-    console.log(studentId)
-
     try {
       const student = await Student.findOne({ id: studentId });
       if (!student || !student.emailVerified || student.status !== ACTIVE) {
@@ -21,8 +19,6 @@ module.exports = async function (queue) {
       if (_.size(subscribedSkills) < 0) {
         return done();
       }
-
-      console.log('subscribedSkills: ', subscribedSkills);
 
       const skills = _.map(subscribedSkills, 'skill.id');
 
@@ -38,7 +34,7 @@ module.exports = async function (queue) {
       query.bool.must.push({
         range: {
           expiredAt: {
-            gt: moment.now()
+            gte: moment.now()
           }
         }
       });
@@ -60,9 +56,6 @@ module.exports = async function (queue) {
         }
       }).then(transformResult.getHits);
 
-      console.log('query: ', JSON.stringify(query));
-      console.log('result.list: ', result.list);
-
       if (!_.size(result.list)) return done();
 
       const jobs = _.map(result.list, job => {
@@ -79,8 +72,6 @@ module.exports = async function (queue) {
         moreJobsLink: `${process.env.WEB_URL}/browse-jobs?qs=${_.chain(subscribedSkills).map('skill.name').join('-')}`
       }
 
-      console.log('data: ', data);
-
       EmailService.sendToUser(student, 'job-alert-email', data)
         .then(() => {
           done();
@@ -89,7 +80,6 @@ module.exports = async function (queue) {
           done(err);
         })
     } catch (err) {
-      console.log(err);
       return done(err);
     }
   }

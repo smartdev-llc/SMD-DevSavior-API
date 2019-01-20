@@ -59,7 +59,6 @@ module.exports.routes = {
   'get /jobs/search': 'Job.search',
   'get /jobs/:jobId/recommended': 'Job.recommend',
   'get /jobs/count': 'Job.count',
-  'put /jobs/:id': 'Job.update',
   'get /jobs/list-by-time': 'Job.list-by-time',
   'get /jobs/:id': 'Job.find-one',
   'put /my-jobs/:id': 'Job.update-my-job',

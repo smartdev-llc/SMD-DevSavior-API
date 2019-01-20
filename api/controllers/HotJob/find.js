@@ -17,7 +17,7 @@ module.exports = async function (req, res) {
         expiredAt: { ">=": moment.now() }
       }];
     } else {
-      query. expiredAt = { ">=": moment.now() };
+      query.expiredAt = { ">=": moment.now() };
       query.status = ACTIVE;
     }
     const jobs = await HotJob.find()

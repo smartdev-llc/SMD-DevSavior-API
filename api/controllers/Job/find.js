@@ -23,7 +23,7 @@ module.exports = async function (req, res) {
     status = ACTIVE;
     sort = 'approvedAt DESC';
     expiredAt = {
-      '>': moment.now()
+      '>=': moment.now()
     }
   }
 

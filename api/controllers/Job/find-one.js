@@ -23,13 +23,13 @@ module.exports = async function (req, res) {
     } else if (role !== 'admin') {
       condition.status = ACTIVE;
       condition.expiredAt = {
-        '>': moment.now()
+        '>=': moment.now()
       };
     } 
   } else {
     condition.status = ACTIVE;
     condition.expiredAt = {
-      '>': moment.now()
+      '>=': moment.now()
     };
   }
 

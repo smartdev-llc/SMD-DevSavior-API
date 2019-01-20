@@ -67,17 +67,20 @@ module.exports = async function (req, res) {
             "_id": jobId
           }
         },
-        "must": [{
-          "term": {
-            "status": ACTIVE
-          }
-        }, {
-          "range": {
-            "expiredAt": {
-              gt: moment.now()
+        "must": [
+          {
+            "term": {
+              "status": ACTIVE
+            }
+          }, 
+          {
+            "range": {
+              "expiredAt": {
+                gte: moment.now()
+              }
             }
           }
-        }],
+        ],
         should,
       }
     };

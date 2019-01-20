@@ -31,7 +31,7 @@ module.exports = async function (req, res) {
       company: companyId, 
       status: ACTIVE,
       expiredAt: {
-        gt: moment.now()
+        '>=': moment.now()
       }
     }
 
