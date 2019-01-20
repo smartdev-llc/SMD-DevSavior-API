@@ -8,9 +8,6 @@
  * https://sailsjs.com/anatomy/config/routes-js
  */
 
-const serveStatic = require('serve-static');
-const uploadFolder = process.env.UPLOAD_FOLDER || '.tmp';
-
 module.exports.routes = {
 
 
@@ -68,6 +65,10 @@ module.exports.routes = {
   'put /my-jobs/:id': 'Job.update-my-job',
   'get /companies/:companyId/jobs': 'Job.find-by-company-id',
   'post /jobs/:jobId/status': 'Job.set-status',
+  'put /jobs/:id/approve': 'Job.approve',
+  'put /jobs/:id/reject': 'Job.reject',
+  'put /jobs/:id/activate': 'Job.activate',
+  'put /jobs/:id/deactivate': 'Job.deactivate',
   
   'post /photos/upload': 'Photo.upload',
   'get /photos/:photoName': {

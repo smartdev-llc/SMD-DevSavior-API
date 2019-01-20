@@ -37,6 +37,10 @@ module.exports.policies = {
   'job/update-my-job': 'isCompany',
   'job/find-by-company-id': true,
   'job/set-status': 'isAdmin',
+  'job/approve': 'isAdmin',
+  'job/reject': 'isAdmin',
+  'job/activate': 'isAdmin',
+  'job/deactivate': 'isAdmin',
 
   // Category
   'category/find': true,
