@@ -55,7 +55,7 @@ module.exports = async function (req, res) {
   if (job.status !== STATUS.ACTIVE) {
     return res.badRequest({
       message: "Invalid job.",
-      devMessage: "Invalid job id, status is not active.",
+      devMessage: "Job is not active.",
       code: INVALID_PARAMETERS
     });
   }
@@ -63,7 +63,7 @@ module.exports = async function (req, res) {
   if (job.expiredAt > moment.now()) {
     return res.badRequest({
       message: "Invalid job.",
-      devMessage: "Invalid job id, the job is expired.",
+      devMessage: "Job is expired.",
       code: INVALID_PARAMETERS
     });
   }

@@ -6,6 +6,8 @@ const {
   NOT_FOUND
 } = require('../../../constants/error-code');
 
+const moment = require('moment');
+
 module.exports = async function (req, res) {
   const userId = _.get(req, "user.id");
   const role = _.get(req, "user.role");
@@ -20,9 +22,15 @@ module.exports = async function (req, res) {
       condition.company = userId;
     } else if (role !== 'admin') {
       condition.status = ACTIVE;
+      condition.expiredAt = {
+        '>': moment.now()
+      };
     } 
   } else {
     condition.status = ACTIVE;
+    condition.expiredAt = {
+      '>': moment.now()
+    };
   }
 
   let job;

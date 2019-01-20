@@ -62,7 +62,7 @@ module.exports = async function (req, res) {
         }, {
           "range": {
             "expiredAt": {
-              gte: moment.now()
+              gt: moment.now()
             }
           }
         }],

@@ -96,7 +96,7 @@ module.exports = async function (queue) {
 
   function transformSalary (fromSalary, toSalary) {
     if (!fromSalary) return `Up to ${toSalary}$`;
-    if (fromSalary === toSalary) return `${toSalary}`;
+    if (fromSalary === toSalary) return `${toSalary}$`;
     return `${fromSalary}$ - ${toSalary}$`
   }
 };
