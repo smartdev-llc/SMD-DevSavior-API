@@ -73,9 +73,10 @@ module.exports = async function (queue) {
       })
 
       const data = {
-        subscribedSkills: _.join(subscribedSkills, ', '),
+        subscribedSkills: _.chain(subscribedSkills).map('skill.name').join(', '),
         jobs,
-        userInfo: student
+        userInfo: student,
+        moreJobsLink: `${process.env.WEB_URL}/browse-jobs?qs=${_.chain(subscribedSkills).map('skill.name').join('-')}`
       }
 
       console.log('data: ', data);
