@@ -2,6 +2,10 @@ const {
   INTERNAL_SERVER_ERROR, NOT_FOUND
 } = require("../../../constants/error-code");
 
+const constants = require('../../../constants');
+const { ACTIVE } = constants.STATUS;
+
+const moment = require('moment');
 module.exports = async function (req, res) {
   try {
     const { size, page } = _.get(req, "query");
@@ -51,6 +55,17 @@ module.exports = async function (req, res) {
             "_id": jobId
           }
         },
+        "must": [{
+          "term": {
+            "status": ACTIVE
+          }
+        }, {
+          "range": {
+            "expiredAt": {
+              gte: moment.now()
+            }
+          }
+        }],
         should,
       }
     };

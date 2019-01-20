@@ -5,6 +5,8 @@ const {
   INTERNAL_SERVER_ERROR
 } = require('../../../constants/error-code');
 
+const moment = require('moment');
+
 const { STATUS } = require("./../../../constants");
 
 const sendEmailToCompany = (job, company, user) => {
@@ -54,6 +56,14 @@ module.exports = async function (req, res) {
     return res.badRequest({
       message: "Invalid job.",
       devMessage: "Invalid job id, status is not active.",
+      code: INVALID_PARAMETERS
+    });
+  }
+
+  if (job.expiredAt > moment.now()) {
+    return res.badRequest({
+      message: "Invalid job.",
+      devMessage: "Invalid job id, the job is expired.",
       code: INVALID_PARAMETERS
     });
   }
