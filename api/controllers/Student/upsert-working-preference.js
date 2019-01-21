@@ -87,8 +87,7 @@ module.exports = async function (req, res) {
     if (!existingWorkingPreference) {
       workingPreference = await WorkingPreference.create(workingPreferenceBody).fetch();
     } else {
-      updatedWorkingPreferences = await WorkingPreference.update({ student: userId }).set(workingPreferenceBody).fetch();
-      workingPreference = updatedWorkingPreferences[0];
+      workingPreference = await WorkingPreference.updateOne({ student: userId }).set(workingPreferenceBody);
     }
 
     res.ok(workingPreference);

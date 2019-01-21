@@ -42,7 +42,7 @@ module.exports = async function (req, res) {
     const oldCoverURL = _.get(req, 'user.coverURL');
 
     try {
-      await Company.update({ id: companyId }).set({ coverURL: photoUrl });
+      await Company.updateOne({ id: companyId }).set({ coverURL: photoUrl });
       if (oldCoverURL) {
         deleteOldImage(oldCoverURL);
       }

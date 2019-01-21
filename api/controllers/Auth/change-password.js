@@ -86,7 +86,7 @@ module.exports = async function (req, res) {
   }
 
   try {
-    await UserModel.update({ id: userId })
+    await UserModel.updateOne({ id: userId })
       .set({ password: hashPassword });
   } catch (err) {
     return res.serverError({

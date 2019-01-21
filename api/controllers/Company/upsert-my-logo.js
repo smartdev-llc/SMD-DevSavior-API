@@ -40,7 +40,7 @@ module.exports = async function (req, res) {
     const oldLogoURL = _.get(req, 'user.logoURL');
 
     try {
-      await Company.update({ id: companyId }).set({ logoURL: photoUrl });
+      await Company.updateOne({ id: companyId }).set({ logoURL: photoUrl });
       if (oldLogoURL) {
         deleteOldImage(oldLogoURL);
       }

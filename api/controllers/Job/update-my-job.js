@@ -27,11 +27,10 @@ module.exports = async function (req, res) {
   }
 
   try {
-    const jobs = await Job.update({id})
-    .set({description})
-    .fetch();
+    const updateJob = await Job.updateOne({id})
+    .set({description});
 
-      return res.ok(jobs[0]);
+      return res.ok(updateJob);
   } catch (err) {
     return res.serverError({
       message: `Something went wrong.`

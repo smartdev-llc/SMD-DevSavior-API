@@ -91,8 +91,7 @@ module.exports = async function (req, res) {
   };
 
   try {
-    const updatedProfiles = await Student.update({ id: userId }).set(profileBody).fetch();
-    const userProfile = updatedProfiles[0];
+    const userProfile = await Student.updateOne({ id: userId }).set(profileBody);
     res.ok(userProfile);
   } catch(err) {
     return res.serverError({

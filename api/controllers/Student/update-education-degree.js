@@ -103,8 +103,8 @@ module.exports = async function (req, res) {
   };
 
   try {
-    const updatedEDs = await EducationDegree.update({ id }, educationDegreeBody).fetch();
-    res.ok(updatedEDs[0]);
+    const updatedED = await EducationDegree.updateOne({ id }, educationDegreeBody);
+    res.ok(updatedED);
   } catch (err) {
     return res.serverError({
       message: "Something went wrong.",

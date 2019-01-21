@@ -81,7 +81,7 @@ module.exports = async function(req, res) {
   }
 
   try {
-    await UserModel.update({ id: userId }).set({ emailVerified: true });
+    await UserModel.updateOne({ id: userId }).set({ emailVerified: true });
 
     if (role === 'admin') {
       await EmailService.sendToUser(user, 'welcome-admin-email', {

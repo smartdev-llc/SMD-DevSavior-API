@@ -83,8 +83,8 @@ module.exports = async function (req, res) {
   };
 
   try {
-    const updatedWEs = await WorkingExperience.update({ id }, workingExperienceBody).fetch();
-    res.ok(updatedWEs[0]);
+    const updatedWE = await WorkingExperience.updateOne({ id }, workingExperienceBody);
+    res.ok(updatedWE);
   } catch (err) {
     return res.serverError({
       message: "Something went wrong.",

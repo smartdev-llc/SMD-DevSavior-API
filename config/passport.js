@@ -181,10 +181,8 @@ async function handleFacebookAuthentication(
       };
 
       try {
-        const updatedUsers = await Student.update({ id: existingUser.id })
-          .set(updatedData)
-          .fetch();
-        user = _.get(updatedUsers, "0", existingUser);
+        user = await Student.updateOne({ id: existingUser.id })
+          .set(updatedData);
       } catch (err) {
         return cb({
           message: "Something went wrong.",
@@ -280,10 +278,8 @@ async function handleGoogleAuthentication(
       };
 
       try {
-        const updatedUsers = await Student.update({ id: existingUser.id })
-          .set(updatedData)
-          .fetch();
-        user = _.get(updatedUsers, "0", existingUser);
+        user = await Student.updateOne({ id: existingUser.id })
+          .set(updatedData);
       } catch (err) {
         return cb({
           message: "Something went wrong.",

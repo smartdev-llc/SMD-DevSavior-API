@@ -48,7 +48,7 @@ module.exports = async function (req, res) {
       expiredAt: moment().add(sails.config.custom.jobDuration || 7, 'days').valueOf()
     };
 
-    await Job.update({ id })
+    const updatedJob = await Job.updateOne({ id })
       .set(updatedBody);
 
     await ElasticsearchService.update({
@@ -58,9 +58,7 @@ module.exports = async function (req, res) {
         doc: updatedBody
       }
     });
-    return res.ok({
-      message: 'Approved succesfully.'
-    });
+    return res.ok(updatedJob);
   } catch (err) {
     return res.serverError({
       message: "Something went wrong.",

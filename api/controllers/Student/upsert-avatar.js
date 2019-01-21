@@ -52,7 +52,7 @@ module.exports = async function (req, res) {
 
     const oldProfileImageURL = _.get(req, 'user.profileImageURL');
     try {
-      await Student.update({ id: userId }).set({ profileImageURL: photoUrl });
+      await Student.updateOne({ id: userId }).set({ profileImageURL: photoUrl });
       if (oldProfileImageURL) {
         deleteOldImage(oldProfileImageURL);
       }

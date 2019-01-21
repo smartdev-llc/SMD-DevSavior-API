@@ -37,10 +37,9 @@ module.exports = async function (req, res) {
   }
 
   try {
-    const updatedInfo = await Company.update({ id: companyId })
-      .set(updatedFields)
-      .fetch();
-    const updatedCompany = _.get(updatedInfo, '0');
+    const updatedCompany = await Company.updateOne({ id: companyId })
+      .set(updatedFields);
+
     if (updatedCompany) {
       res.ok(updatedCompany);
     } else {
