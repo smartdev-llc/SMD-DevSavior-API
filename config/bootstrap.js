@@ -63,7 +63,7 @@ module.exports.bootstrap = async function(done) {
       ]);
     }
 
-    const mainAdmin = await mainAdmin.findOne({ email: 'juniorviec@gmail.com'});
+    const mainAdmin = await Admin.findOne({ email: 'juniorviec@gmail.com'});
     if (!mainAdmin) {
       await Admin.create({
         email: 'juniorviec@gmail.com',
