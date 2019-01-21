@@ -37,8 +37,8 @@ module.exports = async function (req, res) {
   let UserModel;
   if (role === 'company') {
     UserModel = Company;
-  } else if (role === 'admin') {
-    UserModel = Admin;
+  // } else if (role === 'admin') {
+  //   UserModel = Admin;
   } else {
     UserModel = Student;
   }
@@ -91,27 +91,32 @@ module.exports = async function (req, res) {
       verificationLink = `${process.env.WEB_URL}/employer/verify-account?token=${verificationToken}`;
     }
 
-    if (role === 'admin') {
-      template = 'verify-admin-email';
-      verificationLink = `${process.env.WEB_URL}/admin/verify-account?token=${verificationToken}`;
-      receiverInfo = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
-        return {
-          email
-        }
-      });
-    }
+    // if (role === 'admin') {
+    //   template = 'verify-admin-email';
+    //   verificationLink = `${process.env.WEB_URL}/admin/verify-account?token=${verificationToken}`;
+    //   receiverInfo = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
+    //     return {
+    //       email
+    //     }
+    //   });
+    // }
 
-    if (role === 'admin') {
-      await EmailService.sendToAdmins(receiverInfo, template, {
-        verificationLink,
-        userInfo
-      });
-    } else {
-      await EmailService.sendToUser(receiverInfo, template, {
-        verificationLink,
-        userInfo
-      });
-    }
+    // if (role === 'admin') {
+    //   await EmailService.sendToAdmins(receiverInfo, template, {
+    //     verificationLink,
+    //     userInfo
+    //   });
+    // } else {
+    //   await EmailService.sendToUser(receiverInfo, template, {
+    //     verificationLink,
+    //     userInfo
+    //   });
+    // }
+
+    await EmailService.sendToUser(receiverInfo, template, {
+      verificationLink,
+      userInfo
+    });
 
     res.ok({
       message: "A verification link has been sent to your email."

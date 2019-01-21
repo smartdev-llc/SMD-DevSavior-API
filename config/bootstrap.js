@@ -26,40 +26,56 @@ module.exports.bootstrap = async function(done) {
   //   // etc.
   // ]);
   // ```
-  const numberOfSkills = await Skill.count();
+  try {
+    const numberOfSkills = await Skill.count();
 
-  if (numberOfSkills === 0) {
-    await Skill.createEach([
-      { name: 'Java' },
-      { name: 'Android' },
-      { name: 'IOS' },
-      { name: 'NodeJS' },
-      { name: 'PHP' },
-      { name: '.NET' },
-      { name: 'AngularJS' },
-      { name: 'React Native' },
-      { name: 'ReactJS' },
-      { name: 'Automation Testing' },
-      { name: 'Manual Testing' },
-      { name: 'Python' },
-      { name: 'Ruby' },
-      { name: 'AI' },
-      { name: 'Blockchain' },
-      { name: 'VueJS' },
-      { name: 'Web Design' },
-    ]);
-  }
+    if (numberOfSkills === 0) {
+      await Skill.createEach([
+        { name: 'Java' },
+        { name: 'Android' },
+        { name: 'IOS' },
+        { name: 'NodeJS' },
+        { name: 'PHP' },
+        { name: '.NET' },
+        { name: 'AngularJS' },
+        { name: 'React Native' },
+        { name: 'ReactJS' },
+        { name: 'Automation Testing' },
+        { name: 'Manual Testing' },
+        { name: 'Python' },
+        { name: 'Ruby' },
+        { name: 'AI' },
+        { name: 'Blockchain' },
+        { name: 'VueJS' },
+        { name: 'Web Design' },
+      ]);
+    }
 
-  const numberOfCategories = await Category.count();
+    const numberOfCategories = await Category.count();
 
-  if (numberOfCategories === 0) {
-    await Category.createEach([
-      { name: 'Backend Developer' },
-      { name: 'Frontend Developer' },
-      { name: 'Designer' },
-      { name: 'Tester' },
-      { name: 'FullStack' },
-    ]);
+    if (numberOfCategories === 0) {
+      await Category.createEach([
+        { name: 'Backend Developer' },
+        { name: 'Frontend Developer' },
+        { name: 'Designer' },
+        { name: 'Tester' },
+        { name: 'FullStack' },
+      ]);
+    }
+
+    const mainAdmin = await mainAdmin.findOne({ email: 'juniorviec@gmail.com'});
+    if (!mainAdmin) {
+      await Admin.create({
+        email: 'juniorviec@gmail.com',
+        password: 'Nguy!n12345',
+        firstName: 'JuniorViec',
+        lastName: 'Admin',
+        displayName: 'JuniorViec Admin',
+        emailVerified: true
+      });
+    }
+  } catch (err) {
+    console.log(err);
   }
 
   // Don't forget to trigger `done()` when this bootstrap function's logic is finished.

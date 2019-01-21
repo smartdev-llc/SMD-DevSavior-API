@@ -17,8 +17,8 @@ module.exports = async function (req, res) {
 
   if (role === 'company') {
     registerCompany(req, res);
-  } else if (role === 'admin') {
-    registerAdmin(req, res);
+  // } else if (role === 'admin') {
+  //   registerAdmin(req, res);
   } else {
     registerStudent(req, res);
   }
@@ -183,73 +183,73 @@ module.exports = async function (req, res) {
     }
   }
 
-  async function registerAdmin(req, res) {
-    const { email, password, firstName, lastName } = req.body;
+  // async function registerAdmin(req, res) {
+  //   const { email, password, firstName, lastName } = req.body;
 
-    if (!email || !password || !firstName || !lastName) {
-      return res.badRequest({
-        message: "Missing parameters.",
-        devMessage: "Some paramters are missing (`email`, `password`, `firstName`, `lastName`).",
-        code: MISSING_PARAMETERS
-      });
-    }
+  //   if (!email || !password || !firstName || !lastName) {
+  //     return res.badRequest({
+  //       message: "Missing parameters.",
+  //       devMessage: "Some paramters are missing (`email`, `password`, `firstName`, `lastName`).",
+  //       code: MISSING_PARAMETERS
+  //     });
+  //   }
   
-    if (!validator.isEmail(email)) {
-      return res.badRequest({
-        message: "Invalid email.",
-        devMessage: "`email` is invalid.",
-        code: INVALID_PARAMETERS
-      });
-    }
+  //   if (!validator.isEmail(email)) {
+  //     return res.badRequest({
+  //       message: "Invalid email.",
+  //       devMessage: "`email` is invalid.",
+  //       code: INVALID_PARAMETERS
+  //     });
+  //   }
   
-    if (!validatorUtils.isValidPassword(password)) {
-      return res.badRequest({
-        message: "Invalid password.",
-        devMessage: "Invalid `password`. It must be at least 8 characters.",
-        code: INVALID_PARAMETERS
-      })
-    }
+  //   if (!validatorUtils.isValidPassword(password)) {
+  //     return res.badRequest({
+  //       message: "Invalid password.",
+  //       devMessage: "Invalid `password`. It must be at least 8 characters.",
+  //       code: INVALID_PARAMETERS
+  //     })
+  //   }
 
-    const adminReq = {
-      email,
-      password,
-      firstName: firstName ? _.escape(firstName): firstName,
-      lastName: lastName ? _.escape(lastName): lastName,
-      displayName: `${lastName} ${firstName}`,
-    }
+  //   const adminReq = {
+  //     email,
+  //     password,
+  //     firstName: firstName ? _.escape(firstName): firstName,
+  //     lastName: lastName ? _.escape(lastName): lastName,
+  //     displayName: `${lastName} ${firstName}`,
+  //   }
 
-    try {
-      const adminWithCurrentEmail = await Admin.findOne({ email });
-      if (adminWithCurrentEmail) {
-        return res.conflict({
-          message: "This email already exists.",
-          devMessage: "This email is already in use.",
-          code: ALREADY_EXISTED_EMAIL
-        });
-      } else {
-        const userInfo = await Admin.create(adminReq).fetch();
-        const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role: 'admin', token_type: VERIFICATION_TOKEN });
-        const verificationToken = JwtService.issue(decodedInfo, { expiresIn });
+  //   try {
+  //     const adminWithCurrentEmail = await Admin.findOne({ email });
+  //     if (adminWithCurrentEmail) {
+  //       return res.conflict({
+  //         message: "This email already exists.",
+  //         devMessage: "This email is already in use.",
+  //         code: ALREADY_EXISTED_EMAIL
+  //       });
+  //     } else {
+  //       const userInfo = await Admin.create(adminReq).fetch();
+  //       const decodedInfo = _.assign({}, _.pick(userInfo, ['id', 'email']), { role: 'admin', token_type: VERIFICATION_TOKEN });
+  //       const verificationToken = JwtService.issue(decodedInfo, { expiresIn });
 
-        const admins = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
-          return {
-            email
-          }
-        });
+  //       const admins = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
+  //         return {
+  //           email
+  //         }
+  //       });
 
-        await EmailService.sendToAdmins(admins, 'verify-admin-email', {
-          verificationLink: `${process.env.WEB_URL}/admin/verify-account?token=${verificationToken}`,
-          userInfo
-        });
+  //       await EmailService.sendToAdmins(admins, 'verify-admin-email', {
+  //         verificationLink: `${process.env.WEB_URL}/admin/verify-account?token=${verificationToken}`,
+  //         userInfo
+  //       });
 
-        res.ok(userInfo);
-      }
-    } catch (err) {
-      return res.serverError({
-        message: "Something went wrong.",
-        devMessage: err.message,
-        code: INTERNAL_SERVER_ERROR
-      });
-    }
-  }
+  //       res.ok(userInfo);
+  //     }
+  //   } catch (err) {
+  //     return res.serverError({
+  //       message: "Something went wrong.",
+  //       devMessage: err.message,
+  //       code: INTERNAL_SERVER_ERROR
+  //     });
+  //   }
+  // }
 }
