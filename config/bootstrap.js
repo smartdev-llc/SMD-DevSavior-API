@@ -39,7 +39,6 @@ module.exports.bootstrap = async function(done) {
       { name: 'AngularJS' },
       { name: 'React Native' },
       { name: 'ReactJS' },
-      { name: 'HTML, CSS' },
       { name: 'Automation Testing' },
       { name: 'Manual Testing' },
       { name: 'Python' },
