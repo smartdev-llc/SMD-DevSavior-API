@@ -7,12 +7,12 @@ const {
 const constants = require('../../../constants');
 const { ACTIVE, INACTIVE } = constants.STATUS
 module.exports = async function (req, res) {
-  const { jobId } = _.get(req, "params");
+  const { id } = _.get(req, "params");
 
   let job;
 
   try {
-    job = await Job.findOne({ id: jobId });
+    job = await Job.findOne({ id });
   } catch (err) {
     return res.serverError({
       message: "Something went wrong.",
@@ -43,12 +43,12 @@ module.exports = async function (req, res) {
       status: INACTIVE
     };
 
-    await Job.update({ id: jobId })
+    await Job.update({ id })
       .set(updatedBody);
 
     await ElasticsearchService.update({
       type: 'Job',
-      id: jobId,
+      id,
       body: {
         doc: updatedBody
       }
