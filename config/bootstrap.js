@@ -28,7 +28,7 @@ module.exports.bootstrap = async function(done) {
   // ```
   const numberOfSkills = await Skill.count();
 
-  if (numberOfSkills == 0) {
+  if (numberOfSkills === 0) {
     await Skill.createEach([
       { name: 'Java' },
       { name: 'Android' },
@@ -39,20 +39,26 @@ module.exports.bootstrap = async function(done) {
       { name: 'AngularJS' },
       { name: 'React Native' },
       { name: 'ReactJS' },
-      { name: 'HTML, CSS' },
       { name: 'Automation Testing' },
-      { name: 'Manual Testing' }
+      { name: 'Manual Testing' },
+      { name: 'Python' },
+      { name: 'Ruby' },
+      { name: 'AI' },
+      { name: 'Blockchain' },
+      { name: 'VueJS' },
+      { name: 'Web Design' },
     ]);
   }
 
   const numberOfCategories = await Category.count();
 
-  if (numberOfCategories == 0) {
+  if (numberOfCategories === 0) {
     await Category.createEach([
       { name: 'Backend Developer' },
       { name: 'Frontend Developer' },
       { name: 'Designer' },
-      { name: 'Tester' }
+      { name: 'Tester' },
+      { name: 'FullStack' },
     ]);
   }
 
