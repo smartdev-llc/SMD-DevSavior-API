@@ -59,15 +59,15 @@ module.exports.bootstrap = async function(done) {
         { name: 'Frontend Developer' },
         { name: 'Designer' },
         { name: 'Tester' },
-        { name: 'FullStack' },
+        { name: 'Full Stack' },
       ]);
     }
 
-    const mainAdmin = await Admin.findOne({ email: 'juniorviec@gmail.com'});
+    const mainAdmin = await Admin.findOne({ email: process.env.ADMIN_EMAIL });
     if (!mainAdmin) {
       await Admin.create({
-        email: 'juniorviec@gmail.com',
-        password: 'Nguy!n12345',
+        email: process.env.ADMIN_EMAIL,
+        password: process.env.ADMIN_PASSWORD,
         firstName: 'JuniorViec',
         lastName: 'Admin',
         displayName: 'JuniorViec Admin',
