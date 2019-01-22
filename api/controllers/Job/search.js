@@ -20,7 +20,7 @@ module.exports = async function (req, res) {
 
     let query = { bool: { must: [] } };
     query.bool.must.push(buildQuery.activeJob());
-    
+
     query.bool.must.push({
       range: {
         expiredAt: {
@@ -72,6 +72,13 @@ module.exports = async function (req, res) {
       body: {
         "size": limit,
         "from": skip,
+        "sort": {
+          "approvedAt": {
+            "order": "desc",
+            "missing": "_last",
+            "unmapped_type": "string"
+          }
+        },
         "query": query
       }
     }).then(transformResult.getHits);
