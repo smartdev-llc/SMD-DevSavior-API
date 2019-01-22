@@ -79,9 +79,13 @@ module.exports = async function (req, res) {
                 gte: moment.now()
               }
             }
+          },
+          {
+            "bool": {
+              should
+            }
           }
         ],
-        should,
       }
     };
 
