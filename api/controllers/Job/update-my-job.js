@@ -29,8 +29,14 @@ module.exports = async function (req, res) {
   try {
     const updateJob = await Job.updateOne({id})
     .set({description});
-
-      return res.ok(updateJob);
+    await ElasticsearchService.update({
+      type: 'Job',
+      id,
+      body: {
+        doc: {description}
+      }
+    });
+    return res.ok(updateJob);
   } catch (err) {
     return res.serverError({
       message: `Something went wrong.`

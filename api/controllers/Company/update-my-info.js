@@ -40,6 +40,27 @@ module.exports = async function (req, res) {
     const updatedCompany = await Company.updateOne({ id: companyId })
       .set(updatedFields);
 
+    ElasticsearchService.updateByQuery({
+      type: 'Job',
+      body: {
+        query: {
+          nested: {
+            path: "company",
+            query: {
+              term: {
+                "company.id": companyId
+              }
+            }
+          }
+        },
+        script: {
+          source:  Object.keys(updatedFields).reduce((script, key)=>{
+            return script + `ctx._source.company.${key} = '${updatedFields[key]}';`;
+          }, "")
+        }
+      }
+    });
+
     if (updatedCompany) {
       res.ok(updatedCompany);
     } else {

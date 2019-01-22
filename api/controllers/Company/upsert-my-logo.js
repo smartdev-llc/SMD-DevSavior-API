@@ -41,6 +41,24 @@ module.exports = async function (req, res) {
 
     try {
       await Company.updateOne({ id: companyId }).set({ logoURL: photoUrl });
+      ElasticsearchService.updateByQuery({
+        type: 'Job',
+        body: {
+          query: {
+            nested: {
+              path: "company",
+              query: {
+                term: {
+                  "company.id": companyId
+                }
+              }
+            }
+          },
+          script: {
+            source: `ctx._source.company.logoURL = '${photoUrl}';`
+          }
+        }
+      });
       if (oldLogoURL) {
         deleteOldImage(oldLogoURL);
       }
