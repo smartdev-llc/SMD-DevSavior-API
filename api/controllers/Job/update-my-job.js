@@ -1,11 +1,48 @@
+const {
+  isValidSalary,
+  isValidJobType
+} = require('../../../utils/validator');
+
+const {
+  INVALID_PARAMETERS,
+  MISSING_PARAMETERS,
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
   const id = _.get(req, "params.id");
-  const { description } = req.body;
+  const {
+    skillIds,
+    title,
+    description,
+    categoryId,
+    fromSalary,
+    toSalary,
+    requirements,
+    jobType,
+    benefits
+  } = req.body;
 
-  if (!description) {
+  if (!description || !fromSalary || !toSalary || !requirements || !jobType || !benefits || !skillIds || !title || !categoryId) {
     return res.badRequest({
-      message: "Missing parameter."
+      message: MISSING_PARAMETERS
+    });
+  }
+
+  if (!isValidSalary(fromSalary, toSalary)) {
+    return res.badRequest({
+      message: "Invalid Salary.",
+      devMessage: "Invalid `fromSalary` and `toSalary` (they should be NUMBERIC, `fromSalary` <= `toSalary`).",
+      code: INVALID_PARAMETERS
+    });
+  }
+
+  if (!isValidJobType(jobType)) {
+    return res.badRequest({
+      message: "Invalid job type",
+      devMessage: "Invalid job type (should be FULL_TIME or PART_TIME or INTERNSHIP or CONTRACT or FREELANCE.",
+      code: INVALID_PARAMETERS
     });
   }
 
@@ -26,20 +63,58 @@ module.exports = async function (req, res) {
     });
   }
 
+  const updatedBody = {
+    title,
+    description,
+    category: categoryId,
+    skills: skillIds,
+    requirements,
+    fromSalary,
+    toSalary,
+    jobType,
+    benefits,
+  };
+
   try {
-    const updateJob = await Job.updateOne({id})
-    .set({description});
-    await ElasticsearchService.update({
+    let job = await Job.updateOne({ id })
+      .set(updatedBody);
+
+    const skills = await Skill.find({ id: skillIds });
+    const category = await Category.findOne({ id: categoryId });
+
+    ElasticsearchService.update({
       type: 'Job',
-      id,
+      id: id,
       body: {
-        doc: {description}
+        doc: {
+          title,
+          description,
+          skills: _.map(skills, skill => _.pick(skill, ['name', 'id'])),
+          category: {
+            id: category.id,
+            name: category.name
+          },
+          status: job.status,
+          requirements: job.requirements,
+          fromSalary: job.fromSalary,
+          toSalary: job.toSalary,
+          jobType: job.jobType,
+          benefits: job.benefits,
+          createdAt: job.createdAt,
+          updatedAt: job.updatedAt,
+        }
       }
     });
-    return res.ok(updateJob);
+
+    job.skills = skills;
+    job.category = category;
+
+    return res.ok(job);
   } catch (err) {
     return res.serverError({
-      message: `Something went wrong.`
+      message: `Something went wrong.`,
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 };
