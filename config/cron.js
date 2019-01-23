@@ -5,7 +5,7 @@ module.exports.cron = {
     schedule: '0 0 0 * * sun',
     onTick: () => CronTaskService.sendJobAlerts(),
     start: true,
-    runOnInit: true,
+    runOnInit: false,
     timeZone: 'Asia/Ho_Chi_Minh'
   }
 }
