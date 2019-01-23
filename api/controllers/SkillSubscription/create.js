@@ -48,9 +48,10 @@ module.exports = async function (req, res) {
     } else {
       await Student.addToCollection(userId, 'subscribedSkills').members([skillId]);
       const subscriptions = await SkillSubscription.find({ student: userId }).populate('skill');
+      const shortenedSubscriptions = _.map(subscriptions, subscription => _.pick(subscription, [ 'id', 'createdAt', 'skill']));
       res.ok({
         message: "Subscribed " + skill.name + ".",
-        data: _.pick(subscriptions, [ 'id', 'createdAt', 'skill'])
+        data: shortenedSubscriptions
       })
     }
   } catch (err) {
