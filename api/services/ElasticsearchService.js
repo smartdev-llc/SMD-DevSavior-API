@@ -25,6 +25,16 @@ module.exports = {
       _.extend({
         index: indexName
       },
+        _.pick(options, ["type", "id"])
+      )
+    );
+  },
+
+  delete: async function (options) {
+    return await esClient.delete(
+      _.extend({
+        index: indexName
+      },
         _.pick(options, ["type", "id", "body"])
       )
     );
