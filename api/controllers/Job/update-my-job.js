@@ -6,8 +6,12 @@ const {
 const {
   INVALID_PARAMETERS,
   MISSING_PARAMETERS,
-  INTERNAL_SERVER_ERROR
+  INTERNAL_SERVER_ERROR,
+  BAD_REQUEST
 } = require('../../../constants/error-code');
+
+const constants = require('../../../constants');
+const { ACTIVE, PENDING } = constants.STATUS;
 
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
@@ -55,6 +59,14 @@ module.exports = async function (req, res) {
     if (!job) {
       return res.notFound({
         message: "Job not found."
+      });
+    }
+
+    if (_.indexOf([ACTIVE, PENDING], job.status) < 0) {
+      return res.badRequest({
+        message: "Invalid job status",
+        devMessage: "Invalid job status (should be ACTIVE or PENDING).",
+        code: BAD_REQUEST
       });
     }
   } catch (err) {
