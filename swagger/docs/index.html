@@ -37,10 +37,14 @@
     <script src="./dist/swagger-ui-standalone-preset.js"> </script>
     <script>
     window.onload = function() {
-      
+      var docUrl = "/docs/swagger.yaml";
+
+      if (window.location.origin.indexOf('juniorviec') > 0) {
+        docUrl = "/api/v1/docs/swagger.yaml";
+      }
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
-        url: window.location.origin + "/docs/swagger.yaml",
+        url: docUrl,
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [

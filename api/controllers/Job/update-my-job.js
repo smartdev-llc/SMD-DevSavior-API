@@ -30,7 +30,7 @@ module.exports = async function (req, res) {
     benefits
   } = req.body;
 
-  if (!description || !fromSalary || !toSalary || !requirements || !jobType || !benefits || !skillIds || !title || !categoryId) {
+  if (!description || !requirements || !jobType || !skillIds || !title || !categoryId) {
     return res.badRequest({
       message: MISSING_PARAMETERS
     });
