@@ -88,6 +88,10 @@ paths:
     $ref: 'paths/Company/search.yaml'
   /jobs/{jobId}/status:
     $ref: 'paths/Job/set-status.yaml'
+  /my-jobs/{id}:
+    $ref: 'paths/Job/update-my-job.yaml'
+  /jobs/{id}:
+    $ref: 'paths/Job/delete.yaml'
 components:
   responses:
     200:

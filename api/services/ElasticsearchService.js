@@ -25,7 +25,7 @@ module.exports = {
       _.extend({
         index: indexName
       },
-        _.pick(options, ["type", "id"])
+        _.pick(options, ["type", "id",  "body"])
       )
     );
   },
@@ -35,7 +35,7 @@ module.exports = {
       _.extend({
         index: indexName
       },
-        _.pick(options, ["type", "id", "body"])
+        _.pick(options, ["type", "id"])
       )
     );
   },

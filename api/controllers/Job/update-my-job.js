@@ -72,7 +72,7 @@ module.exports = async function (req, res) {
       });
     }
 
-    if (job.expiredAt < moment.now()) {
+    if (job.status === ACTIVE && job.expiredAt < moment.now()) {
       return res.badRequest({
         message: "Invalid job.",
         devMessage: "Job is expired.",
