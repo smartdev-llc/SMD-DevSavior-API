@@ -13,6 +13,8 @@ const {
 const constants = require('../../../constants');
 const { ACTIVE, PENDING } = constants.STATUS;
 
+const moment = require('moment');
+
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
   const id = _.get(req, "params.id");
@@ -69,9 +71,19 @@ module.exports = async function (req, res) {
         code: BAD_REQUEST
       });
     }
+
+    if (job.expiredAt < moment.now()) {
+      return res.badRequest({
+        message: "Invalid job.",
+        devMessage: "Job is expired.",
+        code: INVALID_PARAMETERS
+      });
+    }
   } catch (err) {
     return res.serverError({
-      message: `Something went wrong.`
+      message: `Something went wrong.`,
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 
