@@ -18,6 +18,7 @@ module.exports = {
     status: {
       type: 'string',
       isIn: [ACTIVE, INACTIVE, PENDING],
+      defaultsTo: ACTIVE
     }
   },
 };
