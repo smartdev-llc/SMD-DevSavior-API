@@ -37,9 +37,9 @@ module.exports = async function (req, res) {
   }
 
   try {
-    const existesSubscription = await SkillSubscription.findOne({ student: userId, skill: skillId });
+    const existedSubscription = await SkillSubscription.findOne({ student: userId, skill: skillId });
 
-    if (existesSubscription) {
+    if (existedSubscription) {
       return res.conflict({
         message: "You have already subscribed this skill.",
         devMessage: "You have already subscribed this skill.",
@@ -47,10 +47,10 @@ module.exports = async function (req, res) {
       })
     } else {
       await Student.addToCollection(userId, 'subscribedSkills').members([skillId]);
-      const currentUser = await Student.findOne({ id: userId }).populate('subscribedSkills');
+      const subscriptions = await SkillSubscription.find({ student: userId }).populate('skill');
       res.ok({
         message: "Subscribed " + skill.name + ".",
-        data: _.pick(currentUser, 'subscribedSkills')
+        data: _.pick(subscriptions, [ 'id', 'createdAt', 'skill'])
       })
     }
   } catch (err) {

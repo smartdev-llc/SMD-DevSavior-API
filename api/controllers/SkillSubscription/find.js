@@ -5,8 +5,8 @@ const {
 module.exports = async function (req, res) {
   const userId = _.get(req, 'user.id');
   try {
-    const user = await Student.findOne({ id: userId }).populate('subscribedSkills');
-    res.ok(_.get(user, 'subscribedSkills'));
+    const subscriptions = await SkillSubscription.find({ student: userId }).populate('skill');
+    res.ok(_.pick(subscriptions, [ 'id', 'createdAt', 'skill']));
   } catch (err) {
     return res.serverError({
       message: "Something went wrong.",
