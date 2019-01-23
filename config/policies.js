@@ -40,6 +40,7 @@ module.exports.policies = {
   'job/reject': 'isAdmin',
   'job/activate': 'isAdmin',
   'job/deactivate': 'isAdmin',
+  'job/delete': 'isAuthenticated',
 
   // Category
   'category/find': true,
