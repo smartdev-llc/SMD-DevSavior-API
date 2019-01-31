@@ -3,9 +3,9 @@ const {
   MISSING_PARAMETERS,
   ALREADY_APPLIED,
   INTERNAL_SERVER_ERROR
-} = require('../../../constants/error-code');
+} = require("../../../constants/error-code");
 
-const moment = require('moment');
+const moment = require("moment");
 
 const { STATUS } = require("./../../../constants");
 
@@ -17,19 +17,75 @@ const sendEmailToCompany = (job, company, user) => {
     jobLink: `${process.env.WEB_URL}/employer/jobs/${job.id}`,
     applicantLink: `${process.env.WEB_URL}/employer/jobs/${job.id}/candidates/${user.id}`
   };
-  EmailService.sendToUser( { email: company.email }, 'new-candidate-email', contentData);
+  EmailService.sendToUser({ email: company.email }, "new-candidate-email", contentData);
 };
 
 module.exports = async function (req, res) {
-  const user = _.get(req, 'user');
-  const userId = _.get(req, 'user.id');
+  const user = _.get(req, "user");
+  const userId = _.get(req, "user.id");
   const { jobId } = req.params;
 
-  if (!jobId || jobId === 'undefined') {
+  if (!jobId || jobId === "undefined") {
     return res.badRequest({
       message: "Job is missing.",
       devMessage: "`jobId` is missing.",
       code: MISSING_PARAMETERS
+    });
+  }
+
+  try {
+    const student = await Student.findOne({ id: userId }).populate("workingPreference");
+    const {
+      displayEmail,
+      profileImageURL,
+      phoneNumber,
+      gender,
+      dateOfBirth,
+      maritalStatus,
+      country,
+      currentAddress,
+      city,
+      jobTitle,
+      educationalStatus,
+      workingPreference,
+      skills
+    } = student;
+
+    const requireKeys = [
+      "displayEmail",
+      "profileImageURL",
+      "phoneNumber",
+      "gender",
+      "dateOfBirth",
+      "maritalStatus",
+      "country",
+      "currentAddress",
+      "city",
+      "jobTitle",
+      "educationalStatus",
+      "workingPreference",
+      "skills"
+    ];
+
+    let missingKeys = [];
+    _.map(requireKeys, item => {
+      !!_.isEmpty(student[item]) && missingKeys.push(item);
+    });
+
+    if (!_.isEmpty(missingKeys)) {
+      return res.badRequest({
+        message: `Some paramters are missing: [${missingKeys}]. Please update your profile.`,
+        devMessage: `Some paramters are missing: [${missingKeys}].`,
+        code: MISSING_PARAMETERS,
+        data: missingKeys
+      });
+    }
+
+  } catch (err) {
+    return res.serverError({
+      message: "Something went wrong.",
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 
@@ -87,9 +143,9 @@ module.exports = async function (req, res) {
   }
 
   try {
-    await Job.addToCollection(jobId, 'students').members([userId]);
+    await Job.addToCollection(jobId, "students").members([userId]);
 
-    sendEmailToCompany(job, _.get(job, 'company'), user);
+    sendEmailToCompany(job, _.get(job, "company"), user);
 
     res.ok({
       message: "Applied " + job.title + "."
