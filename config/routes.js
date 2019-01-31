@@ -68,6 +68,7 @@ module.exports.routes = {
   'put /jobs/:id/reject': 'Job.reject',
   'put /jobs/:id/activate': 'Job.activate',
   'put /jobs/:id/deactivate': 'Job.deactivate',
+  'put /jobs/:id/renew': 'Job.renew',
   'delete /jobs/:id': 'Job.delete',
   
   'post /photos/upload': 'Photo.upload',
