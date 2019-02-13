@@ -35,13 +35,13 @@ module.exports.policies = {
   'job/find-one': true,
   'job/update-my-job': 'isCompany',
   'job/find-by-company-id': true,
-  'job/set-status': 'isAdmin',
   'job/approve': 'isAdmin',
   'job/reject': 'isAdmin',
   'job/activate': 'isAdmin',
   'job/deactivate': 'isAdmin',
   'job/renew': 'isAdmin',
   'job/delete': 'isAuthenticated',
+  'job/create-alert-queues': 'isAdmin',
 
   // Category
   'category/find': true,

@@ -63,13 +63,13 @@ module.exports.routes = {
   'get /jobs/:id': 'Job.find-one',
   'put /my-jobs/:id': 'Job.update-my-job',
   'get /companies/:companyId/jobs': 'Job.find-by-company-id',
-  'post /jobs/:jobId/status': 'Job.set-status',
   'put /jobs/:id/approve': 'Job.approve',
   'put /jobs/:id/reject': 'Job.reject',
   'put /jobs/:id/activate': 'Job.activate',
   'put /jobs/:id/deactivate': 'Job.deactivate',
   'put /jobs/:id/renew': 'Job.renew',
   'delete /jobs/:id': 'Job.delete',
+  'post /jobs/alert-queues': 'Job.create-alert-queues',
   
   'post /photos/upload': 'Photo.upload',
   'get /photos/:photoName': {
