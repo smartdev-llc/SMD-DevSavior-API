@@ -13,7 +13,7 @@ const sendEmailToCompany = (job) => {
     company: job.company,
     jobLink: `${process.env.WEB_URL}/jobs/${job.id}`
   };
-  EmailService.sendToUser({ email: 'ttdung001@gmail.com' }, "job-is-deactivated-email", contentData);
+  EmailService.sendToUser({ email: _.get(job, 'company.email') }, "job-is-deactivated-email", contentData);
 };
 
 module.exports = async function (req, res) {

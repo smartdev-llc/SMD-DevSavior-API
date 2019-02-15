@@ -15,7 +15,7 @@ const sendEmailToCompany = (job) => {
     jobLink: `${process.env.WEB_URL}/jobs/${job.id}`,
     editJobLink: `${process.env.WEB_URL}/employer/jobs/${job.id}/edit`
   };
-  EmailService.sendToUser({ email: 'ttdung001@gmail.com' }, "job-is-rejected-email", contentData);
+  EmailService.sendToUser({ email: _.get(job, 'company.email') }, "job-is-rejected-email", contentData);
 };
 
 module.exports = async function (req, res) {
