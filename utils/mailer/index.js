@@ -44,6 +44,7 @@ function mailerFactory() {
     contentData.BO_URL = process.env.BO_URL;
     contentData.LOGO_URL = `${process.env.WEB_URL}/assets/images/logo2.png`;
     contentData.DEFAULT_COMPANY_LOGO_URL = `${process.env.WEB_URL}/assets/images/widget1image.png`;
+    contentData.ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'juniorviec@gmail.com';
 
     return _.assign({}, contentData, { _data: contentData });
   };

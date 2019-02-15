@@ -72,6 +72,22 @@ paths:
     $ref: 'paths/Job/CRUD.yaml'
   /jobs/{jobId}/applications:
     $ref: 'paths/JobApplication/CRUD.yaml'
+  /jobs/{jobId}/approve:
+    $ref: 'paths/Job/approve.yaml'
+  /jobs/{jobId}/reject:
+    $ref: 'paths/Job/reject.yaml'
+  /jobs/{jobId}/activate:
+    $ref: 'paths/Job/activate.yaml'
+  /jobs/{jobId}/deactivate:
+    $ref: 'paths/Job/deactivate.yaml'
+  /jobs/{jobId}/renew:
+    $ref: 'paths/Job/renew.yaml'
+  /jobs/alert-queues:
+    $ref: 'paths/Job/create-alert-queues.yaml'
+  /my-jobs/{id}:
+    $ref: 'paths/Job/update-my-job.yaml'
+  /jobs/{id}:
+    $ref: 'paths/Job/delete.yaml'
   /companies/{companyId}/jobs:
     $ref: 'paths/Job/find-by-company-id.yaml'
   /photos/upload:
@@ -86,12 +102,6 @@ paths:
     $ref: 'paths/Company/find.yaml'
   /companies/search:
     $ref: 'paths/Company/search.yaml'
-  /jobs/alert-queues:
-    $ref: 'paths/Job/create-alert-queues.yaml'
-  /my-jobs/{id}:
-    $ref: 'paths/Job/update-my-job.yaml'
-  /jobs/{id}:
-    $ref: 'paths/Job/delete.yaml'
 components:
   responses:
     200:

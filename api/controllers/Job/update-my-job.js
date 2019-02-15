@@ -15,8 +15,23 @@ const { ACTIVE, PENDING } = constants.STATUS;
 
 const moment = require('moment');
 
+const sendEmailToAdmin = (job, company) => {
+  const contentData = {
+    job: _.pick(job, ['id', 'title']),
+    company: _.pick(company, ['id', 'name']),
+    jobLink: `${process.env.BO_URL}/dashboard/job/${job.id}`
+  };
+  const admins = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
+    return {
+      email
+    };
+  });
+  
+  EmailService.sendToAdmins(admins, 'job-is-edited-email', contentData);
+};
+
 module.exports = async function (req, res) {
-  const companyId = _.get(req, "user.id");
+  const company = _.get(req, "user");
   const id = _.get(req, "params.id");
   const {
     skillIds,
@@ -55,7 +70,7 @@ module.exports = async function (req, res) {
   try {
     const job = await Job.findOne({
       id,
-      company: companyId,
+      company: company.id,
     });
 
     if (!job) {
@@ -132,6 +147,8 @@ module.exports = async function (req, res) {
 
     job.skills = skills;
     job.category = category;
+
+    sendEmailToAdmin(job, company);
 
     return res.ok(job);
   } catch (err) {

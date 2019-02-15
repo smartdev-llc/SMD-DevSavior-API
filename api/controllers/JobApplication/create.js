@@ -9,12 +9,12 @@ const moment = require("moment");
 
 const { STATUS } = require("./../../../constants");
 
-const sendEmailToCompany = (job, company, user) => {
+const sendEmailToCompany = (job, user) => {
   const contentData = {
-    job,
-    company,
+    job: _.pick(job, ['id', 'title']),
+    company: job.company,
     user,
-    jobLink: `${process.env.WEB_URL}/employer/jobs/${job.id}`,
+    jobLink: `${process.env.WEB_URL}/jobs/${job.id}`,
     applicantLink: `${process.env.WEB_URL}/employer/jobs/${job.id}/candidates/${user.id}`
   };
   EmailService.sendToUser({ email: company.email }, "new-candidate-email", contentData);
@@ -35,21 +35,6 @@ module.exports = async function (req, res) {
 
   try {
     const student = await Student.findOne({ id: userId }).populate("workingPreference");
-    const {
-      displayEmail,
-      profileImageURL,
-      phoneNumber,
-      gender,
-      dateOfBirth,
-      maritalStatus,
-      country,
-      currentAddress,
-      city,
-      jobTitle,
-      educationalStatus,
-      workingPreference,
-      skills
-    } = student;
 
     const requireKeys = [
       "displayEmail",
@@ -145,7 +130,7 @@ module.exports = async function (req, res) {
   try {
     await Job.addToCollection(jobId, "students").members([userId]);
 
-    sendEmailToCompany(job, _.get(job, "company"), user);
+    sendEmailToCompany(job, user);
 
     res.ok({
       message: "Applied " + job.title + "."

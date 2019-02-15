@@ -1,0 +1,21 @@
+extends ../layout/index
+
+block content
+  div#job-is-activated
+    p
+      | Hi <strong>!{_data.company.name}</strong>,
+    p
+      |  One of your job has just been activated again by <strong>JuniorViec Team</strong>:
+      |
+      a(href=_data.jobLink) <strong>!{_data.job.title} </strong>
+    p 
+      | Please click on the following link to view it on the website:
+    div.block.job-link-wrapper
+      a.job-link(href=_data.jobLink) !{_data.jobLink}
+    div.block
+      | If you have any questions, please contact us via !{_data.ADMIN_EMAIL}.
+    div.block
+      p
+        | Thanks and Best regards,
+        br
+        strong The JuniorViec Team

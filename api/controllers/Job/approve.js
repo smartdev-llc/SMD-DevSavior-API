@@ -8,14 +8,24 @@ const {
 } = require('../../../constants/error-code');
 
 const constants = require('../../../constants');
-const { ACTIVE, PENDING, REJECTED } = constants.STATUS
+const { ACTIVE, PENDING, REJECTED } = constants.STATUS;
+
+const sendEmailToCompany = (job) => {
+  const contentData = {
+    job: _.pick(job, ['id', 'title']),
+    company: job.company,
+    jobLink: `${process.env.WEB_URL}/jobs/${job.id}`
+  };
+  EmailService.sendToUser({ email: 'ttdung001@gmail.com' }, "job-is-approved-email", contentData);
+};
+
 module.exports = async function (req, res) {
   const { id } = _.get(req, "params");
 
   let job;
 
   try {
-    job = await Job.findOne({ id });
+    job = await Job.findOne({ id }).populate("company");
   } catch (err) {
     return res.serverError({
       message: "Something went wrong.",
@@ -58,6 +68,9 @@ module.exports = async function (req, res) {
         doc: updatedBody
       }
     });
+
+    sendEmailToCompany(job);
+
     return res.ok(updatedJob);
   } catch (err) {
     return res.serverError({

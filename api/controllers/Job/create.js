@@ -9,6 +9,21 @@ const {
   INTERNAL_SERVER_ERROR
 } = require('../../../constants/error-code');
 
+const sendEmailToAdmin = (job, company) => {
+  const contentData = {
+    job: _.pick(job, ['id', 'title']),
+    company: _.pick(company, ['id', 'name']),
+    jobLink: `${process.env.BO_URL}/dashboard/job/${job.id}`
+  };
+  const admins = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
+    return {
+      email
+    };
+  });
+  
+  EmailService.sendToAdmins(admins, 'review-job-email', contentData);
+};
+
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
   const company = _.get(req, "user");
@@ -95,18 +110,4 @@ module.exports = async function (req, res) {
       code: INTERNAL_SERVER_ERROR
     })
   }
-};
-
-const sendEmailToAdmin = (job, company) => {
-  const contentData = {
-    job,
-    company,
-    jobLink: `${process.env.BO_URL}/dashboard/job/${job.id}`
-  };
-  const admins = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
-    return {
-      email
-    };
-  });
-  EmailService.sendToAdmins(admins, 'approve-job-email', contentData);
 };

@@ -10,6 +10,15 @@ const { ACTIVE } = constants.STATUS;
 
 const moment = require('moment');
 
+const sendEmailToCompany = (job) => {
+  const contentData = {
+    job: _.pick(job, ['id', 'title']),
+    company: job.company,
+    jobLink: `${process.env.WEB_URL}/jobs/${job.id}`
+  };
+  EmailService.sendToUser({ email: 'ttdung001@gmail.com' }, "job-is-renewed-email", contentData);
+};
+
 module.exports = async function (req, res) {
   const { id } = _.get(req, "params");
 
@@ -65,6 +74,9 @@ module.exports = async function (req, res) {
         doc: updatedBody
       }
     });
+
+    sendEmailToCompany(job);
+
     return res.ok(updatedJob);
   } catch (err) {
     return res.serverError({
