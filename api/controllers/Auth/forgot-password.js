@@ -70,7 +70,7 @@ module.exports = async function (req, res) {
 
   try {
     userInfo.displayName = role === 'company' ? userInfo.name : userInfo.displayName;
-    resetPasswordLink = role === 'company' ? `${process.env.WEB_URL}/employer/reset-password?token=${resetPasswordToken}` : `${process.env.WEB_URL}/reset-password?token=${resetPasswordToken}`;
+    resetPasswordLink = role === 'company' ? `${process.env.EMPLOYER_URL}/reset-password?token=${resetPasswordToken}` : `${process.env.WEB_URL}/reset-password?token=${resetPasswordToken}`;
     await EmailService.sendToUser(userInfo, 'reset-password-email', {
       resetPasswordLink,
       userInfo

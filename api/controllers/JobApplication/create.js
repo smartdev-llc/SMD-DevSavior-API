@@ -15,7 +15,7 @@ const sendEmailToCompany = (job, user) => {
     company: job.company,
     user,
     jobLink: `${process.env.WEB_URL}/jobs/${job.id}`,
-    applicantLink: `${process.env.WEB_URL}/employer/jobs/${job.id}/candidates/${user.id}`
+    applicantLink: `${process.env.EMPLOYER_URL}/jobs/${job.id}/candidates/${user.id}`
   };
   EmailService.sendToUser({ email: company.email }, "new-candidate-email", contentData);
 };

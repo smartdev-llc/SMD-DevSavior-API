@@ -88,7 +88,7 @@ module.exports = async function (req, res) {
 
     if (role === 'company') {
       template = 'verify-company-email';
-      verificationLink = `${process.env.WEB_URL}/employer/verify-account?token=${verificationToken}`;
+      verificationLink = `${process.env.EMPLOYER_URL}/verify-account?token=${verificationToken}`;
     }
 
     // if (role === 'admin') {

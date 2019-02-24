@@ -1,13 +1,11 @@
 extends ../layout/index
 
 block content
-  div#job-is-deactivated
+  div#company-is-rejected
     p
       | Hi <strong>!{_data.company.name}</strong>,
     p
-      |  One of your job has just been deactivated by <strong>JuniorViec Team</strong>:
-      |
-      a(href=_data.jobLink) <strong>!{_data.job.title} </strong>
+      |  Your company account has just been rejected by <strong>JuniorViec Team</strong> due to policy violation. Please contact us for more details.
     div.block
       | If you have any questions, please contact us via !{_data.ADMIN_EMAIL}.
     div.block

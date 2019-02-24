@@ -81,6 +81,10 @@ module.exports.routes = {
 
   'get /companies/search': "Company.search",
   'get /companies/:id': "Company.find-one",
+  'put /companies/:id/approve': 'Company.approve',
+  'put /companies/:id/reject': 'Company.reject',
+  'put /companies/:id/activate': 'Company.activate',
+  'put /companies/:id/deactivate': 'Company.deactivate',
   'put /my-company/info': "Company.update-my-info",
   'put /my-company/logo': "Company.upsert-my-logo",
   'put /my-company/cover': "Company.upsert-my-cover",

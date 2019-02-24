@@ -1,4 +1,3 @@
-
 const {
   INTERNAL_SERVER_ERROR,
   NOT_FOUND,
@@ -9,14 +8,11 @@ const {
 const constants = require('../../../constants');
 const { PENDING, REJECTED } = constants.STATUS;
 
-const sendEmailToCompany = (job) => {
+const sendEmailToCompany = (company) => {
   const contentData = {
-    job: _.pick(job, ['id', 'title']),
-    company: job.company,
-    jobLink: `${process.env.WEB_URL}/jobs/${job.id}`,
-    editJobLink: `${process.env.EMPLOYER_URL}/jobs/${job.id}/edit`
+    company
   };
-  EmailService.sendToUser({ email: _.get(job, 'company.email') }, "job-is-rejected-email", contentData);
+  EmailService.sendToUser({ email: _.get(company, 'email') }, "company-is-rejected-email", contentData);
 };
 
 module.exports = async function (req, res) {
@@ -24,16 +20,16 @@ module.exports = async function (req, res) {
 
   if (!id || id === "undefined") {
     return res.badRequest({
-      message: "Job id is missing.",
-      devMessage: "Job id is missing.",
+      message: "Company id is missing.",
+      devMessage: "Company id is missing.",
       code: MISSING_PARAMETERS
     });
   }
 
-  let job;
+  let company;
 
   try {
-    job = await Job.findOne({ id }).populate('company');
+    company = await Company.findOne({ id });
   } catch (err) {
     return res.serverError({
       message: "Something went wrong.",
@@ -44,16 +40,16 @@ module.exports = async function (req, res) {
 
   if (!job) {
     return res.notFound({
-      message: 'Job is not found.',
-      devMessage: 'Job is not found.',
+      message: 'Company is not found.',
+      devMessage: 'Company is not found.',
       code: NOT_FOUND
     });
   }
 
-  if (job.status !== PENDING) {
+  if (company.status !== PENDING) {
     return res.badRequest({
-      message: 'Cannot execute this action. Job is not pending.',
-      devMessage: 'Job status is not active.',
+      message: 'Cannot execute this action. Company is not pending.',
+      devMessage: 'Company status is not pending.',
       code: CANNOT_EXECUTE_ACTION
     });
   }
@@ -64,20 +60,12 @@ module.exports = async function (req, res) {
       status: REJECTED
     };
 
-    const updatedJob = await Job.updateOne({ id })
+    const updatedCompany = await Company.updateOne({ id })
       .set(updatedBody);
 
-    await ElasticsearchService.update({
-      type: 'Job',
-      id,
-      body: {
-        doc: updatedBody
-      }
-    });
+    sendEmailToCompany(updatedCompany);
 
-    sendEmailToCompany(job);
-
-    return res.ok(updatedJob);
+    return res.ok(updatedCompany);
   } catch (err) {
     return res.serverError({
       message: "Something went wrong.",

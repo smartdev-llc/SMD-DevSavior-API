@@ -68,6 +68,10 @@ module.exports.policies = {
   'company/update-my-info': 'isCompany',
   'company/upsert-my-logo': 'isCompany',
   'company/upsert-my-cover': 'isCompany',
+  'company/approve': 'isAdmin',
+  'company/reject': 'isAdmin',
+  'company/activate': 'isAdmin',
+  'company/deactivate': 'isAdmin',
   
   // Student
   'student/search': 'isAdmin',

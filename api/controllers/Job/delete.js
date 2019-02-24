@@ -34,10 +34,11 @@ module.exports = async function (req, res) {
       code: FORBIDDEN_ACTION
     });
   }
+  
   if (!id || id === "undefined") {
     return res.badRequest({
-      message: "JobId is missing.",
-      devMessage: "JobId is missing.",
+      message: "Job id is missing.",
+      devMessage: "Job id is missing.",
       code: MISSING_PARAMETERS
     });
   }

@@ -102,6 +102,14 @@ paths:
     $ref: 'paths/Company/find.yaml'
   /companies/search:
     $ref: 'paths/Company/search.yaml'
+  /companies/{companyId}/approve:
+    $ref: 'paths/Company/approve.yaml'
+  /companies/{companyId}/reject:
+    $ref: 'paths/Company/reject.yaml'
+  /companies/{companyId}/activate:
+    $ref: 'paths/Company/activate.yaml'
+  /companies/{companyId}/deactivate:
+    $ref: 'paths/Company/deactivate.yaml'
 components:
   responses:
     200:

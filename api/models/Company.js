@@ -7,7 +7,7 @@
 const bcrypt = require('bcrypt-nodejs');
 
 const constants = require('../../constants');
-const { ACTIVE } = constants.STATUS;
+const { PENDING } = constants.STATUS;
 
 module.exports = {
 
@@ -57,7 +57,7 @@ module.exports = {
     },
     status: {
       type: 'string',
-      defaultsTo: ACTIVE
+      defaultsTo: PENDING
     },
     emailVerified: {
       type: 'boolean',

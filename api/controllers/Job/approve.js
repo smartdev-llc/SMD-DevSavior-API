@@ -4,7 +4,8 @@ const moment = require('moment');
 const {
   INTERNAL_SERVER_ERROR,
   NOT_FOUND,
-  CANNOT_EXECUTE_ACTION
+  CANNOT_EXECUTE_ACTION,
+  MISSING_PARAMETERS
 } = require('../../../constants/error-code');
 
 const constants = require('../../../constants');
@@ -21,6 +22,14 @@ const sendEmailToCompany = (job) => {
 
 module.exports = async function (req, res) {
   const { id } = _.get(req, "params");
+
+  if (!id || id === "undefined") {
+    return res.badRequest({
+      message: "Job id is missing.",
+      devMessage: "Job id is missing.",
+      code: MISSING_PARAMETERS
+    });
+  }
 
   let job;
 
