@@ -6,11 +6,14 @@ const {
   MISSING_PARAMETERS,
   INVALID_PARAMETERS,
   INTERNAL_SERVER_ERROR,
-  UNVERIFIED_EMAIL
+  UNVERIFIED_EMAIL,
+  UNAPPROVED_ACCOUNT,
+  UNAVAILABLE_ACCOUNT
 } = require('../../../constants/error-code');
 
 const constants = require('../../../constants');
 const { ACCESS_TOKEN } = constants.TOKEN_TYPE;
+const { PENDING, ACTIVE } = constants.STATUS;
 
 module.exports = async function (req, res) {
   const role = req.param("role") || "student";
@@ -72,6 +75,22 @@ module.exports = async function (req, res) {
       message: "Email is unverified.",
       devMessage: "Email is unverified",
       code: UNVERIFIED_EMAIL
+    });
+  }
+
+  if (user.status === PENDING) {
+    return res.forbidden({
+      message: "Your account hasn't been approved yet. Please wait until Admin approves it",
+      devMessage: "Your account hasn't been approved yet",
+      code: UNAPPROVED_ACCOUNT
+    });
+  }
+
+  if (user.status !== ACTIVE) {
+    return res.forbidden({
+      message: "Your account is not available.",
+      devMessage: "Your account is not available",
+      code: UNAVAILABLE_ACCOUNT
     });
   }
 

@@ -38,7 +38,7 @@ module.exports = async function (req, res) {
     });
   }
 
-  if (!job) {
+  if (!company) {
     return res.notFound({
       message: 'Company is not found.',
       devMessage: 'Company is not found.',
