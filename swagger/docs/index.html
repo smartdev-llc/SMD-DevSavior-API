@@ -39,9 +39,6 @@
     window.onload = function() {
       var docUrl = "/docs/swagger.yaml";
 
-      if (window.location.origin.indexOf('juniorviec') > 0) {
-        docUrl = "/api/v1/docs/swagger.yaml";
-      }
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
         url: docUrl,

@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  description: This is api explorer for [JuniorViec](https://juniorviec.com) (You can only access in development environment).
+  description: This is api explorer for [JuniorViec](https://uat.juniorviec.com) (You can only access in development environment).
   version: 1.0.0
   title: JuniorViec API Explorer
   termsOfService: https://juniorviec.com/privacy-policy
@@ -8,8 +8,8 @@ info:
     name: JuniorViec Team
     email: contact@juniorviec.com
 servers: 
-- url: https://juniorviec.com/api/v1
-  description: Production API
+- url: https://uat.api.juniorviec.com
+  description: UAT API
 - url: http://localhost:1337
   description: Local API
 tags:

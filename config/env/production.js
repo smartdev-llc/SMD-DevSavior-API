@@ -225,6 +225,8 @@ module.exports = {
       maxAge: 24 * 60 * 60 * 1000,  // 24 hours
     },
 
+    isSessionDisabled: () => true
+
   },
 
 
@@ -373,6 +375,8 @@ module.exports = {
   custom: {
     baseUrl: 'https://example.com',
     internalEmailAddress: 'support@example.com',
+    jobDuration: 7, //days
+    jobExpiresSoonDuration: 2 //days
 
     // mailgunDomain: 'mg.example.com',
     // mailgunSecret: 'key-prod_fake_bd32301385130a0bafe030c',
