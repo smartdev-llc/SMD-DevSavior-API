@@ -1,5 +1,23 @@
 {
   "properties": {
+    "_juniorviec_": {
+      "properties": {
+        "createdTime": {
+          "type": "date",
+          "format": "strict_date_optional_time||epoch_millis"
+        },
+        "updatedTime": {
+          "type": "date",
+          "format": "strict_date_optional_time||epoch_millis"
+        }
+      }
+    },
+    "approvedAt": {
+      "type": "long"
+    },
+    "benefits": {
+      "type": "text"
+    },
     "category": {
       "type": "nested",
       "properties": {
@@ -14,12 +32,6 @@
     "company": {
       "type": "nested",
       "properties": {
-        "id": {
-          "type": "keyword"
-        },
-        "name": {
-          "type": "text"
-        },
         "address": {
           "type": "text"
         },
@@ -29,15 +41,108 @@
         "contactName": {
           "type": "text"
         },
+        "coverURL": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "createdAt": {
+          "type": "long"
+        },
+        "description": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "email": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "emailVerified": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "keyword"
+        },
         "logoURL": {
           "type": "keyword"
         },
+        "name": {
+          "type": "text"
+        },
         "phoneNumber": {
           "type": "text"
+        },
+        "role": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "status": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "updatedAt": {
+          "type": "long"
+        },
+        "videoURL": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "website": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         }
       }
     },
+    "createdAt": {
+      "type": "date"
+    },
     "description": {
+      "type": "text"
+    },
+    "expiredAt": {
+      "type": "date"
+    },
+    "fromSalary": {
+      "type": "double"
+    },
+    "jobType": {
+      "type": "keyword"
+    },
+    "requirements": {
       "type": "text"
     },
     "skills": {
@@ -57,39 +162,11 @@
     "title": {
       "type": "text"
     },
-    "requirements": {
-      "type": "text"
-    },
-    "fromSalary": {
-      "type": "double"
-    },
     "toSalary": {
       "type": "double"
     },
-    "jobType": {
-      "type": "keyword"
-    },
-    "benefits": {
-      "type": "text"
-    },
-    "approvedAt": {
-      "type": "date",
-      "format": "strict_date_optional_time||epoch_millis"
-    },
-    "expiredAt": {
-      "type": "date",
-      "format": "strict_date_optional_time||epoch_millis"
-    },
-    "createdAt": {
-      "type": "date",
-      "format": "strict_date_optional_time||epoch_millis"
-    },
     "updatedAt": {
-      "type": "date",
-      "format": "strict_date_optional_time||epoch_millis"
-    },
-    "_juniorviec_": {
-      "type": "object"
+      "type": "date"
     }
   }
 }
