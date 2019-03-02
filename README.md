@@ -1,7 +1,7 @@
 # juniorviec-backend
 
 a [Sails v1](https://sailsjs.com) application
-
+API for [Juniorviec](https://juniorviec.com) website
 
 ### Links
 
@@ -16,7 +16,7 @@ a [Sails v1](https://sailsjs.com) application
 ### Version info
 
 This app was originally generated on Thu Jun 28 2018 20:31:29 GMT+0700 (+07) using Sails v1.0.2.
-
+Release Ver 1.0.0: 21/1/2019
 <!-- Internally, Sails used [`sails-generate@1.15.28`](https://github.com/balderdashy/sails-generate/tree/v1.15.28/lib/core-generators/new). -->
 
 
@@ -25,28 +25,18 @@ This app was originally generated on Thu Jun 28 2018 20:31:29 GMT+0700 (+07) usi
 Note:  Generators are usually run using the globally-installed `sails` CLI (command-line interface).  This CLI version is _environment-specific_ rather than app-specific, thus over time, as a project's dependencies are upgraded or the project is worked on by different developers on different computers using different versions of Node.js, the Sails dependency in its package.json file may differ from the globally-installed Sails CLI release it was originally generated with.  (Be sure to always check out the relevant [upgrading guides](https://sailsjs.com/upgrading) before upgrading the version of Sails used by your app.  If you're stuck, [get help here](https://sailsjs.com/support).)
 -->
 ### Requirements
-NodeJS version 8 LTS  
-Sails v1.0.2  
+NodeJS version 8 LTS  (v8.11.3)
+Sails v1.0.2
+MySQL 5.7
+Elasticsearch 5.6
 ### How to run
 - Install node packages
 ```sh
 npm i
 ```
-- Create .env file and Copy environment variables from .env.example to .env, then edit it if needed
+- Create .env file and Copy environment variables from .env.example to .env, then make it suitable to the current environment
 ## Local
-- Run https in localhost: Replace these codes on /config/local.js file
-```javascript
-const fs = require('fs');
-const path = require('path');
-
-module.exports = {
-  ssl: {
-    key: fs.readFileSync(path.resolve(__dirname, '../keys/api_key.pem')),
-    cert: fs.readFileSync(path.resolve(__dirname, '../keys/api_cert.pem'))
-  }
-};
-```
-- Start it:
+- Run the app with this command:
 ```sh
 node app.js
 ```  
