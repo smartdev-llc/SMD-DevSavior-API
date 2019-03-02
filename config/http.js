@@ -29,7 +29,7 @@ module.exports.http = {
 
     passportInit: require('passport').initialize(),
     passportSession: require('passport').session(),
-    swaggerAssets: process.env.NODE_ENV === 'prod' ? () => {} : express.static(process.cwd() + "/swagger"),
+    swaggerAssets: process.env.NODE_ENV === 'production' ? () => {} : express.static(process.cwd() + "/swagger"),
 
     /***************************************************************************
     *                                                                          *
