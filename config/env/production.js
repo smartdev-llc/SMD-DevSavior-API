@@ -148,6 +148,7 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     cors: {
+      allRoutes: true,
       allowOrigins: [
         'https://juniorviec.com',
         'https://bo.juniorviec.com',
