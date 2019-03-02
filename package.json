@@ -2,7 +2,7 @@
   "name": "juniorviec-backend",
   "private": true,
   "version": "0.0.0",
-  "description": "a Sails application",
+  "description": "API for Juniorviec website - a Sails application",
   "keywords": [],
   "dependencies": {
     "@sailshq/connect-redis": "^3.2.1",
@@ -43,9 +43,9 @@
     "@sailshq/eslint": "^4.19.3"
   },
   "scripts": {
-    "prestart": "npm install",
     "start": "node app.js",
     "deploy": "./deploy.sh",
+    "deploy:prod": "./deploy_prod.sh",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "eslint . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
     "custom-tests": "echo \"(No other custom tests yet.)\" && echo"
