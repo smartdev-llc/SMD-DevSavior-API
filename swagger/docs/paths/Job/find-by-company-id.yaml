@@ -1,0 +1,34 @@
+get:
+  tags: 
+  - Job
+  summary: Get list of jobs posted by company.
+  description: Get list of jobs posted by company.
+  security: []
+  parameters: 
+  - name: companyId
+    in: path
+    required: true
+    description: The company id
+    schema:
+      type: integer
+      format: int32
+    example: 15
+  - name: size
+    in: query
+    description: The number of items to return.
+    schema:
+      type: integer
+      format: int32
+    example: 10
+  - name: page
+    in: query
+    description: The page you want to begin.
+    schema:
+      type: integer
+      format: int32
+    example: 1
+  responses:
+    200:
+      description: OK
+    500:
+      description: Server error

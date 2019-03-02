@@ -1,0 +1,25 @@
+extends ../layout/index
+
+block content
+  div#contact
+    p.greeting
+      | Hi <strong>JuniorViec admin</strong>, 
+    p
+      | There is a new contact message from our user. Detail:
+      br
+      ul
+        li
+          | From: <em>!{`${_data.name}`}</em>
+        li
+          | Email: <em>!{`${_data.email}`}</em>
+        li
+          | About: <em>!{`${_data.subject}`}</em>
+        li
+          | Message: <em>!{`${_data.message}`}</em>
+    p
+      | Please click on the email to reply now!
+    div.block
+      p
+        | Thanks and Best regards,
+        br
+        strong JuniorViec Team

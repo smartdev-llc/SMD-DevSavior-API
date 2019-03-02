@@ -9,19 +9,43 @@
     "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
     "async": "2.0.1",
-    "dotenv": "^6.0.0",
+    "bcrypt-nodejs": "0.0.3",
+    "bluebird": "^3.5.1",
+    "debug": "^4.0.1",
+    "dotenv-safe": "^6.1.0",
+    "elasticsearch": "15.1.1",
+    "email-templates": "^4.0.3",
+    "express": "^4.16.4",
     "grunt": "1.0.1",
+    "include-all": "^4.0.3",
+    "ioredis": "^4.0.0",
+    "jsonwebtoken": "^8.3.0",
+    "kue": "^0.11.6",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
+    "nodemailer": "^4.6.7",
+    "nodemailer-mailgun-transport": "^1.4.0",
+    "passport": "^0.4.0",
+    "passport-facebook-token": "^3.3.0",
+    "passport-google-token": "^0.1.2",
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.3",
     "sails": "^1.0.2",
+    "sails-hook-cron": "^3.0.0",
     "sails-hook-grunt": "^3.0.2",
     "sails-hook-orm": "^2.0.0-16",
     "sails-hook-sockets": "^1.4.0",
-    "sails-mysql": "^1.0.0"
+    "sails-mysql": "^1.0.0",
+    "shortid": "^2.2.13",
+    "validator": "^10.6.0"
   },
   "devDependencies": {
     "@sailshq/eslint": "^4.19.3"
   },
   "scripts": {
+    "prestart": "npm install",
     "start": "node app.js",
+    "deploy": "./deploy.sh",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "eslint . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
     "custom-tests": "echo \"(No other custom tests yet.)\" && echo"
@@ -29,7 +53,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/dungtran/juniorviec-backend.git"
+    "url": "git@gitlab.com:levunguyen/juniorviec-backend.git"
   },
   "author": "dungtran",
   "license": "",

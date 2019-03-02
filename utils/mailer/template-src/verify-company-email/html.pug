@@ -1,0 +1,29 @@
+extends ../layout/index
+
+block content
+  div#verify-company-email
+    p
+      | Hi <strong>!{_data.userInfo.name}</strong>,
+    p
+      | Welcome to <strong>JuniorViec</strong> ! Thanks for joining us, please verify your company email by clicking the following button:
+    div.block
+      table.button.large.expand
+        tr
+          td
+            table
+              tr
+                td
+                  a.float-center(href= _data.verificationLink, align='center') Confirm my account
+    p.note
+      | If the button doesn't work, copy & paste this link into your browser:
+      br
+      br
+      a.copy-link(href=_data.verificationLink) !{_data.verificationLink}
+      br
+      br
+      | Note: <em>The link will expire in 1 hour.</em>
+    div.block
+      p
+        | Thanks and Best regards,
+        br
+        strong JuniorViec Team

@@ -1,0 +1,150 @@
+openapi: 3.0.0
+info:
+  description: This is api explorer for [JuniorViec](https://uat.juniorviec.com) (You can only access in development environment).
+  version: 1.0.0
+  title: JuniorViec API Explorer
+  termsOfService: https://juniorviec.com/privacy-policy
+  contact:
+    name: JuniorViec Team
+    email: contact@juniorviec.com
+servers: 
+- url: https://uat.api.juniorviec.com
+  description: UAT API
+- url: http://localhost:1337
+  description: Local API
+tags:
+- name: Auth
+  description: All operations about Authentication
+- name: Common
+  description: All common operations
+- name: Category
+  description: All operations about Category
+- name: Company
+  description: All operations about Company (Employer)
+- name: HotJob
+  description: All operations about Hot Jobs
+- name: Job
+  description: All operations about Jobs
+- name: JobApplication
+  description: All operations about Job Applications
+- name: Photo
+  description: All operations about Photos
+- name: Skill
+  description: All operations about Skills
+- name: SkillSubscription
+  description: All operations about SkillSubscriptions
+- name: Student
+  description: All operations about Students
+- name: Photo
+  description: All operations about Photos
+- name: Common
+  description: All operations about Common
+paths:
+  /auth/signup:
+    $ref: 'paths/Auth/signup.yaml'
+  /auth/verify:
+    $ref: 'paths/Auth/verify.yaml'
+  /auth/resend-email:
+    $ref: 'paths/Auth/resend-email.yaml'
+  /auth/login:
+    $ref: 'paths/Auth/login.yaml'
+  /auth/forgot-password:
+    $ref: 'paths/Auth/forgot-password.yaml'
+  /auth/reset-password:
+    $ref: 'paths/Auth/reset-password.yaml'
+  /auth/change-password:
+    $ref: 'paths/Auth/change-password.yaml'
+  /auth/{provider}:
+    $ref: 'paths/Auth/social.yaml'
+  /auth/logout:
+    $ref: 'paths/Auth/logout.yaml'
+  /students/search:
+    $ref: 'paths/Student/search.yaml'
+  /skills:
+     $ref: 'paths/Skill/find.yaml'
+  /skills/{skillId}/subscriptions:
+    $ref: 'paths/SkillSubscription/CRUD.yaml'
+  /skill-subscriptions:
+    $ref: 'paths/SkillSubscription/find.yaml'
+  /categories:
+    $ref: 'paths/Category/find.yaml'
+  /jobs:
+    $ref: 'paths/Job/CRUD.yaml'
+  /jobs/{jobId}/applications:
+    $ref: 'paths/JobApplication/CRUD.yaml'
+  /jobs/{jobId}/approve:
+    $ref: 'paths/Job/approve.yaml'
+  /jobs/{jobId}/reject:
+    $ref: 'paths/Job/reject.yaml'
+  /jobs/{jobId}/activate:
+    $ref: 'paths/Job/activate.yaml'
+  /jobs/{jobId}/deactivate:
+    $ref: 'paths/Job/deactivate.yaml'
+  /jobs/{jobId}/renew:
+    $ref: 'paths/Job/renew.yaml'
+  /jobs/alert-queues:
+    $ref: 'paths/Job/create-alert-queues.yaml'
+  /my-jobs/{id}:
+    $ref: 'paths/Job/update-my-job.yaml'
+  /jobs/{id}:
+    $ref: 'paths/Job/delete.yaml'
+  /companies/{companyId}/jobs:
+    $ref: 'paths/Job/find-by-company-id.yaml'
+  /photos/upload:
+    $ref: 'paths/Photo/upload.yaml'
+  /photos/{photoName}:
+    $ref: 'paths/Photo/CRUD.yaml'
+  /hotjobs:
+    $ref: 'paths/HotJob/CRUD.yaml'
+  /contact:
+    $ref: 'paths/Common/contact.yaml'
+  /companies:
+    $ref: 'paths/Company/find.yaml'
+  /companies/search:
+    $ref: 'paths/Company/search.yaml'
+  /companies/{companyId}/approve:
+    $ref: 'paths/Company/approve.yaml'
+  /companies/{companyId}/reject:
+    $ref: 'paths/Company/reject.yaml'
+  /companies/{companyId}/activate:
+    $ref: 'paths/Company/activate.yaml'
+  /companies/{companyId}/deactivate:
+    $ref: 'paths/Company/deactivate.yaml'
+components:
+  responses:
+    200:
+        description: OK
+    400:
+      description: Bad request
+    409:
+      description: Conflict
+    500:
+      description: Server error
+  securitySchemes:
+    studentAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    companyAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    adminAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Admin:
+      $ref: 'models/Admin.yaml'
+    Category:
+      $ref: 'models/Category.yaml'
+    Company:
+      $ref: 'models/Company.yaml'
+    EducationDegree:
+      $ref: 'models/EducationDegree.yaml'
+security:
+  - bearerAuth: []

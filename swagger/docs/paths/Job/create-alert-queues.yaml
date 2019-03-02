@@ -1,0 +1,14 @@
+post:
+  tags: 
+  - Job
+  summary: Admin can create job alert queues manually.
+  description: Admin can create job alert queues manually.
+  security:
+    - adminAuth: []
+  responses:
+    200:
+      description: OK
+    404:
+      description: Not found
+    500:
+      description: Server error

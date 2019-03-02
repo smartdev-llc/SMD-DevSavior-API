@@ -184,8 +184,8 @@ module.exports = {
     * > (For a full list, see https://sailsjs.com/plugins/sessions)            *
     *                                                                          *
     ***************************************************************************/
-    // adapter: '@sailshq/connect-redis',
-    // url: 'redis://user:password@localhost:6379/databasenumber',
+    adapter: '@sailshq/connect-redis',
+    url: `${process.env.REDIS_URL}/${process.env.REDIS_DB_FOR_AUTH}`,
     //--------------------------------------------------------------------------
     // /\   OR, to avoid checking it in to version control, you might opt to
     // ||   set sensitive credentials like this using an environment variable.
@@ -224,6 +224,8 @@ module.exports = {
       // secure: true,
       maxAge: 24 * 60 * 60 * 1000,  // 24 hours
     },
+
+    isSessionDisabled: () => true
 
   },
 
@@ -373,6 +375,8 @@ module.exports = {
   custom: {
     baseUrl: 'https://example.com',
     internalEmailAddress: 'support@example.com',
+    jobDuration: 7, //days
+    jobExpiresSoonDuration: 2 //days
 
     // mailgunDomain: 'mg.example.com',
     // mailgunSecret: 'key-prod_fake_bd32301385130a0bafe030c',

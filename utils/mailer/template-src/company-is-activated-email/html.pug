@@ -1,0 +1,19 @@
+extends ../layout/index
+
+block content
+  div#company-is-activated
+    p
+      | Hi <strong>!{_data.company.name}</strong>,
+    p
+      |  Your company account has just been re-activated by <strong>JuniorViec Team</strong>.
+    p 
+      | Please click on the following link to login to your dashboard and continue your recruitments:
+    div.block.login-link-wrapper
+      a.login-link(href=_data.loginLink) Login for employer
+    div.block
+      | If you have any questions, please contact us via !{_data.ADMIN_EMAIL}.
+    div.block
+      p
+        | Thanks and Best regards,
+        br
+        strong JuniorViec Team

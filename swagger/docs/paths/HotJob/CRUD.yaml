@@ -1,0 +1,52 @@
+post:
+  tags: 
+  - HotJob
+  summary: Create a hotjob with role = admin
+  description: > 
+    API for admin to create a hotjob.
+    You should login as admin to do this action.
+  security:
+    - adminAuth: []
+  requestBody:
+    description: A JSON object containing job information
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            expiredDay:
+              type: string
+            jobId:
+              type: integer
+              format: int32
+          example:
+            expiredDay: ONE_WEEK
+            jobId: 1
+  
+  responses:
+    200:
+      description: OK
+    400:
+      description: Bad request
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
+    404: 
+      description: Job not found
+    500:
+      description: Server error
+
+get:
+  tags: 
+  - HotJob
+  summary: Get all hotjobs .
+  description: 
+    Get all hotjobs from now.
+    Maximum is 15
+  security: []
+  responses:
+    '200':
+      description: List of hotjobs you want to get
+    500:
+      description: Server error

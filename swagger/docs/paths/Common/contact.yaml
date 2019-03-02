@@ -1,0 +1,35 @@
+post:
+  tags: 
+  - Common
+  summary: Contact admin
+  description: API for client to contact admin.
+  security: []
+  requestBody:
+    description: A JSON object
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            name:
+              type: string
+            subject:
+              type: string
+            message:
+              type: string
+          example:
+            email: test01@gmail.com
+            name: duy
+            subject: help me
+            message: co loi xay ra
+  
+  responses:
+    200:
+      description: OK
+    400:
+      description: Bad request
+    500:
+      description: Server error

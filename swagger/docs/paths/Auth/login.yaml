@@ -1,0 +1,45 @@
+post:
+  tags: 
+  - Auth
+  summary: Login as student/company/admin
+  description: API for student/company/admin to login.
+  security: []
+  parameters: 
+  - name: role
+    in: query
+    description: The role of logged user
+    schema:
+      type: string
+      enum: 
+      - student
+      - company
+      - admin
+      default: student
+  requestBody:
+    description: A JSON object containing user's email and password
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            password:
+              type: string
+              format: password
+          example:
+            email: test01@gmail.com
+            password: "12345678"
+  
+  responses:
+    200:
+      description: OK
+    400:
+      description: Bad request
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
+    500:
+      description: Server error

@@ -1,0 +1,13 @@
+post:
+  tags: 
+  - Auth
+  summary: Log user out
+  description: >  
+    API to log a user out.
+    You should login as student/company/admin to do this action.
+  security:
+    - bearerAuth: []
+  
+  responses:
+    200:
+      description: OK

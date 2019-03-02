@@ -1,0 +1,15 @@
+extends ../layout/index
+
+block content
+  div#company-is-rejected
+    p
+      | Hi <strong>!{_data.company.name}</strong>,
+    p
+      |  Your company account has just been rejected by <strong>JuniorViec Team</strong> due to policy violation. Please contact us for more details.
+    div.block
+      | If you have any questions, please contact us via !{_data.ADMIN_EMAIL}.
+    div.block
+      p
+        | Thanks and Best regards,
+        br
+        strong JuniorViec Team

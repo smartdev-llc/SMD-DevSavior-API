@@ -1,0 +1,21 @@
+extends ../layout/index
+
+block content
+  div#job-is-rejected
+    p
+      | Hi <strong>!{_data.company.name}</strong>,
+    p
+      |  One of your job has just been rejected by <strong>JuniorViec Team</strong>:
+      |
+      a(href=_data.jobLink) <strong>!{_data.job.title} </strong>
+    p 
+      | Please click on the following link to edit and submit it again:
+    div.block.job-link-wrapper
+      a.job-link(href=_data.editJobLink) !{_data.editJobLink}
+    div.block
+      | If you have any questions, please contact us via !{_data.ADMIN_EMAIL}.
+    div.block
+      p
+        | Thanks and Best regards,
+        br
+        strong JuniorViec Team

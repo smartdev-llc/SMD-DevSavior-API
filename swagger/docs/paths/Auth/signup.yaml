@@ -1,0 +1,62 @@
+post:
+  tags: 
+  - Auth
+  summary: Register a new user (student/company/admin)
+  description: API to register a new user.
+  security: []
+  parameters: 
+  - name: role
+    in: query
+    description: The role of registered user
+    schema:
+      type: string
+      enum: 
+      - student
+      - company
+      - admin
+      default: student
+  
+  requestBody:
+    description: A JSON object containing user information (depend on user role)
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            password:
+              type: string
+              format: password
+            firstName:
+              type: string
+            lastName:
+              type: string
+            name:
+              type: string
+            address:
+              type: string
+            city:
+              type: string
+            contactName:
+              type: string
+            phoneNumber:
+              type: string
+            website:
+              type: string
+          example:
+            email: test01@gmail.com
+            password: "12345678"
+            firstName: Test
+            lastName: User
+  
+  responses:
+    200:
+      description: OK
+    400:
+      description: Bad request
+    409:
+      description: Conflict
+    500:
+      description: Server error

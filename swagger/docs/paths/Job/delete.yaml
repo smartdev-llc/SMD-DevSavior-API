@@ -1,0 +1,30 @@
+delete:
+  tags: 
+  - Job
+  summary: Company/Admin can delete the job.
+  description: Company/Admin can delete the job.
+  security:
+    - bearerAuth: []
+  parameters: 
+  - name: id
+    in: path
+    required: true
+    description: The job id
+    schema:
+      type: integer
+      format: int32
+      example: 1
+  
+  responses:
+    200:
+      description: OK
+    400:
+      description: Bad request
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
+    404: 
+      description: Not found
+    500:
+      description: Server error

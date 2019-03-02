@@ -1,0 +1,17 @@
+extends ../layout/index
+
+block content
+  div#job-is-deactivated
+    p
+      | Hi <strong>!{_data.company.name}</strong>,
+    p
+      |  One of your job has just been deactivated by <strong>JuniorViec Team</strong>:
+      |
+      a(href=_data.jobLink) <strong>!{_data.job.title} </strong>
+    div.block
+      | If you have any questions, please contact us via !{_data.ADMIN_EMAIL}.
+    div.block
+      p
+        | Thanks and Best regards,
+        br
+        strong JuniorViec Team

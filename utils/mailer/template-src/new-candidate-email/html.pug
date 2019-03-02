@@ -1,0 +1,19 @@
+extends ../layout/index
+
+block content
+  div#new-candidate
+    p
+      | Hi <strong>!{_data.company.name}</strong>,
+    p
+      |  <i>!{_data.user.displayName}</i> has just applied to one of your jobs: 
+      |
+      a(href=_data.jobLink) <strong>!{_data.job.title} </strong>
+    p 
+      | Please click on the following link to view applicant's information:
+    div.block.job-link-wrapper
+      a.job-link(href=_data.applicantLink) !{_data.applicantLink}
+    div.block
+      p
+        | Thanks and Best regards,
+        br
+        strong JuniorViec Team

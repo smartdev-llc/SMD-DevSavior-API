@@ -26,6 +26,57 @@ module.exports.bootstrap = async function(done) {
   //   // etc.
   // ]);
   // ```
+  try {
+    const numberOfSkills = await Skill.count();
+
+    if (numberOfSkills === 0) {
+      await Skill.createEach([
+        { name: 'Java' },
+        { name: 'Android' },
+        { name: 'IOS' },
+        { name: 'NodeJS' },
+        { name: 'PHP' },
+        { name: '.NET' },
+        { name: 'AngularJS' },
+        { name: 'React Native' },
+        { name: 'ReactJS' },
+        { name: 'Automation Testing' },
+        { name: 'Manual Testing' },
+        { name: 'Python' },
+        { name: 'Ruby' },
+        { name: 'AI' },
+        { name: 'Blockchain' },
+        { name: 'VueJS' },
+        { name: 'Web Design' },
+      ]);
+    }
+
+    const numberOfCategories = await Category.count();
+
+    if (numberOfCategories === 0) {
+      await Category.createEach([
+        { name: 'Backend Developer' },
+        { name: 'Frontend Developer' },
+        { name: 'Designer' },
+        { name: 'Tester' },
+        { name: 'Full Stack' },
+      ]);
+    }
+
+    const mainAdmin = await Admin.findOne({ email: process.env.ADMIN_EMAIL });
+    if (!mainAdmin) {
+      await Admin.create({
+        email: process.env.ADMIN_EMAIL,
+        password: process.env.ADMIN_PASSWORD,
+        firstName: 'JuniorViec',
+        lastName: 'Admin',
+        displayName: 'JuniorViec Admin',
+        emailVerified: true
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
 
   // Don't forget to trigger `done()` when this bootstrap function's logic is finished.
   // (otherwise your server will never lift, since it's waiting on the bootstrap)

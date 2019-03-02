@@ -1,0 +1,112 @@
+module.exports = {
+  JWT_OPTIONS: {
+    ACCESS_TOKEN_EXPIRATION: '24h',
+    VERIFICATION_TOKEN_EXPIRATION: '1h',
+    RESET_PASSWORD_TOKEN_EXPIRATION: '1h',
+    ALGORITHM: 'RS256',
+    DECODED_KEYS: ['id', 'email', 'password', 'token_type', 'role']
+  },
+
+  TOKEN_TYPE: {
+    VERIFICATION_TOKEN: 'VERIFICATION_TOKEN',
+    ACCESS_TOKEN: 'ACCESS_TOKEN',
+    RESET_PASSWORD_TOKEN: 'RESET_PASSWORD_TOKEN'
+  },
+
+  FILE_LIMIT_SIZE: 10000000, // 10MB,
+
+  COMPANY_PUBLIC_FIELDS: [ 'id', 'name', 'email', 'address', 'city', 'contactName', 'phoneNumber', 'website', 'description', 'logoURL', 'coverURL', 'videoURL'],
+
+  STUDENT_PUBLIC_FIELDS: [ 'id', 'firstName', 'lastName', 'profileImageURL'],
+
+  EDUCATIONAL_STATUS: {
+    FIRST_TO_THIRD_YEAR: 'FIRST_TO_THIRD_YEAR',
+    FOURTH_YEAR: 'FOURTH_YEAR',
+    FINAL_YEAR: 'FINAL_YEAR',
+    GRADUATED: 'GRADUATED'
+  },
+
+  MARITAL_STATUS: {
+    SINGLE: 'SINGLE',
+    MARRIED: 'MARRIED'
+  },
+
+  GENDER: {
+    MALE: 'MALE',
+    FEMALE: 'FEMALE'
+  },
+
+  STATUS: {
+    ACTIVE: 'ACTIVE',
+    INACTIVE: 'INACTIVE',
+    PENDING: 'PENDING',
+    REJECTED: 'REJECTED'
+  },
+
+  WORKING_LOCATION: {
+    HN: "Ha Noi",
+    TPHCM: "TP Ho Chi Minh",
+    DN: 'Da Nang'
+  },
+
+  JOB_TYPE: {
+    FULL_TIME: 'FULL_TIME', 
+    PART_TIME: 'PART_TIME', 
+    INTERNSHIP: 'INTERNSHIP',
+    CONTRACT: 'CONTRACT',
+    FREELANCE: 'FREELANCE'
+  },
+
+  LANGUAGES: {
+    ENGLISH: 'ENGLISH',
+    FRENCH: 'FRENCH',
+    GERMAN: 'GERMAN',
+    SPANISH: 'SPANISH',
+    RUSSIAN: 'RUSSIAN',
+    KOREAN: 'KOREAN',
+    CHINESE: 'CHINESE',
+    JAPANESE: 'JAPANESE'
+  },
+
+  LANGUAGE_LEVELS: {
+    NO: 'NO',
+    BEGINNER: 'BEGINNER',
+    INTERMEDIATE: 'INTERMEDIATE',
+    ADVANCED: 'ADVANCED',
+    NATIVE: 'NATIVE'
+  },
+
+  DEGREE_TYPE: {
+    HIGH_SCHOOL: 'HIGH_SCHOOL',
+    COLLEGE: 'COLLEGE',
+    BACHELOR: 'BACHELOR',
+    MASTER: 'MASTER',
+    DOCTORATE: 'DOCTORATE',
+    OTHER: 'OTHER'
+  },
+
+  DEGREE_CLASSIFICATION: {
+    AVERAGE: 'AVERAGE',
+    GOOD: 'GOOD',
+    EXCELLENT: 'EXCELLENT'
+  },
+
+  REGEX: {
+    PHONE: /^[0-9\+]{1,}[0-9\-]{3,15}$/
+  },
+
+  EXPIRED_DAY: {
+    ONE_WEEK: 'ONE_WEEK',
+    TWO_WEEKS: 'TWO_WEEKS',
+    ONE_MONTH: 'ONE_MONTH'
+  },
+
+  MAXIMUM_ELEMENT_COUNT: 15,
+  AUTH_PREFIX: 'auth_token_id:',
+  HOT_JOB_STATUS: {
+    ACTIVE: 'ACTIVE',
+    INACTIVE: 'INACTIVE',
+    PENDING: 'PENDING',
+    REJECTED: 'REJECTED'
+  }
+};

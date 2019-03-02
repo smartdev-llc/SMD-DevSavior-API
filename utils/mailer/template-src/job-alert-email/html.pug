@@ -1,0 +1,38 @@
+extends ../layout/index
+
+block content
+  div#job-alert-email
+    p
+      | Hi <strong>!{_data.userInfo.displayName}</strong>,
+    p
+      | Here is a list of best jobs that matches your subscribed skills: <strong>!{_data.subscribedSkills}</strong>
+    div.block
+      table.job-table(align='center', border="0", cellpadding="0", cellspacing="0", width='100%')
+        each job in _data.jobs
+          tr.job-row
+            td.logo-col(align='center', valign='top', width='80')
+              a.job-logo-url(href=job.link, target='blank')
+                img(src= job.company.logoURL ? `${_data.API_URL}${job.company.logoURL}` : _data.DEFAULT_COMPANY_LOGO_URL)
+            td.detail-col(align='left', valign='top')
+              table
+                tr
+                  td.job-detail
+                    a.job-detail-url(href=job.link, target='blank') !{`${job.title} (${job.salary})`}
+                    p.job-company-name !{job.company.name}
+                    p.job-skills
+                      each skill in job.skills
+                        span.skill-name !{skill.name}
+    div.block
+      table.button.large.expand.center
+        tr
+          td
+            table
+              tr
+                td
+                  a.float-center(href= _data.moreJobsLink, align='center') More jobs
+    p
+      | Wish you the best of luck in your job search!
+    p
+      | Thanks and Best regards,
+      br
+      strong JuniorViec Team

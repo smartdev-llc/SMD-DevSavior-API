@@ -1,0 +1,31 @@
+post:
+  tags: 
+  - Auth
+  summary: Login social
+  description: API to login social (facebook, google).
+  security: []
+  parameters: 
+  - name: provider
+    in: path
+    description: The social provider
+    schema:
+      type: string
+      enum: 
+      - facebook
+      - google
+      example: facebook
+  - name: access_token
+    in: query
+    description: The social access token (after social authentication in front-end side)
+    schema:
+      type: string
+  
+  responses:
+    200:
+      description: OK
+    400:
+      description: Bad request
+    401:
+      description: Unauthorized
+    500:
+      description: Server error
