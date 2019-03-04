@@ -31,7 +31,7 @@ module.exports = {
   },
 
   updateByQuery: async function (options) {
-    return await esClient.update(
+    return await esClient.updateByQuery(
       _.extend({
         index: indexName
       },
