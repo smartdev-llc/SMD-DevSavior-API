@@ -1,18 +1,29 @@
-const { COMPANY_PUBLIC_FIELDS } = require('../../../constants');
+const {
+  INTERNAL_SERVER_ERROR,
+  NOT_FOUND
+} = require('../../../constants/error-code');
+
+const constants = require('../../../constants');
+const { ACTIVE } = constants.STATUS;
 
 module.exports = async function (req, res) {
+  const userRole = _.get(req, 'user.role');
   const { id } = req.params;
   try {
-    const company = await Company.findOne({ id }).select(COMPANY_PUBLIC_FIELDS);
+    const company = userRole === 'admin' ? await Company.findOne({ id }) : await Company.findOne({ id, emailVerified: true, status: ACTIVE });
     if (!company) {
       return res.notFound({
-        message: 'Company is not found.'
+        message: 'Company is not found.',
+        devMessage: 'Company is not found.',
+        code: NOT_FOUND
       });
     }
     res.ok(company);
   } catch (err) {
     return res.serverError({
-      message: "Something went wrong."
+      message: "Something went wrong.",
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     })
   }
 }
