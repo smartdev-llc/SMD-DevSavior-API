@@ -30,6 +30,16 @@ module.exports = {
     );
   },
 
+  updateByQuery: async function (options) {
+    return await esClient.update(
+      _.extend({
+        index: indexName
+      },
+        _.pick(options, ["type",  "body"])
+      )
+    );
+  },
+
   delete: async function (options) {
     return await esClient.delete(
       _.extend({
