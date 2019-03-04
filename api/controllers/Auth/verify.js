@@ -8,6 +8,20 @@ const {
   INVALID_TOKEN
 } = require('../../../constants/error-code');
 
+const sendEmailToAdmin = (company) => {
+  const contentData = {
+    company: company,
+    companyLink: `${process.env.BO_URL}/dashboard/company-users/${company.id}`
+  };
+  const admins = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
+    return {
+      email
+    };
+  });
+  
+  EmailService.sendToAdmins(admins, 'review-new-company-email', contentData);
+};
+
 module.exports = async function(req, res) {
   const token = req.param('token');
   if (!token) {
@@ -83,10 +97,14 @@ module.exports = async function(req, res) {
   try {
     await UserModel.updateOne({ id: userId }).set({ emailVerified: true });
 
-    if (role === 'admin') {
-      await EmailService.sendToUser(user, 'welcome-admin-email', {
-        userInfo: user
-      });
+    // if (role === 'admin') {
+    //   await EmailService.sendToUser(user, 'welcome-admin-email', {
+    //     userInfo: user
+    //   });
+    // }
+
+    if (role === 'company') {
+      sendEmailToAdmin(_.pick(user, ['id', 'name']));
     }
 
     res.ok({

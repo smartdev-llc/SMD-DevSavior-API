@@ -21,7 +21,7 @@ const sendEmailToAdmin = (job, company) => {
     };
   });
   
-  EmailService.sendToAdmins(admins, 'review-job-email', contentData);
+  EmailService.sendToAdmins(admins, 'review-new-job-email', contentData);
 };
 
 module.exports = async function (req, res) {

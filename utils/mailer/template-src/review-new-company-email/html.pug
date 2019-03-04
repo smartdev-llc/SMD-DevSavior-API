@@ -1,0 +1,17 @@
+extends ../layout/index
+
+block content
+  div
+    p
+      | Hi <strong>admin</strong>,
+    p
+      | <i>!{_data.company.name}</i> has just registered as a company.  
+    p 
+      | Please click on the following link to review it:
+    div.block.company-link-wrapper
+      a.company-link(href=_data.companyLink) !{_data.companyLink}
+    div.block
+      p
+        | Thanks and Best regards,
+        br
+        strong JuniorViec Team

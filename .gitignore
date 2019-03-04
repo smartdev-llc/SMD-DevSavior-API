@@ -135,5 +135,6 @@ package-lock.json
 .env
 build/
 .vscode
+views
 
 
