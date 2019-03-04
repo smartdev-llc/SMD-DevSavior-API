@@ -1,3 +1,9 @@
+const {
+  MISSING_PARAMETERS,
+  INVALID_PARAMETERS,
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   const companyId = _.get(req, "user.id");
   const {
@@ -14,13 +20,17 @@ module.exports = async function (req, res) {
 
   if (!name || !contactName || !phoneNumber || !address) {
     return res.badRequest({
-      message: "Missing parameters."
+      message: "Missing parameters.",
+      devMessage: "Missing parameters (`name` | `contactName` || `phoneNumber` | `address`)",
+      code: MISSING_PARAMETERS
     });
   }
 
   if (!_.isString(name) || !_.isString(address) || !_.isString(description)) {
     return res.badRequest({
-      message: "Invalid parameters."
+      message: "Invalid parameters.",
+      devMessage: "Invalid parameters (`name` | `address` | `description`)",
+      code: INVALID_PARAMETERS
     });
   }
 
@@ -61,16 +71,12 @@ module.exports = async function (req, res) {
       }
     });
 
-    if (updatedCompany) {
-      res.ok(updatedCompany);
-    } else {
-      return res.serverError({
-        message: "Something went wrong."
-      });
-    }
+    res.ok(updatedCompany);
   } catch (err) {
     return res.serverError({
-      message: "Something went wrong."
+      message: "Something went wrong.",
+      devMessage: err.message,
+      code: INTERNAL_SERVER_ERROR
     });
   }
 }

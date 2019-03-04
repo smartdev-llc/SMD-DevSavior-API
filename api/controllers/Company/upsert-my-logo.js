@@ -1,5 +1,11 @@
 const fs = require('fs');
 
+const {
+  INVALID_EXTENSION,
+  BAD_REQUEST,
+  INTERNAL_SERVER_ERROR
+} = require('../../../constants/error-code');
+
 const constants = require('../../../constants');
 const { FILE_LIMIT_SIZE: maxBytes } = constants;
 const { 
@@ -13,7 +19,9 @@ module.exports = async function (req, res) {
   
   if (!originalFilename || !isImage(originalFilename)) {
     return res.badRequest({
-      message: "Invalid file extension."
+      message: "Invalid file extension.",
+      devMessage: "Invalid file extension.",
+      code: INVALID_EXTENSION
     });
   }
 
@@ -24,13 +32,19 @@ module.exports = async function (req, res) {
     maxBytes
   }, async function (err, uploadedFiles) {
     if (err) {
-      return res.serverError(err);
+      return res.serverError({
+        message: "Something went wrong.",
+        devMessage: err.message,
+        code: INTERNAL_SERVER_ERROR
+      });
     }
 
     // If no files were uploaded, respond with an error.
     if (!_.size(uploadedFiles)) {
       return res.badRequest({
-        message: 'No file was uploaded.'
+        message: "No file was uploaded.",
+        devMessage: "File is not uploaded",
+        code: BAD_REQUEST
       });
     }
 
@@ -68,8 +82,10 @@ module.exports = async function (req, res) {
       });
     } catch (err) {
       return res.serverError({
-        message: "Something went wrong."
-      })
+        message: "Something went wrong.",
+        devMessage: err.message,
+        code: INTERNAL_SERVER_ERROR
+      });
     }
   })
 
