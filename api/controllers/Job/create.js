@@ -13,7 +13,7 @@ const sendEmailToAdmin = (job, company) => {
   const contentData = {
     job: _.pick(job, ['id', 'title']),
     company: _.pick(company, ['id', 'name']),
-    jobLink: `${process.env.BO_URL}/dashboard/job/${job.id}`
+    jobLink: `${process.env.BO_URL}/dashboard/jobs/${job.id}`
   };
   const admins = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
     return {

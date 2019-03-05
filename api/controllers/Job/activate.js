@@ -59,14 +59,6 @@ module.exports = async function (req, res) {
     });
   }
 
-  if (job.expiredAt <= moment.now()) {
-    return res.badRequest({
-      message: 'Cannot execute this action. Job is expired.',
-      devMessage: 'Job is expired.',
-      code: CANNOT_EXECUTE_ACTION
-    });
-  }
-
   try {
 
     let updatedBody = {
