@@ -1,0 +1,10 @@
+{
+    "elasticsearch": {
+        "connection": {
+            "host": "localhost:9200",
+            "requestTimeout": 90000
+        },
+        "indexName": "juniorviec"
+    },
+    "batchSize": 100
+}
