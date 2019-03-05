@@ -68,6 +68,8 @@ module.exports.policies = {
   'company/update-info': 'isCompanyOrAdmin',
   'company/upsert-logo': 'isCompanyOrAdmin',
   'company/upsert-cover': 'isCompanyOrAdmin',
+  'company/add-photos': 'isCompanyOrAdmin',
+  'company/delete-photos': 'isCompanyOrAdmin',
   'company/approve': 'isAdmin',
   'company/reject': 'isAdmin',
   'company/activate': 'isAdmin',
