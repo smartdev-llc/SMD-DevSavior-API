@@ -1,11 +1,14 @@
 const {
   MISSING_PARAMETERS,
   INVALID_PARAMETERS,
+  PERMISSION_DENIED,
   INTERNAL_SERVER_ERROR
 } = require('../../../constants/error-code');
 
 module.exports = async function (req, res) {
-  const companyId = _.get(req, "user.id");
+  const userId = _.get(req, "user.id");
+  const role = _.get(req, "user.role");
+  const companyId = _.get(req, "params.id");
   const {
     name,
     address,
@@ -17,6 +20,14 @@ module.exports = async function (req, res) {
     photoURLs,
     videoURL
   } = req.body;
+
+  if ((role === 'company') && (userId !== id)) {
+    return res.unauthorized({
+      message: "Permission denied.",
+      devMessage: "You are not allowed to do this action.",
+      code: PERMISSION_DENIED
+    });
+  }
 
   if (!name || !contactName || !phoneNumber || !address) {
     return res.badRequest({

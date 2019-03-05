@@ -1,3 +1,4 @@
+git checkout dev
 git pull origin dev &&
 npm i &&
 pm2 delete juniorviec-api

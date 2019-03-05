@@ -85,9 +85,9 @@ module.exports.routes = {
   'put /companies/:id/reject': 'Company.reject',
   'put /companies/:id/activate': 'Company.activate',
   'put /companies/:id/deactivate': 'Company.deactivate',
-  'put /my-company/info': "Company.update-my-info",
-  'put /my-company/logo': "Company.upsert-my-logo",
-  'put /my-company/cover': "Company.upsert-my-cover",
+  'put /companies/:id/info': "Company.update-info",
+  'put /companies/:id/logo': "Company.upsert-logo",
+  'put /companies/:id/cover': "Company.upsert-cover",
 
   'get /students/search': "Student.search",
   'get /students/:studentId': 'Student.find-one',
