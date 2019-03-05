@@ -102,6 +102,10 @@ paths:
     $ref: 'paths/Company/find.yaml'
   /companies/search:
     $ref: 'paths/Company/search.yaml'
+  /companies/{companyId}/photos:
+    $ref: 'paths/Company/add-photos.yaml'
+  /companies/{companyId}/photos/{photoName}:
+    $ref: 'paths/Company/delete-photos.yaml'
   /companies/{companyId}/approve:
     $ref: 'paths/Company/approve.yaml'
   /companies/{companyId}/reject:

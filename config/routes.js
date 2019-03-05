@@ -88,8 +88,8 @@ module.exports.routes = {
   'put /companies/:id/info': "Company.update-info",
   'put /companies/:id/logo': "Company.upsert-logo",
   'put /companies/:id/cover': "Company.upsert-cover",
-  'post /companies/:id/photos': "Company.add-photos",
-  'delete /companies/:id/photos/:photoName': "Company.delete-photos",
+  'post /companies/:id/photos': "Company.add-photo",
+  'delete /companies/:id/photos/:photoName': "Company.delete-photo",
 
   'get /students/search': "Student.search",
   'get /students/:studentId': 'Student.find-one',
