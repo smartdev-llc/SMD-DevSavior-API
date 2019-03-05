@@ -15,7 +15,7 @@ html(xmlns='http://www.w3.org/1999/xhtml')
                 table.head-wrap
                   tr
                     td.logo-wrapper
-                      a.logo(href='https://juniorviec.com')
+                      a.logo(href= _data.WEB_URL)
                         img(src= _data.LOGO_URL)
             tr
               td(align='center', bgcolor='#ffffff', valign='top', width='100%')
@@ -34,15 +34,15 @@ html(xmlns='http://www.w3.org/1999/xhtml')
                     td(height='10')
                   tr
                     td.footer-content(valign='top', align='center')
-                      a.footer-link(href='https://juniorviec.com/about-us') About us
+                      a.footer-link(href= `${_data.WEB_URL}/about-us`) About us
                       |
                       | |
                       |
-                      a.footer-link(href='https://juniorviec.com/privacy-policy') Privacy Policy
+                      a.footer-link(href= `${_data.WEB_URL}/privacy-policy`) Privacy Policy
                       |
                       | |
                       |
-                      a.footer-link(href='https://juniorviec.com/contact-us') Contact with us
+                      a.footer-link(href= `${_data.WEB_URL}/contact-us`) Contact with us
                       br
                       | Copyright © JuniorViec JSC
                       br
@@ -58,4 +58,4 @@ html(xmlns='http://www.w3.org/1999/xhtml')
                         |
                         | from
                         |
-                        a.name(href='https://juniorviec.com') JuniorViec
+                        a.name(href= _data.WEB_URL) JuniorViec
