@@ -14,7 +14,7 @@ curl --request PUT \
   --header 'content-type: application/json' \
   --data ' {
 		"mappings": {
-			"Jobs": {
+			"Job": {
         "properties": {
           "_juniorviec_": {
             "properties": {
