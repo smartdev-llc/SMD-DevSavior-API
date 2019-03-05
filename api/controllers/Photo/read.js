@@ -2,12 +2,18 @@ const {
   isImage
 } = require('../../../utils/validator');
 
+const {
+  NOT_FOUND
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
   const photoName = req.params.photoName;
 
   if (!photoName || !isImage(photoName)) {
     return res.notFound({
-      message: "Photo not found."
+      message: "Photo not found.",
+      devMessage: "Photo is not found.",
+      code: NOT_FOUND
     });
   }
 
@@ -20,7 +26,9 @@ module.exports = async function (req, res) {
   fileAdapter.read(absolutePhotoPath)
     .on('error', function (err) {
       return res.notFound({
-        message: "Photo not found."
+        message: "Photo not found.",
+        devMessage: "Photo is not found.",
+        code: NOT_FOUND
       });
     })
     .pipe(res);

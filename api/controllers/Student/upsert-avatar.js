@@ -19,7 +19,7 @@ module.exports = async function (req, res) {
   if (!originalFilename || !isImage(originalFilename)) {
     return res.badRequest({
       message: "Invalid file extension.",
-      devMessage: "Wrong image extension.",
+      devMessage: "Invalid file extension.",
       code: INVALID_EXTENSION
     });
   }
@@ -41,24 +41,24 @@ module.exports = async function (req, res) {
     // If no files were uploaded, respond with an error.
     if (!_.size(uploadedFiles)) {
       return res.serverError({
-        message: 'No file was uploaded.',
-        devMessage: "Upload failed.",
+        message: "Something went wrong.",
+        devMessage: "File is not uploaded.",
         code: INTERNAL_SERVER_ERROR
       });
     }
 
     const photoName = _.get(uploadedFiles, '0.fd', '').split('/').pop();
-    const photoUrl = `/photos/${photoName}`;
+    const photoURL = `/photos/${photoName}`;
 
     const oldProfileImageURL = _.get(req, 'user.profileImageURL');
     try {
-      await Student.updateOne({ id: userId }).set({ profileImageURL: photoUrl });
+      await Student.updateOne({ id: userId }).set({ profileImageURL: photoURL });
       if (oldProfileImageURL) {
         deleteOldImage(oldProfileImageURL);
       }
   
       res.ok({
-        photoUrl
+        photoURL
       });
     } catch (err) {
       return res.serverError({

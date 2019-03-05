@@ -1,4 +1,5 @@
 const fs = require('fs');
+
 const {
   INVALID_EXTENSION,
   PERMISSION_DENIED,
@@ -7,11 +8,9 @@ const {
 
 const constants = require('../../../constants');
 const { FILE_LIMIT_SIZE: maxBytes } = constants;
-
 const { 
   isImage
 } = require('../../../utils/validator');
-
 
 module.exports = async function (req, res) {
   const userId = _.get(req, "user.id");
@@ -62,33 +61,13 @@ module.exports = async function (req, res) {
     const photoName = _.get(uploadedFiles, '0.fd', '').split('/').pop();
     const photoURL = `/photos/${photoName}`;
 
-    const oldCoverURL = _.get(req, 'user.coverURL');
-
     try {
-      await Company.updateOne({ id: companyId }).set({ coverURL: photoURL });
-      ElasticsearchService.updateByQuery({
-        type: 'Job',
-        body: {
-          query: {
-            nested: {
-              path: "company",
-              query: {
-                term: {
-                  "company.id": companyId
-                }
-              }
-            }
-          },
-          script: {
-            source: `ctx._source.company.coverURL = '${photoURL}';`
-          }
-        }
-      });
-      if (oldCoverURL) {
-        deleteOldImage(oldCoverURL);
-      }
+      const company = await Company.findOne({ id: companyId });
+      const photoURLs = _.concat(company.photoURLs || [], photoURL);
+      await Company.updateOne({ id: companyId }).set({ photoURLs });
   
       res.ok({
+        photoURLs,
         photoURL
       });
     } catch (err) {
@@ -99,16 +78,4 @@ module.exports = async function (req, res) {
       });
     }
   })
-
-  function deleteOldImage(imageURL) {
-    const photoName = imageURL.split('/').pop();
-    const uploadFolder = process.env.UPLOAD_FOLDER || '.tmp';
-    const absolutePhotoPath = `${uploadFolder}/photos/${photoName}`;
-
-    fs.unlink(absolutePhotoPath, (err) => {
-      if (err) {
-        fs.unlink(`.tmp/uploads/photos/${photoName}`, () => {})
-      }
-    })
-  }
 }

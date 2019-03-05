@@ -2,7 +2,6 @@ const fs = require('fs');
 
 const {
   INVALID_EXTENSION,
-  BAD_REQUEST,
   PERMISSION_DENIED,
   INTERNAL_SERVER_ERROR
 } = require('../../../constants/error-code');
@@ -52,20 +51,20 @@ module.exports = async function (req, res) {
 
     // If no files were uploaded, respond with an error.
     if (!_.size(uploadedFiles)) {
-      return res.badRequest({
-        message: "No file was uploaded.",
-        devMessage: "File is not uploaded",
-        code: BAD_REQUEST
+      return res.serverError({
+        message: "Something went wrong.",
+        devMessage: "File is not uploaded.",
+        code: INTERNAL_SERVER_ERROR
       });
     }
 
     const photoName = _.get(uploadedFiles, '0.fd', '').split('/').pop();
-    const photoUrl = `/photos/${photoName}`;
+    const photoURL = `/photos/${photoName}`;
 
     const oldLogoURL = _.get(req, 'user.logoURL');
 
     try {
-      await Company.updateOne({ id: companyId }).set({ logoURL: photoUrl });
+      await Company.updateOne({ id: companyId }).set({ logoURL: photoURL });
       ElasticsearchService.updateByQuery({
         type: 'Job',
         body: {
@@ -80,7 +79,7 @@ module.exports = async function (req, res) {
             }
           },
           script: {
-            source: `ctx._source.company.logoURL = '${photoUrl}';`
+            source: `ctx._source.company.logoURL = '${photoURL}';`
           }
         }
       });
@@ -89,7 +88,7 @@ module.exports = async function (req, res) {
       }
   
       res.ok({
-        photoUrl
+        photoURL
       });
     } catch (err) {
       return res.serverError({
