@@ -102,6 +102,12 @@ paths:
     $ref: 'paths/Company/find.yaml'
   /companies/search:
     $ref: 'paths/Company/search.yaml'
+  /companies/{companyId}/info:
+    $ref: 'paths/Company/update-info.yaml'
+  /companies/{companyId}/logo:
+    $ref: 'paths/Company/upsert-logo.yaml'
+  /companies/{companyId}/cover:
+    $ref: 'paths/Company/upsert-cover.yaml'
   /companies/{companyId}/photos:
     $ref: 'paths/Company/add-photos.yaml'
   /companies/{companyId}/photos/{photoName}:

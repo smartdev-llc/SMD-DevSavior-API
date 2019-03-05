@@ -17,7 +17,6 @@ module.exports = async function (req, res) {
     phoneNumber,
     website,
     description,
-    photoURLs,
     videoURL
   } = req.body;
 
@@ -37,14 +36,6 @@ module.exports = async function (req, res) {
     });
   }
 
-  if (!_.isString(name) || !_.isString(address) || !_.isString(description)) {
-    return res.badRequest({
-      message: "Invalid parameters.",
-      devMessage: "Invalid parameters (`name` | `address` | `description`)",
-      code: INVALID_PARAMETERS
-    });
-  }
-
   const updatedFields = {
     name: _.escape(name),
     address,
@@ -53,7 +44,6 @@ module.exports = async function (req, res) {
     phoneNumber,
     website,
     description,
-    photoURLs,
     videoURL
   }
 

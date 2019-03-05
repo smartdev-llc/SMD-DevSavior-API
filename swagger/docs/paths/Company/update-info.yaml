@@ -1,0 +1,55 @@
+put:
+  tags: 
+  - Company
+  summary: Update information for a company.
+  description: Update information for a company.
+  security:
+    - companyAuth: []
+    - adminAuth: []
+  parameters: 
+  - name: companyId
+    in: path
+    required: true
+    description: The company id
+    schema:
+      type: integer
+      format: int32
+      example: 1
+  requestBody:
+    description: A JSON object containing company information
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            address:
+              type: string
+            city:
+              type: string
+            contactName:
+              type: string
+            phoneNumber:
+              type: string
+            website:
+              type: string
+            description:
+              type: string
+            videoURL:
+              type: string
+          example:
+            name: Company 1
+            address: 123 Hung Vuong
+            city: DN
+            contactName: Co. HR
+            phoneNumber: "0123456789"
+  responses:
+    200:
+      description: OK
+    400:
+      description: Bad request
+    401:
+      description: Unauthorized
+    500:
+      description: Server error
