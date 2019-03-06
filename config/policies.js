@@ -74,6 +74,7 @@ module.exports.policies = {
   'company/reject': 'isAdmin',
   'company/activate': 'isAdmin',
   'company/deactivate': 'isAdmin',
+  'company/review': 'isStudent',
   
   // Student
   'student/search': 'isAdmin',
