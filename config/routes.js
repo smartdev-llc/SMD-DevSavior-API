@@ -90,6 +90,7 @@ module.exports.routes = {
   'put /companies/:id/cover': "Company.upsert-cover",
   'post /companies/:id/photos': "Company.add-photo",
   'delete /companies/:id/photos/:photoName': "Company.delete-photo",
+  'put /companies/:companyId/reviews': "Company.review",
 
   'get /students/search': "Student.search",
   'get /students/:studentId': 'Student.find-one',

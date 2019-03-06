@@ -72,6 +72,18 @@ module.exports = async function (req, res) {
       }
     }
 
+    try {
+      const company = await CompanyReview.find({ company: job.company.id }).populate("student");
+      reviews = _.map(company, value =>  _.pick(value, ['student.id', 'student.firstName', 'student.lastName', "comment", "stars"]));
+      job.company.reviews = reviews;
+    } catch (err) {
+      return res.serverError({
+        message: "Something went wrong.",
+        devMessage: err.message,
+        code: INTERNAL_SERVER_ERROR
+      });
+    }
+
     return res.ok(job);
   } catch (err) {
     return res.serverError({

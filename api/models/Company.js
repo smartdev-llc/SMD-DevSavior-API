@@ -66,6 +66,11 @@ module.exports = {
     jobs: {
       collection: 'job',
       via: 'company'
+    },
+    reviews:{
+      collection: 'student',
+      via: 'company',
+      through: 'companyreview'
     }
   },
 
