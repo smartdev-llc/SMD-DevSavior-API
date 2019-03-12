@@ -36,7 +36,7 @@ module.exports = async function (req, res) {
                     createdAt: job.createdAt,
                     updatedAt: job.updatedAt,
                     _juniorviec_: {
-                      createdTime: new Date().toDateString()
+                      createdTime: new Date().toISOString()
                     }
                 }
             });

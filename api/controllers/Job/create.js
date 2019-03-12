@@ -34,7 +34,8 @@ module.exports = async function (req, res) {
     return res.badRequest({
       message: "Missing parameters.",
       devMessage: "Some parameters are missing (`title` | `categoryId` | `description` | `requirements` | `jobType`).",
-      code: MISSING_PARAMETERS
+      code: MISSING_PARAMETERS,
+      traceId: req.traceId
     });
   }
 
@@ -42,7 +43,8 @@ module.exports = async function (req, res) {
     return res.badRequest({
       message: "Invalid Salary.",
       devMessage: "Invalid `fromSalary` and `toSalary` (they should be NUMBERIC, `fromSalary` <= `toSalary`).",
-      code: INVALID_PARAMETERS
+      code: INVALID_PARAMETERS,
+      traceId: req.traceId
     });
   }
 
@@ -50,7 +52,8 @@ module.exports = async function (req, res) {
     return res.badRequest({
       message: "Invalid job type",
       devMessage: "Invalid job type (should be FULL_TIME or PART_TIME or INTERNSHIP or CONTRACT or FREELANCE.",
-      code: INVALID_PARAMETERS
+      code: INVALID_PARAMETERS,
+      traceId: req.traceId
     });
   }
 
@@ -92,7 +95,7 @@ module.exports = async function (req, res) {
         createdAt: job.createdAt,
         updatedAt: job.updatedAt,
         _juniorviec_: {
-          createdTime: new Date().toDateString()
+          createdTime: new Date().toISOString()
         }
       }
     });
