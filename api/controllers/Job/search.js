@@ -1,4 +1,4 @@
-const debuglog = require("debug")("jv:job:search");
+  const debuglog = require("debug")("jv:job:search");
 const moment = require('moment');
 
 module.exports = async function (req, res) {
@@ -67,6 +67,7 @@ module.exports = async function (req, res) {
     }));
     query.bool.must = _.compact(query.bool.must);
     debuglog("query: ", JSON.stringify(query));
+    sails.log.debug("[jobs.search] - query: %s, TraceId [%s]", JSON.stringify(query), req.traceId);
     let result = await ElasticsearchService.search({
       type: "Job",
       body: {
