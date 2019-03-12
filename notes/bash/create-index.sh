@@ -45,6 +45,9 @@ curl --request PUT \
               }
             }
           },
+          "slug": {
+            "type": "text"
+          },
           "company": {
             "type": "nested",
             "properties": {
@@ -52,6 +55,9 @@ curl --request PUT \
                 "type": "text"
               },
               "city": {
+                "type": "text"
+              },
+              "slug": {
                 "type": "text"
               },
               "contactName": {
