@@ -70,6 +70,8 @@ module.exports.routes = {
   'delete /jobs/:id': 'Job.delete',
   'post /jobs/alert-queues': 'Job.create-alert-queues',
 
+  'post /jobs/sync': 'Job.sync-to-es',
+  
   'post /photos/upload': 'Photo.upload',
   'get /photos/:photoName': {
     controller: 'Photo',

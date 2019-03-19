@@ -42,6 +42,7 @@ module.exports.policies = {
   'job/renew': 'isAdmin',
   'job/delete': 'isAuthenticated',
   'job/create-alert-queues': 'isAdmin',
+  'job/sync': 'isAdmin',
 
   // Category
   'category/find': true,
