@@ -46,7 +46,7 @@ module.exports.policies = {
   // Category
   'category/find': true,
   'category/create': 'isAdmin',
-  
+
   // Skill
   'skill/find': true,
   'skill/create': 'isAdmin',
@@ -55,12 +55,12 @@ module.exports.policies = {
   'skillsubscription/create': 'isStudent',
   'skillsubscription/delete': 'isStudent',
   'skillsubscription/find': 'isStudent',
-  
+
   // Photo
   'photo/upload': true,
   'photo/read': true,
   'photo/delete': true,
-  
+
   // Company
   'company/find': true,
   'company/search': 'isAdmin',
@@ -75,7 +75,7 @@ module.exports.policies = {
   'company/activate': 'isAdmin',
   'company/deactivate': 'isAdmin',
   'company/review': 'isStudent',
-  
+
   // Student
   'student/search': 'isAdmin',
   'student/find-me': 'isStudent',
@@ -110,5 +110,5 @@ module.exports.policies = {
   'hotjob/deactivate': 'isAdmin',
   'hotjob/find': true,
   'hotjob/find-all': 'isAdmin',
-  
+
 };

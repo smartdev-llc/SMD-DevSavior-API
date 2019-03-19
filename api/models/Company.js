@@ -12,6 +12,9 @@ const { PENDING } = constants.STATUS;
 module.exports = {
 
   attributes: {
+    slug: {
+      type: 'string'
+    },
     email: {
       type: 'string',
       required: true,

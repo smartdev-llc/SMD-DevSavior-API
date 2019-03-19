@@ -1,3 +1,4 @@
+const moment = require('moment');
 const { SEND_JOB_ALERT_EMAIL } = require('../../constants/jobTypes');
 
 module.exports = {
@@ -19,6 +20,22 @@ module.exports = {
             if (!err) console.log(job.id, ' is enqueued.');
           });
       })
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  removeUnusedUsers: async function () {
+    try {
+      const tenDaysAgo = moment().subtract(10, 'days').valueOf();
+      const unusedConditions = {
+        emailVerified: false,
+        createdAt: {
+          '<=': tenDaysAgo
+        }
+      }
+      await Student.destroy(unusedConditions);
+      await Company.destroy(unusedConditions);
     } catch (err) {
       console.log(err);
     }

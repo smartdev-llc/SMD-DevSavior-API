@@ -5,15 +5,15 @@ const {
 
 module.exports = async function (req, res) {
   try {
-    const id = req.params.id;
-    if (!id) {
+    const { slug } = req.params;
+    if (!slug) {
       return res.badRequest({
         code: BAD_REQUEST,
         message: "Id is required"
       });
     }
     const hotjob = await HotJob
-      .findOne({ id })
+      .findOne({ slug })
       .populate("job")
       .populate("company");
 

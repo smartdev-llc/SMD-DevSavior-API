@@ -57,12 +57,11 @@ module.exports.routes = {
   'post /jobs/:jobId/applications': 'JobApplication.create',
   'get /jobs/:jobId/applications': 'JobApplication.find',
   'get /jobs/search': 'Job.search',
-  'get /jobs/:jobId/recommended': 'Job.recommend',
+  'get /jobs/:slug/recommended': 'Job.recommend',
   'get /jobs/count': 'Job.count',
   'get /jobs/list-by-time': 'Job.list-by-time',
-  'get /jobs/:id': 'Job.find-one',
+  'get /jobs/:slug': 'Job.find-one',
   'put /my-jobs/:id': 'Job.update-my-job',
-  'get /companies/:companyId/jobs': 'Job.find-by-company-id',
   'put /jobs/:id/approve': 'Job.approve',
   'put /jobs/:id/reject': 'Job.reject',
   'put /jobs/:id/activate': 'Job.activate',
@@ -70,7 +69,7 @@ module.exports.routes = {
   'put /jobs/:id/renew': 'Job.renew',
   'delete /jobs/:id': 'Job.delete',
   'post /jobs/alert-queues': 'Job.create-alert-queues',
-  
+
   'post /photos/upload': 'Photo.upload',
   'get /photos/:photoName': {
     controller: 'Photo',
@@ -79,8 +78,9 @@ module.exports.routes = {
   },
   'delete /photos/:photoName': 'Photo.delete',
 
+  'get /companies/:slug/jobs': 'Job.find-by-company-id',
   'get /companies/search': "Company.search",
-  'get /companies/:id': "Company.find-one",
+  'get /companies/:slug': "Company.find-one",
   'put /companies/:id/approve': 'Company.approve',
   'put /companies/:id/reject': 'Company.reject',
   'put /companies/:id/activate': 'Company.activate',
@@ -111,6 +111,8 @@ module.exports.routes = {
 
   'post /contact': 'Common.contact',
   'get /test': 'Common.test',
+  'get /slugify-companies': 'Common.slugify-companies',
+  'get /slugify-jobs': 'Common.slugify-jobs',
 
   'post /skills/:skillId/subscriptions': 'SkillSubscription.create',
   'delete /skills/:skillId/subscriptions': 'SkillSubscription.delete',
@@ -120,10 +122,10 @@ module.exports.routes = {
   'put /hotjobs/:id/reject': 'HotJob.reject',
   'put /hotjobs/:id/activate': 'HotJob.activate',
   'put /hotjobs/:id/deactivate': 'HotJob.deactivate',
-  'get /hotjobs/:id': 'HotJob.get',
+  'get /hotjobs/:slug': 'HotJob.get',
   'get /bo/hotjobs': 'HotJob.find-all',
 
-  
+
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
@@ -132,5 +134,5 @@ module.exports.routes = {
   //  ╔╦╗╦╔═╗╔═╗
   //  ║║║║╚═╗║
   //  ╩ ╩╩╚═╝╚═╝
-  
+
 };

@@ -1,4 +1,6 @@
-const { 
+const slugify = require('slugify');
+const shortid = require('shortid');
+const {
   isValidSalary,
   isValidJobType
 } = require('../../../utils/validator');
@@ -20,7 +22,7 @@ const sendEmailToAdmin = (job, company) => {
       email
     };
   });
-  
+
   EmailService.sendToAdmins(admins, 'review-new-job-email', contentData);
 };
 
@@ -58,8 +60,11 @@ module.exports = async function (req, res) {
   }
 
   try {
+    const cleanTitle = _.escape(job.title.trim().toLowerCase());
+    const slug = `${slugify(cleanTitle)}-${shortid.generate()}`;
     const job = await Job.create({
       company: companyId,
+      slug,
       title,
       description,
       category: categoryId,
@@ -73,12 +78,13 @@ module.exports = async function (req, res) {
 
     const category = await Category.findOne({ id: categoryId });
     const skills = await Skill.find({ id: skillIds });
-    
+
     ElasticsearchService.create({
       type: 'Job',
       id: job.id,
       body: {
         company: company,
+        slug,
         title,
         description,
         skills: _.map(skills, skill => _.pick(skill, ['name', 'id'])),
@@ -102,7 +108,7 @@ module.exports = async function (req, res) {
 
     job.skills = skills;
     job.category = category;
-    
+
     sendEmailToAdmin(job, company);
 
     return res.ok(job);

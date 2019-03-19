@@ -8,9 +8,17 @@ const { ACTIVE } = constants.STATUS;
 
 module.exports = async function (req, res) {
   const userRole = _.get(req, 'user.role');
-  const { id } = req.params;
+  const { slug } = req.params;
+  if (!slug || slug !== 'undefined') {
+    return res.notFound({
+      message: 'Company is not found.',
+      devMessage: 'Company is not found.',
+      code: NOT_FOUND
+    });
+  }
+
   try {
-    const company = userRole === 'admin' ? await Company.findOne({ id }) : await Company.findOne({ id, emailVerified: true, status: ACTIVE });
+    const company = userRole === 'admin' ? await Company.findOne({ slug }) : await Company.findOne({ slug, emailVerified: true, status: ACTIVE });
     if (!company) {
       return res.notFound({
         message: 'Company is not found.',
