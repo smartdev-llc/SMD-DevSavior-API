@@ -126,7 +126,7 @@ paths:
     $ref: 'paths/Company/review.yaml'
   /companies/{companyId}/deactivate:
     $ref: 'paths/Company/deactivate.yaml'
-  /students/{id}/delete:
+  /students/{id}:
     $ref: 'paths/Student/delete.yaml'
 components:
   responses:
