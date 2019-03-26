@@ -118,8 +118,12 @@ paths:
     $ref: 'paths/Company/reject.yaml'
   /companies/{companyId}/activate:
     $ref: 'paths/Company/activate.yaml'
-  /companies/{companyId}/deactivate:
-    $ref: 'paths/Company/deactivate.yaml'
+  /students/{id}/activate:
+    $ref: 'paths/Student/activate.yaml'
+  /students/{id}/deactivate:
+    $ref: 'paths/Student/deactivate.yaml'
+  /companies/{companyId}/reviews:
+    $ref: 'paths/Company/review.yaml'
 components:
   responses:
     200:

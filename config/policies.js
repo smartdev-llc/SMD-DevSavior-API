@@ -94,6 +94,8 @@ module.exports.policies = {
   'student/update-working-experience': 'isStudent',
   'student/delete-working-experience': 'isStudent',
   'student/find-applicant': 'isCompany',
+  'student/deactivate': 'isAdmin',
+  'student/activate': 'isAdmin',
 
   // JobApplication
   'jobapplication/find': 'isCompany',

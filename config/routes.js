@@ -110,6 +110,8 @@ module.exports.routes = {
   'put /profile/me/working-experiences/:id': 'Student.update-working-experience',
   'delete /profile/me/working-experiences/:id': 'Student.delete-working-experience',
   'get /jobs/:jobId/applications/:applicantId': 'Student.find-applicant',
+  'put /students/:id/activate': 'Student.activate',
+  'put /students/:id/deactivate': 'Student.deactivate',
 
   'post /contact': 'Common.contact',
   'get /test': 'Common.test',
