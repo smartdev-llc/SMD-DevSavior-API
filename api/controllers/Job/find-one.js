@@ -13,7 +13,7 @@ module.exports = async function (req, res) {
   const role = _.get(req, "user.role");
   const slug = _.get(req, "params.slug");
 
-  if (!slug || slug !== 'undefined') {
+  if (!slug || slug === 'undefined') {
     return res.notFound({
       message: 'Job is not found.',
       devMessage: 'Job is not found.',

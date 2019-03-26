@@ -14,7 +14,7 @@ module.exports = async function (req, res) {
     const { size, page } = _.get(req, "query");
     const { slug } = _.get(req, "params");
 
-    if (!slug || slug !== 'undefined') {
+    if (!slug || slug === 'undefined') {
       return res.notFound({
         message: 'Company is not found.',
         devMessage: 'Company is not found.',
