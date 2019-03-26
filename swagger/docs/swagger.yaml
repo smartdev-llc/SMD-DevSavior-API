@@ -124,6 +124,10 @@ paths:
     $ref: 'paths/Student/deactivate.yaml'
   /companies/{companyId}/reviews:
     $ref: 'paths/Company/review.yaml'
+  /companies/{companyId}/deactivate:
+    $ref: 'paths/Company/deactivate.yaml'
+  /students/{id}/delete:
+    $ref: 'paths/Student/delete.yaml'
 components:
   responses:
     200:

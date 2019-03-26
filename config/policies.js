@@ -96,6 +96,7 @@ module.exports.policies = {
   'student/find-applicant': 'isCompany',
   'student/deactivate': 'isAdmin',
   'student/activate': 'isAdmin',
+  'student/delete': 'isAdmin',
 
   // JobApplication
   'jobapplication/find': 'isCompany',
