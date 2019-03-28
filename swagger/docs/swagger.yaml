@@ -128,6 +128,10 @@ paths:
     $ref: 'paths/Company/deactivate.yaml'
   /students/{id}:
     $ref: 'paths/Student/delete.yaml'
+  /students/count:
+    $ref: 'paths/Student/count.yaml'
+  /companies/count:
+    $ref: 'paths/Company/count.yaml'
 components:
   responses:
     200:

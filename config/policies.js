@@ -76,6 +76,7 @@ module.exports.policies = {
   'company/activate': 'isAdmin',
   'company/deactivate': 'isAdmin',
   'company/review': 'isStudent',
+  'company/count': 'isCompanyOrAdmin',
 
   // Student
   'student/search': 'isAdmin',
@@ -97,6 +98,7 @@ module.exports.policies = {
   'student/deactivate': 'isAdmin',
   'student/activate': 'isAdmin',
   'student/delete': 'isAdmin',
+  'student/count': 'isCompanyOrAdmin',
 
   // JobApplication
   'jobapplication/find': 'isCompany',
