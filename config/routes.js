@@ -93,6 +93,7 @@ module.exports.routes = {
   'post /companies/:id/photos': "Company.add-photo",
   'delete /companies/:id/photos/:photoName': "Company.delete-photo",
   'put /companies/:companyId/reviews': "Company.review",
+  'get /companies/count': "Company.count",
 
   'get /students/search': "Student.search",
   'get /students/:studentId': 'Student.find-one',
@@ -113,6 +114,7 @@ module.exports.routes = {
   'put /students/:id/activate': 'Student.activate',
   'put /students/:id/deactivate': 'Student.deactivate',
   'delete /students/:id': 'Student.delete',
+  'get /students/count': 'Student.count',
 
   'post /contact': 'Common.contact',
   'get /test': 'Common.test',
