@@ -1,10 +1,10 @@
-  const debuglog = require("debug")("jv:job:search");
+const debuglog = require("debug")("jv:job:search");
 const moment = require('moment');
 
 module.exports = async function (req, res) {
   try {
     const { qs, size, page } = _.get(req, "query");
-    let queryBody = _.pick(req.query, ["qs", "category", "jobTypes", "skills"]);
+    let queryBody = _.pick(req.query, ["qs", "category", "jobTypes", "skills", "status"]);
     let limit = parseInt(size) || 10;
     let skip = (parseInt(page) || 0) * limit;
 
@@ -19,15 +19,17 @@ module.exports = async function (req, res) {
     const transformResult = ElasticsearchService.transformResult();
 
     let query = { bool: { must: [] } };
-    query.bool.must.push(buildQuery.activeJob());
+    if (role !== "admin" && role !== "company") {
+      query.bool.must.push(buildQuery.activeJob());
 
-    query.bool.must.push({
-      range: {
-        expiredAt: {
-          gte: moment.now()
+      query.bool.must.push({
+        range: {
+          expiredAt: {
+            gte: moment.now()
+          }
         }
-      }
-    });
+      });
+    }
 
     let nestedIdNames = [{
       request: "category",
@@ -43,7 +45,11 @@ module.exports = async function (req, res) {
     }
 
     query.bool.must = query.bool.must.concat(buildQuery.identifiers({
-      nestedIdNames
+      nestedIdNames,
+      idNames: [{
+        request: "status",
+        field: "status"
+      }]
     }));
     query.bool.must.push(buildQuery.textSearch({
       text: qs,
