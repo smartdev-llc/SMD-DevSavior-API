@@ -60,7 +60,7 @@ module.exports = async function (req, res) {
   }
 
   try {
-    const cleanTitle = _.escape(job.title.trim().toLowerCase());
+    const cleanTitle = _.escape(title.trim().toLowerCase());
     const slug = `${slugify(cleanTitle)}-${shortid.generate()}`;
     const job = await Job.create({
       company: companyId,
