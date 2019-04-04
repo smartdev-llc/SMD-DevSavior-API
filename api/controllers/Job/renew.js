@@ -70,6 +70,7 @@ module.exports = async function (req, res) {
   try {
 
     let updatedBody = {
+      approvedAt: moment.now(),
       expiredAt: moment().add(sails.config.custom.jobDuration || 7, 'days').valueOf()
     };
 

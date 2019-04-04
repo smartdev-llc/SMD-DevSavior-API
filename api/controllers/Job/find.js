@@ -5,14 +5,16 @@ const {
 const constants = require('../../../constants');
 const { PENDING, REJECTED, ACTIVE, INACTIVE } = constants.STATUS;
 const moment = require('moment');
+const { isAcceptedSorts } = require("../../../utils/validator");
 
 module.exports = async function (req, res) {
   const userId = _.get(req, 'user.id');
   const role = _.get(req, 'user.role');
-  let { size, page, status, companyId } = _.get(req, 'query');
+  let { size, page, status, companyId, sort } = _.get(req, 'query');
   let limit = parseInt(size) || 10;
   let skip = (parseInt(page) || 0) * limit;
-  let sort = 'createdAt DESC';
+
+  sort = isAcceptedSorts(sort) ? sort : 'approvedAt DESC';
   let expiredAt;
 
   if (!isValidStatus(status)) {
@@ -21,7 +23,6 @@ module.exports = async function (req, res) {
 
   if (role !== 'admin' && role !== 'company') {
     status = ACTIVE;
-    sort = 'approvedAt DESC';
     expiredAt = {
       '>=': moment.now()
     }

@@ -76,6 +76,8 @@ const isImage = (imageName) => {
 
 const isValidExpiredDay = (expiredDay) => _.indexOf([ONE_WEEK, TWO_WEEKS, ONE_MONTH], expiredDay) > -1;
 
+const isAcceptedSorts = (sort) => _.indexOf(["approvedAt ASC", "approvedAt DESC", "createdAt ASC", "createdAt DESC"], sort) > -1;
+
 module.exports = {
   isValidPassword,
   isValidPhoneNumber,
@@ -93,5 +95,6 @@ module.exports = {
   isValidDegreeType,
   isValidDegreeClassification,
   isImage,
-  isValidExpiredDay
-}
+  isValidExpiredDay,
+  isAcceptedSorts
+};
