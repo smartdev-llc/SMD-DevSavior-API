@@ -1,0 +1,39 @@
+put:
+  tags: 
+  - Company
+  summary: In order to review the company
+  description: >
+    API for student to review the company.
+    You should login as student to do this action.
+  security:
+    - studentAuth: []
+  parameters:
+    - name: companyId
+      in: path
+      required: true
+      description: The company id
+      schema:
+        type: integer
+        format: int32
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            stars:
+              type: integer
+            comment:
+              type: string
+          example:
+            stars: 1
+            comment: good
+  responses:
+    200:
+      description: OK
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
+    500:
+      description: Server error

@@ -21,9 +21,11 @@ module.exports = async function (req, res) {
                         "city",
                         "contactName",
                         "logoURL",
-                        "phoneNumber"
+                        "phoneNumber",
+                        "slug"
                     ]),
                     title: job.title,
+                    slug: job.slug,
                     description: job.description,
                     skills: job.skills,
                     category: _.pick(job.category, ['id', 'name']),
@@ -36,7 +38,7 @@ module.exports = async function (req, res) {
                     createdAt: job.createdAt,
                     updatedAt: job.updatedAt,
                     _juniorviec_: {
-                      createdTime: new Date().toDateString()
+                      createdTime: new Date().toISOString()
                     }
                 }
             });

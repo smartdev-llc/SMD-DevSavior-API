@@ -1,0 +1,33 @@
+delete:
+  tags: 
+  - Company
+  summary: Remove a photo to a company gallery.
+  description: Remove a photo to a company gallery.
+  security:
+    - companyAuth: []
+  parameters: 
+  - name: companyId
+    in: path
+    required: true
+    description: The company id
+    schema:
+      type: integer
+      format: int32
+      example: 1
+  - name: photoName
+    in: path
+    required: true
+    description: The photo name and extension
+    schema:
+      type: integer
+      format: int32
+      example: photo1.jpg
+  responses:
+    200:
+      description: OK
+    400:
+      description: Bad request
+    401:
+      description: Unauthorized
+    500:
+      description: Server error

@@ -1,11 +1,13 @@
 const validator = require('validator');
+const slugify = require('slugify');
+const shortid = require('shortid');
 const validatorUtils = require('../../../utils/validator');
 const transformUtils = require('../../../utils/transformData');
 const constants = require('../../../constants');
 const { VERIFICATION_TOKEN } = constants.TOKEN_TYPE;
 const { VERIFICATION_TOKEN_EXPIRATION: expiresIn } = constants.JWT_OPTIONS;
 
-const { 
+const {
   MISSING_PARAMETERS,
   INVALID_PARAMETERS,
   ALREADY_EXISTED_EMAIL,
@@ -34,7 +36,7 @@ module.exports = async function (req, res) {
         code: MISSING_PARAMETERS
       });
     }
-  
+
     if (!validator.isEmail(email)) {
       return res.badRequest({
         message: "Invalid email.",
@@ -42,7 +44,7 @@ module.exports = async function (req, res) {
         code: INVALID_PARAMETERS
       });
     }
-  
+
     if (!validatorUtils.isValidPassword(password)) {
       return res.badRequest({
         message: "Invalid password.",
@@ -91,10 +93,10 @@ module.exports = async function (req, res) {
   }
 
   async function registerCompany(req, res) {
-    const { 
-      email, 
-      password, 
-      name, 
+    const {
+      email,
+      password,
+      name,
       address,
       city,
       contactName,
@@ -102,14 +104,14 @@ module.exports = async function (req, res) {
       website
     } = req.body;
 
-    if (!email || !password || !name || !contactName || !phoneNumber || !address) {
+    if (!email || !password || !name.trim() || !contactName.trim() || !phoneNumber || !address.trim()) {
       return res.badRequest({
         message: "Missing parameters.",
         devMessage: "Some paramters are missing (`email` | `password` | `name` | `contactName` | `phoneNumber` | `address`).",
         code: MISSING_PARAMETERS
       });
     }
-  
+
     if (!validator.isEmail(email)) {
       return res.badRequest({
         message: "Invalid email.",
@@ -117,7 +119,7 @@ module.exports = async function (req, res) {
         code: INVALID_PARAMETERS
       });
     }
-  
+
     if (!validatorUtils.isValidPassword(password)) {
       return res.badRequest({
         message: "Invalid password.",
@@ -142,10 +144,13 @@ module.exports = async function (req, res) {
       });
     }
 
+    const cleanName = _.escape(name.trim().toLowerCase());
+    const slug = `${slugify(cleanName)}-${shortid.generate()}`;
     const companyReq = {
       email,
       password,
-      name: _.escape(name),
+      name: _.escape(name.trim()),
+      slug,
       address,
       city: transformUtils.transformCity(city),
       contactName,
@@ -193,7 +198,7 @@ module.exports = async function (req, res) {
   //       code: MISSING_PARAMETERS
   //     });
   //   }
-  
+
   //   if (!validator.isEmail(email)) {
   //     return res.badRequest({
   //       message: "Invalid email.",
@@ -201,7 +206,7 @@ module.exports = async function (req, res) {
   //       code: INVALID_PARAMETERS
   //     });
   //   }
-  
+
   //   if (!validatorUtils.isValidPassword(password)) {
   //     return res.badRequest({
   //       message: "Invalid password.",

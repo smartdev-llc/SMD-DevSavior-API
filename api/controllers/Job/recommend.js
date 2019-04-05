@@ -11,13 +11,17 @@ const {
 const moment = require('moment');
 module.exports = async function (req, res) {
   try {
-    const {
-      size,
-      page
-    } = _.get(req, "query");
-    const {
-      jobId
-    } = _.get(req, "params");
+    const { size, page } = _.get(req, "query");
+    const { slug } = _.get(req, "params");
+
+    if (!slug || slug === 'undefined') {
+      return res.notFound({
+        message: 'Company is not found.',
+        devMessage: 'Company is not found.',
+        code: NOT_FOUND
+      });
+    }
+
     let limit = parseInt(size) || 10;
     let skip = (parseInt(page) || 0) * limit;
 
@@ -26,9 +30,7 @@ module.exports = async function (req, res) {
     let job;
     try {
       job = await Job
-        .findOne({
-          id: jobId
-        })
+        .findOne({ slug })
         .populate("skills", {
           select: ["id", "name"]
         });
@@ -64,7 +66,7 @@ module.exports = async function (req, res) {
       "bool": {
         "must_not": {
           "match": {
-            "_id": jobId
+            "_id": job.id
           }
         },
         "must": [
@@ -72,7 +74,7 @@ module.exports = async function (req, res) {
             "term": {
               "status": ACTIVE
             }
-          }, 
+          },
           {
             "range": {
               "expiredAt": {

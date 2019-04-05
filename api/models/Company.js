@@ -12,6 +12,9 @@ const { PENDING } = constants.STATUS;
 module.exports = {
 
   attributes: {
+    slug: {
+      type: 'string'
+    },
     email: {
       type: 'string',
       required: true,
@@ -66,6 +69,11 @@ module.exports = {
     jobs: {
       collection: 'job',
       via: 'company'
+    },
+    reviews:{
+      collection: 'student',
+      via: 'company',
+      through: 'companyreview'
     }
   },
 

@@ -42,11 +42,12 @@ module.exports.policies = {
   'job/renew': 'isAdmin',
   'job/delete': 'isAuthenticated',
   'job/create-alert-queues': 'isAdmin',
+  'job/sync': 'isAdmin',
 
   // Category
   'category/find': true,
   'category/create': 'isAdmin',
-  
+
   // Skill
   'skill/find': true,
   'skill/create': 'isAdmin',
@@ -55,24 +56,28 @@ module.exports.policies = {
   'skillsubscription/create': 'isStudent',
   'skillsubscription/delete': 'isStudent',
   'skillsubscription/find': 'isStudent',
-  
+
   // Photo
   'photo/upload': true,
   'photo/read': true,
   'photo/delete': true,
-  
+
   // Company
   'company/find': true,
   'company/search': 'isAdmin',
   'company/find-one': true,
-  'company/update-my-info': 'isCompany',
-  'company/upsert-my-logo': 'isCompany',
-  'company/upsert-my-cover': 'isCompany',
+  'company/update-info': 'isCompanyOrAdmin',
+  'company/upsert-logo': 'isCompanyOrAdmin',
+  'company/upsert-cover': 'isCompanyOrAdmin',
+  'company/add-photo': 'isCompanyOrAdmin',
+  'company/delete-photo': 'isCompanyOrAdmin',
   'company/approve': 'isAdmin',
   'company/reject': 'isAdmin',
   'company/activate': 'isAdmin',
   'company/deactivate': 'isAdmin',
-  
+  'company/review': 'isStudent',
+  'company/count': 'isCompanyOrAdmin',
+
   // Student
   'student/search': 'isAdmin',
   'student/find-me': 'isStudent',
@@ -90,6 +95,10 @@ module.exports.policies = {
   'student/update-working-experience': 'isStudent',
   'student/delete-working-experience': 'isStudent',
   'student/find-applicant': 'isCompany',
+  'student/deactivate': 'isAdmin',
+  'student/activate': 'isAdmin',
+  'student/delete': 'isAdmin',
+  'student/count': 'isCompanyOrAdmin',
 
   // JobApplication
   'jobapplication/find': 'isCompany',
@@ -107,5 +116,5 @@ module.exports.policies = {
   'hotjob/deactivate': 'isAdmin',
   'hotjob/find': true,
   'hotjob/find-all': 'isAdmin',
-  
+
 };

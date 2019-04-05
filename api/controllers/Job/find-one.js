@@ -11,10 +11,18 @@ const moment = require('moment');
 module.exports = async function (req, res) {
   const userId = _.get(req, "user.id");
   const role = _.get(req, "user.role");
-  const id = _.get(req, "params.id");
+  const slug = _.get(req, "params.slug");
+
+  if (!slug || slug === 'undefined') {
+    return res.notFound({
+      message: 'Job is not found.',
+      devMessage: 'Job is not found.',
+      code: NOT_FOUND
+    });
+  }
 
   let condition = {
-    id
+    slug
   }
 
   if (userId) {
@@ -25,7 +33,7 @@ module.exports = async function (req, res) {
       condition.expiredAt = {
         '>=': moment.now()
       };
-    } 
+    }
   } else {
     condition.status = ACTIVE;
     condition.expiredAt = {
@@ -61,7 +69,7 @@ module.exports = async function (req, res) {
 
     if (role === 'student') {
       try {
-        const application = await JobApplication.findOne({ student: userId, job: id });
+        const application = await JobApplication.findOne({ student: userId, job: job.id });
         job.isApplied = !!application;
       } catch (err) {
         return res.serverError({
@@ -70,6 +78,18 @@ module.exports = async function (req, res) {
           code: INTERNAL_SERVER_ERROR
         });
       }
+    }
+
+    try {
+      const company = await CompanyReview.find({ company: job.company.id }).populate("student");
+      reviews = _.map(company, value =>  _.pick(value, ['student.id', 'student.firstName', 'student.lastName', "comment", "stars"]));
+      job.company.reviews = reviews;
+    } catch (err) {
+      return res.serverError({
+        message: "Something went wrong.",
+        devMessage: err.message,
+        code: INTERNAL_SERVER_ERROR
+      });
     }
 
     return res.ok(job);

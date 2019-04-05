@@ -3,8 +3,8 @@
  */
 
 const {
-  MISSING_PARAMETERS,
-  INTERNAL_SERVER_ERROR
+  INTERNAL_SERVER_ERROR,
+  NOT_FOUND
 } = require('../../../constants/error-code');
 const constants = require('../../../constants');
 const { ACTIVE } = constants.STATUS;
@@ -12,23 +12,26 @@ const { ACTIVE } = constants.STATUS;
 const moment = require('moment');
 
 module.exports = async function (req, res) {
-  const companyId = _.get(req, "params.companyId");
+  const slug = _.get(req, "params.slug");
   const { size, page } = _.get(req, 'query');
   let limit = parseInt(size) || 10;
   let skip = (parseInt(page) || 0) * limit;
   const sort = 'approvedAt';
 
-  if (!companyId) {
+  if (!slug) {
     return res.badRequest({
-      message: "Missing parameter.",
-      devMessage: "`companyId` is missing.",
-      code: MISSING_PARAMETERS
+      message: "Company is not found.",
+      devMessage: "Company is not found.",
+      code: NOT_FOUND
     });
   }
 
   try {
+
+    const company = await company.findOne({ slug });
+
     const where = {
-      company: companyId, 
+      company: company.id,
       status: ACTIVE,
       expiredAt: {
         '>=': moment.now()

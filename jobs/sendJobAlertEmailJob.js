@@ -6,8 +6,8 @@ const moment = require("moment");
 module.exports = async function (queue) {
   queue.process(SEND_JOB_ALERT_EMAIL, 5, sendJobAlertEmailFunc);
 
-  async function sendJobAlertEmailFunc(job, done) {
-    const { studentId } = _.get(job, 'data', {});
+  async function sendJobAlertEmailFunc(task, done) {
+    const { studentId } = _.get(task, 'data', {});
 
     try {
       const student = await Student.findOne({ id: studentId });

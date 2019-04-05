@@ -1,4 +1,6 @@
-const { 
+const slugify = require('slugify');
+const shortid = require('shortid');
+const {
   isValidSalary,
   isValidJobType
 } = require('../../../utils/validator');
@@ -13,14 +15,14 @@ const sendEmailToAdmin = (job, company) => {
   const contentData = {
     job: _.pick(job, ['id', 'title']),
     company: _.pick(company, ['id', 'name']),
-    jobLink: `${process.env.BO_URL}/dashboard/job/${job.id}`
+    jobLink: `${process.env.BO_URL}/dashboard/jobs/${job.id}`
   };
   const admins = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
     return {
       email
     };
   });
-  
+
   EmailService.sendToAdmins(admins, 'review-new-job-email', contentData);
 };
 
@@ -34,7 +36,8 @@ module.exports = async function (req, res) {
     return res.badRequest({
       message: "Missing parameters.",
       devMessage: "Some parameters are missing (`title` | `categoryId` | `description` | `requirements` | `jobType`).",
-      code: MISSING_PARAMETERS
+      code: MISSING_PARAMETERS,
+      traceId: req.traceId
     });
   }
 
@@ -42,7 +45,8 @@ module.exports = async function (req, res) {
     return res.badRequest({
       message: "Invalid Salary.",
       devMessage: "Invalid `fromSalary` and `toSalary` (they should be NUMBERIC, `fromSalary` <= `toSalary`).",
-      code: INVALID_PARAMETERS
+      code: INVALID_PARAMETERS,
+      traceId: req.traceId
     });
   }
 
@@ -50,13 +54,17 @@ module.exports = async function (req, res) {
     return res.badRequest({
       message: "Invalid job type",
       devMessage: "Invalid job type (should be FULL_TIME or PART_TIME or INTERNSHIP or CONTRACT or FREELANCE.",
-      code: INVALID_PARAMETERS
+      code: INVALID_PARAMETERS,
+      traceId: req.traceId
     });
   }
 
   try {
+    const cleanTitle = _.escape(title.trim().toLowerCase());
+    const slug = `${slugify(cleanTitle)}-${shortid.generate()}`;
     const job = await Job.create({
       company: companyId,
+      slug,
       title,
       description,
       category: categoryId,
@@ -70,12 +78,13 @@ module.exports = async function (req, res) {
 
     const category = await Category.findOne({ id: categoryId });
     const skills = await Skill.find({ id: skillIds });
-    
+
     ElasticsearchService.create({
       type: 'Job',
       id: job.id,
       body: {
         company: company,
+        slug,
         title,
         description,
         skills: _.map(skills, skill => _.pick(skill, ['name', 'id'])),
@@ -92,14 +101,14 @@ module.exports = async function (req, res) {
         createdAt: job.createdAt,
         updatedAt: job.updatedAt,
         _juniorviec_: {
-          createdTime: new Date().toDateString()
+          createdTime: new Date().toISOString()
         }
       }
     });
 
     job.skills = skills;
     job.category = category;
-    
+
     sendEmailToAdmin(job, company);
 
     return res.ok(job);

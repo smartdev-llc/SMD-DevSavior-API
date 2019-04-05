@@ -1,3 +1,5 @@
+const slugify = require('slugify');
+const shortid = require('shortid');
 const {
   isValidSalary,
   isValidJobType
@@ -19,14 +21,14 @@ const sendEmailToAdmin = (job, company) => {
   const contentData = {
     job: _.pick(job, ['id', 'title']),
     company: _.pick(company, ['id', 'name']),
-    jobLink: `${process.env.BO_URL}/dashboard/job/${job.id}`
+    jobLink: `${process.env.BO_URL}/dashboard/jobs/${job.id}`
   };
   const admins = _.map(_.split(process.env.ADMIN_EMAILS, ','), email => {
     return {
       email
     };
   });
-  
+
   EmailService.sendToAdmins(admins, 'job-is-edited-email', contentData);
 };
 
@@ -67,19 +69,21 @@ module.exports = async function (req, res) {
     });
   }
 
+  let foundJob;
+
   try {
-    const job = await Job.findOne({
+    foundJob = await Job.findOne({
       id,
       company: company.id,
     });
 
-    if (!job) {
+    if (!foundJob) {
       return res.notFound({
         message: "Job not found."
       });
     }
 
-    if (_.indexOf([ACTIVE, PENDING], job.status) < 0) {
+    if (_.indexOf([ACTIVE, PENDING], foundJob.status) < 0) {
       return res.badRequest({
         message: "Invalid job status",
         devMessage: "Invalid job status (should be ACTIVE or PENDING).",
@@ -87,7 +91,7 @@ module.exports = async function (req, res) {
       });
     }
 
-    if (job.status === ACTIVE && job.expiredAt < moment.now()) {
+    if (foundJob.status === ACTIVE && foundJob.expiredAt < moment.now()) {
       return res.badRequest({
         message: "Invalid job.",
         devMessage: "Job is expired.",
@@ -102,8 +106,9 @@ module.exports = async function (req, res) {
     });
   }
 
-  const updatedBody = {
+  let updatedBody = {
     title,
+    slug: foundJob.slug,
     description,
     category: categoryId,
     skills: skillIds,
@@ -111,8 +116,13 @@ module.exports = async function (req, res) {
     fromSalary,
     toSalary,
     jobType,
-    benefits,
+    benefits
   };
+
+  if (title !== foundJob.title) {
+    const cleanTitle = _.escape(job.title.trim().toLowerCase());
+    updatedBody.slug = `${slugify(cleanTitle)}-${shortid.generate()}`;
+  }
 
   try {
     let job = await Job.updateOne({ id })
@@ -126,8 +136,9 @@ module.exports = async function (req, res) {
       id: id,
       body: {
         doc: {
-          title,
-          description,
+          title: job.title,
+          slug: job.slug,
+          description: job.description,
           skills: _.map(skills, skill => _.pick(skill, ['name', 'id'])),
           category: {
             id: category.id,

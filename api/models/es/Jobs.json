@@ -29,6 +29,9 @@
         }
       }
     },
+    "slug": {
+      "type": "text"
+    },
     "company": {
       "type": "nested",
       "properties": {
@@ -36,6 +39,9 @@
           "type": "text"
         },
         "city": {
+          "type": "text"
+        },
+        "slug": {
           "type": "text"
         },
         "contactName": {

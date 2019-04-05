@@ -1,0 +1,17 @@
+{
+  "mysql": {
+    "connection": {
+      "host": "localhost",
+      "user": "root",
+      "password": "root",
+      "database": "juniorviec"
+    }
+  },
+  "elasticsearch": {
+    "connection": {
+      "host": "localhost:9200",
+      "log": "trace"
+    },
+    "indexName": "juniorviec"
+  }
+}

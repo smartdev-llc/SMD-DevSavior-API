@@ -14,7 +14,7 @@ curl --request PUT \
   --header 'content-type: application/json' \
   --data ' {
 		"mappings": {
-			"Jobs": {
+			"Job": {
         "properties": {
           "_juniorviec_": {
             "properties": {
@@ -45,6 +45,9 @@ curl --request PUT \
               }
             }
           },
+          "slug": {
+            "type": "text"
+          },
           "company": {
             "type": "nested",
             "properties": {
@@ -52,6 +55,9 @@ curl --request PUT \
                 "type": "text"
               },
               "city": {
+                "type": "text"
+              },
+              "slug": {
                 "type": "text"
               },
               "contactName": {

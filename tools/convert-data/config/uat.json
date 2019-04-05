@@ -1,0 +1,9 @@
+{
+    "elasticsearch": {
+        "connection": {
+            "host": "juniorviec.uat:9200"
+        },
+        "indexName": "juniorviec"
+    },
+    "batchSize": 100
+}

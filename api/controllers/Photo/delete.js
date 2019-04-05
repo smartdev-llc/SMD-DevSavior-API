@@ -3,12 +3,18 @@ const {
   isImage
 } = require('../../../utils/validator');
 
+const {
+  NOT_FOUND
+} = require('../../../constants/error-code');
+
 module.exports = async function (req, res) {
-  const photoName = req.params.photoName;
+  const { photoName } = req.params;
 
   if (!photoName || !isImage(photoName)) {
-    return res.badRequest({
-      message: "Photo not found."
+    return res.notFound({
+      message: "Photo not found.",
+      devMessage: "Photo is not found.",
+      code: NOT_FOUND
     });
   }
 

@@ -126,6 +126,11 @@ module.exports = {
       via: 'student',
       through: 'skillsubscription'
     },
+    companyReviews:{
+      collection: 'company',
+      via: 'student',
+      through: 'companyreview'
+    }
   },
 
   customToJSON: function() {

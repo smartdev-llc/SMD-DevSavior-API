@@ -102,14 +102,36 @@ paths:
     $ref: 'paths/Company/find.yaml'
   /companies/search:
     $ref: 'paths/Company/search.yaml'
+  /companies/{companyId}/info:
+    $ref: 'paths/Company/update-info.yaml'
+  /companies/{companyId}/logo:
+    $ref: 'paths/Company/upsert-logo.yaml'
+  /companies/{companyId}/cover:
+    $ref: 'paths/Company/upsert-cover.yaml'
+  /companies/{companyId}/photos:
+    $ref: 'paths/Company/add-photos.yaml'
+  /companies/{companyId}/photos/{photoName}:
+    $ref: 'paths/Company/delete-photos.yaml'
   /companies/{companyId}/approve:
     $ref: 'paths/Company/approve.yaml'
   /companies/{companyId}/reject:
     $ref: 'paths/Company/reject.yaml'
   /companies/{companyId}/activate:
     $ref: 'paths/Company/activate.yaml'
+  /students/{id}/activate:
+    $ref: 'paths/Student/activate.yaml'
+  /students/{id}/deactivate:
+    $ref: 'paths/Student/deactivate.yaml'
+  /companies/{companyId}/reviews:
+    $ref: 'paths/Company/review.yaml'
   /companies/{companyId}/deactivate:
     $ref: 'paths/Company/deactivate.yaml'
+  /students/{id}:
+    $ref: 'paths/Student/delete.yaml'
+  /students/count:
+    $ref: 'paths/Student/count.yaml'
+  /companies/count:
+    $ref: 'paths/Company/count.yaml'
 components:
   responses:
     200:
