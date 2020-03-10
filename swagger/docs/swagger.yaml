@@ -8,7 +8,7 @@ info:
     name: JuniorViec Team
     email: contact@juniorviec.com
 servers: 
-- url: https://uat.api.juniorviec.com
+- url: https://api.juniorviec.com
   description: UAT API
 - url: http://localhost:1337
   description: Local API
