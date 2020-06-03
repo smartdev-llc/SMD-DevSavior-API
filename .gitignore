@@ -132,7 +132,6 @@ lib-cov
 
 package-lock.json
 .editorconfig
-.env
 build/
 .vscode
 views
