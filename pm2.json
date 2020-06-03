@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "juniorviec-api",
+      "name": "devsavior-api",
       "script": "app.js",
       "error_file"  : "/dev/null",
       "out_file"    : "/dev/null"
