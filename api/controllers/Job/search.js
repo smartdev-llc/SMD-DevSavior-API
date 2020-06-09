@@ -22,15 +22,14 @@ module.exports = async function (req, res) {
     if (role !== "admin" && role !== "company") {
       query.bool.must.push(buildQuery.activeJob());
 
-      query.bool.must.push({
-        range: {
-          expiredAt: {
-            gte: moment.now()
-          }
-        }
-      });
+      // query.bool.must.push({
+      //   range: {
+      //     expiredAt: {
+      //       gte: moment.now()
+      //     }
+      //   }
+      // });
     }
-
     let nestedIdNames = [{
       request: "category",
       path: "category",
